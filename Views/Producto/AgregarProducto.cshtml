@@ -1,0 +1,37 @@
+@model ProductoDTO
+
+@{
+    ViewData["Title"] = "Agregar Producto";
+}
+
+<h2>Agregar Producto</h2>
+<form asp-controller="Producto" asp-action="GuardarProducto" method="post" enctype="multipart/form-data">
+    <h3>@ViewData["Message"]</h3>
+    <div>
+        <label asp-for="Nombre"></label>
+        <input type="text" asp-for="Nombre">
+        @Html.ValidationMessageFor(model => model.Nombre, null)
+    </div>
+    <div>
+        <label asp-for="Descripcion"></label>
+        <input type="text" asp-for="Descripcion">
+        @Html.ValidationMessageFor(model => model.Descripcion, null)
+    </div>
+    <div>
+        <label asp-for="Imagen"></label>
+        <input type="file" name="Imagen" asp-for="Imagen">
+    </div>
+    <div>
+        <label asp-for="Precio"></label>
+        <input type="number" asp-for="Precio" value="0.0">
+        @Html.ValidationMessageFor(model => model.Precio, null)
+    </div>
+    <div>
+        <label asp-for="Stock"></label>
+        <input type="number" asp-for="Stock" value="0">
+        @Html.ValidationMessageFor(model => model.Stock, null)
+    </div>
+    <div>
+        <input type="submit" value="Crear">
+    </div>
+</form>
