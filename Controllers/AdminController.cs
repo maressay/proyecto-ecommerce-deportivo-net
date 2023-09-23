@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using proyecto_ecommerce_deportivo_net.Data;
 using proyecto_ecommerce_deportivo_net.Models;
@@ -13,13 +15,12 @@ using proyecto_ecommerce_deportivo_net.Models.Validator;
 
 namespace proyecto_ecommerce_deportivo_net.Controllers
 {
-    [Route("[controller]")]
-    public class ProductoController : Controller
+    public class AdminController : Controller
     {
-        private readonly ILogger<ProductoController> _logger;
+        private readonly ILogger<AdminController> _logger;
         private readonly ApplicationDbContext _context;
 
-        public ProductoController(ILogger<ProductoController> logger, ApplicationDbContext context)
+        public AdminController(ILogger<AdminController> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
@@ -79,5 +80,15 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             // Si hay campos que no cumplen con la validacion
             return View("AgregarProducto");
         }
+
+        [HttpGet]
+        public IActionResult ListaDeProductos()
+        {
+            List<Producto> listaProductos = _context.Producto.ToList();
+            return View("ListaDeProductos", listaProductos);
+        }
     }
+
+
+
 }
