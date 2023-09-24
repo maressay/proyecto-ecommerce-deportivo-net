@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using proyecto_ecommerce_deportivo_net.Data;
 using proyecto_ecommerce_deportivo_net.Models;
 using proyecto_ecommerce_deportivo_net.Models.Validator;
+using X.PagedList;
 
 namespace proyecto_ecommerce_deportivo_net.Controllers
 {
@@ -41,7 +42,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         [HttpGet]
         public IActionResult AgregarProducto()
         {
-            return View("agregarProducto");
+            return View("AgregarProducto");
         }
 
 
@@ -81,11 +82,12 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             return View("AgregarProducto");
         }
 
-        [HttpGet]
-        public IActionResult ListaDeProductos()
+        public ActionResult ListaDeProductos(int? page)
         {
-            List<Producto> listaProductos = _context.Producto.ToList();
-            return View("ListaDeProductos", listaProductos);
+            int pageNumber = (page ?? 1); // Si no se especifica la página, asume la página 1
+            int pageSize = 2;
+            IPagedList listaPaginada = _context.Producto.ToPagedList(pageNumber, pageSize);
+            return View("ListaDeProductos", listaPaginada);
         }
     }
 

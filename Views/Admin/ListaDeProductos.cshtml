@@ -1,4 +1,9 @@
-@model ICollection<Producto>
+@using X.PagedList.Mvc.Core; @*import this so we get our HTML Helper*@
+@using X.PagedList;
+@*import this so we can cast our list to IPagedList (only necessary because ViewBag is dynamic)*@
+@using X.PagedList.Mvc.Core.Fluent;
+
+@model IPagedList<Producto>
 
 @{
     ViewData["Title"] = "Lista de Productos";
@@ -33,3 +38,7 @@
         }
     </tbody>
 </table>
+
+<div class="pagination-container">
+    @Html.PagedListPager(Model, page => Url.Action("ListaDeProductos", new { page }))
+</div>

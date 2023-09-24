@@ -36,8 +36,9 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    name: "custom",
+        pattern: "{company}/{controller}/{action}/{id?}",
+        defaults: new {company="AthetiX", controller = "NoCliente", action = "Catalogo" });
 app.MapRazorPages();
 
 app.Run();

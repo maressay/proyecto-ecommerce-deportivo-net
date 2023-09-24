@@ -5,22 +5,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using proyecto_ecommerce_deportivo_net.Data;
 
 namespace proyecto_ecommerce_deportivo_net.Controllers
 {
-    [Route("[controller]")]
     public class NoClienteController : Controller
     {
         private readonly ILogger<NoClienteController> _logger;
+        private ApplicationDbContext _context;
 
-        public NoClienteController(ILogger<NoClienteController> logger)
+        public NoClienteController(ILogger<NoClienteController> logger, ApplicationDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Catalogo()
         {
-            return View();
+            var catalogo = _context.Producto.ToList();
+            return View("Catalogo", catalogo);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -28,5 +32,6 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         {
             return View("Error!");
         }
+
     }
 }

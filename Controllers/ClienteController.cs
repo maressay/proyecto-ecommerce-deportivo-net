@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 
 namespace proyecto_ecommerce_deportivo_net.Controllers
 {
-    [Route("[controller]")]
     public class ClienteController : Controller
     {
         private readonly ILogger<ClienteController> _logger;
