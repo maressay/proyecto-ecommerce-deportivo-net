@@ -13,6 +13,8 @@ using proyecto_ecommerce_deportivo_net.Data;
 using proyecto_ecommerce_deportivo_net.Models;
 using proyecto_ecommerce_deportivo_net.Models.Validator;
 using X.PagedList;
+using Firebase.Auth;
+using Firebase.Storage;
 
 namespace proyecto_ecommerce_deportivo_net.Controllers
 {
@@ -47,7 +49,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
 
 
         [HttpPost]
-        public IActionResult GuardarProducto(ProductoDTO productoDTO)
+        public async Task<IActionResult> GuardarProducto(ProductoDTO productoDTO)
         {
             ProductoValidator validator = new ProductoValidator();
             ValidationResult result = validator.Validate(productoDTO);
@@ -60,7 +62,9 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                 producto.Nombre = productoDTO.Nombre;
                 producto.Descripcion = productoDTO.Descripcion;
                 // producto.Imagen = productoDTO.Imagen; agregar logica para subir imagen y esas cosas ya sabes
-                producto.Imagen = "Seria un link de onedrive, SI SUPIERA COMO SE HACE!!";
+                string urlImagen = await SubirStorage(productoDTO.Imagen.OpenReadStream(), productoDTO.Imagen.FileName);
+                //
+                producto.Imagen = urlImagen;
                 producto.Precio = productoDTO.Precio;
                 producto.Stock = productoDTO.Stock;
                 producto.fechaCreacion = DateTime.Now.ToUniversalTime(); ;
@@ -82,6 +86,38 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             return View("AgregarProducto");
         }
 
+        public async Task<string> SubirStorage(Stream archivo, string nombre)
+        {
+
+            //INGRESA AQUÍ TUS PROPIAS CREDENCIALES
+            string email = "athletix@gmail.com";
+            string clave = "codigo123";
+            string ruta = "athletix-app.appspot.com";
+            string api_key = "AIzaSyAg3WiFrCupnLMrv0CHs8XxJIodiX52XqU";
+
+            var auth = new FirebaseAuthProvider(new FirebaseConfig(api_key));
+            var a = await auth.SignInWithEmailAndPasswordAsync(email, clave);
+
+            var cancellation = new CancellationTokenSource();
+
+            var task = new FirebaseStorage(
+                ruta,
+                new FirebaseStorageOptions
+                {
+                    AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
+                    ThrowOnCancel = true
+                })
+                .Child("AthletiX")
+                .Child(nombre)
+                .PutAsync(archivo, cancellation.Token);
+
+
+            var downloadURL = await task;
+
+            return downloadURL;
+
+        }
+
         public ActionResult ListaDeProductos(int? page)
         {
             int pageNumber = (page ?? 1); // Si no se especifica la página, asume la página 1
@@ -90,7 +126,5 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             return View("ListaDeProductos", listaPaginada);
         }
     }
-
-
 
 }

@@ -13,9 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FirebaseAuthentication.net" Version="3.7.2" />
+    <PackageReference Include="FirebaseStorage.net" Version="1.0.3" />
     <PackageReference Include="FluentValidation" Version="11.7.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore"
+      Version="7.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11">
@@ -24,6 +27,7 @@
     </PackageReference>
     <!-- <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.9" /> -->
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.11" />
     <PackageReference Include="X.PagedList.Mvc" Version="8.0.7" />
     <PackageReference Include="X.PagedList.Mvc.Core" Version="8.4.7" />
