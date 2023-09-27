@@ -316,11 +316,11 @@
             @if (SignInManager.IsSignedIn(User))
             {
                 <div class="nav-item custom-user-info">
-                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello
+                    <a class="nav-link text-dark" style="text-decoration: none;" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello
                         @User.Identity?.Name!</a>
                 </div>
                 <div>
-                    <a class="fas fa-sign-out-alt" asp-area="Identity" asp-page="/Account/Logout"
+                    <a class="fas fa-sign-out-alt" style="text-decoration: none;" asp-area="Identity" asp-page="/Account/Logout"
                         asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"></a>
                 </div>
             }
