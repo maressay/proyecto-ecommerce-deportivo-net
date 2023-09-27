@@ -61,9 +61,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
 
                 producto.Nombre = productoDTO.Nombre;
                 producto.Descripcion = productoDTO.Descripcion;
-                // producto.Imagen = productoDTO.Imagen; agregar logica para subir imagen y esas cosas ya sabes
                 string urlImagen = await SubirStorage(productoDTO.Imagen.OpenReadStream(), productoDTO.Imagen.FileName);
-                //
                 producto.Imagen = urlImagen;
                 producto.Precio = productoDTO.Precio;
                 producto.Stock = productoDTO.Stock;
