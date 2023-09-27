@@ -15,6 +15,7 @@ using proyecto_ecommerce_deportivo_net.Models.Validator;
 using X.PagedList;
 using Firebase.Auth;
 using Firebase.Storage;
+using System.Web.WebPages;
 
 namespace proyecto_ecommerce_deportivo_net.Controllers
 {
@@ -119,9 +120,61 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         public ActionResult ListaDeProductos(int? page)
         {
             int pageNumber = (page ?? 1); // Si no se especifica la página, asume la página 1
-            int pageSize = 2;
+            int pageSize = 10;
             IPagedList listaPaginada = _context.Producto.ToPagedList(pageNumber, pageSize);
             return View("ListaDeProductos", listaPaginada);
+        }
+
+        public async Task<ActionResult> EditarProducto(int? id)
+        {
+
+            Producto? producto = await _context.Producto.FindAsync(id);
+
+            if (producto == null)
+            {
+                return NotFound();
+            }
+
+            ProductoDTO productoDTO = new ProductoDTO();
+            productoDTO.Id = producto.id;
+            productoDTO.Nombre = producto.Nombre;
+            productoDTO.Descripcion = producto.Descripcion;
+            productoDTO.Precio = producto.Precio;
+            productoDTO.Stock = producto.Stock;
+
+
+            return View("EditarProducto", productoDTO);
+
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> GuardarProductoEditado(int id, ProductoDTO productoDTO)
+        {
+            ProductoValidator validator = new ProductoValidator();
+            ValidationResult result = validator.Validate(productoDTO);
+            System.Console.Write(productoDTO.Nombre);
+            if (result.IsValid)
+            {
+                Producto? producto = _context.Producto.Find(id);
+
+                producto.Nombre = productoDTO.Nombre;
+                producto.Descripcion = productoDTO.Descripcion;
+                producto.fechaActualizacion = DateTime.Now.ToUniversalTime();
+                producto.Precio = productoDTO.Precio;
+                producto.Stock = productoDTO.Stock;
+
+                if (productoDTO.Imagen != null)
+                {
+                    string urlImagen = await SubirStorage(productoDTO.Imagen.OpenReadStream(), productoDTO.Imagen.FileName);
+                    producto.Imagen = urlImagen;
+                }
+                _context.Producto.Update(producto);
+                _context.SaveChanges();
+
+                return RedirectToAction("EditarProducto", new { id = producto.id });
+
+            }
+            return View("EditarProducto");
         }
     }
 

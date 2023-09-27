@@ -20,6 +20,7 @@
             <th>Stock</th>
             <th>Fecha de Creación</th>
             <th>Fecha de Actualización</th>
+            <th>Editar</th>
         </tr>
     </thead>
     <tbody>
@@ -29,11 +30,12 @@
                 <td>@producto.id</td>
                 <td>@producto.Nombre</td>
                 <td>@producto.Descripcion</td>
-                <td>@producto.Imagen</td>
+                <td><img src="@producto.Imagen" width="100px" height="100px" /></td>
                 <td>@producto.Precio</td>
                 <td>@producto.Stock</td>
                 <td>@producto.fechaCreacion</td>
                 <td>@producto.fechaActualizacion</td>
+                <td><a asp-controller="Admin" asp-action="EditarProducto" asp-route-id="@producto.id">Editar</a></td>
             </tr>
         }
     </tbody>
