@@ -1,4 +1,5 @@
-﻿@{
+﻿@model proyecto_ecommerce_deportivo_net.Models.Entity.Contacto
+@{
     ViewData["Title"] = "Contactanos";
 }
 <style>
@@ -7,20 +8,20 @@
 
     :root {
         --my-blue: #0074E4;
-            --light-my-blue: #6FA6FF;
-            /* Aquí defines el tono más claro */
-            --celeste: #40E0D0;
-            --light-celeste: hsl(177, 72%, 70%);
-            --amarillo: #f9d806;
-            --light-amarillo: #ffee80;
-            --rojo: #FF0000;
-            --light-rojo: #FFAFAF;
-            --verde: #369681;
-            --light-verde: #00B050;
-            --black: #130f40;
-            --light-color: #666;
-            --border: .1rem solid rgba(0, 0, 0, .1);
-            --box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
+        --light-my-blue: #6FA6FF;
+        /* Aquí defines el tono más claro */
+        --celeste: #40E0D0;
+        --light-celeste: hsl(177, 72%, 70%);
+        --amarillo: #f9d806;
+        --light-amarillo: #ffee80;
+        --rojo: #FF0000;
+        --light-rojo: #FFAFAF;
+        --verde: #369681;
+        --light-verde: #00B050;
+        --black: #130f40;
+        --light-color: #666;
+        --border: .1rem solid rgba(0, 0, 0, .1);
+        --box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
     }
 
     * {
@@ -120,15 +121,20 @@
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.031292261987!2d-76.93455222707215!3d-12.041366688194957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c6a67667e425%3A0x937f2051f03452a1!2sReal%20Plaza%20Puruchuco!5e0!3m2!1ses!2spe!4v1690722522448!5m2!1ses!2spe"
             allowfullscreen="" loading="lazy"></iframe>
 
-        <form action="">
+        <form asp-controller="Home" asp-action="Create" method="post">
             <h3>Ponerse En Contacto</h3>
-            <input type="text" placeholder="Nombre Completo" class="box">
-            <input type="email" placeholder="Correo electronico" class="box">
-            <input type="number" placeholder="Número de Teléfono" class="box">
-            <input type="text" placeholder="Asunto" class="box">
-            <textarea placeholder="Mensaje" class="box" rows="10" cols="30"></textarea>
+            <input type="text" placeholder="Nombre Completo" class="box" id="Nombre" name="Nombre" required>
+            <input type="email" placeholder="Correo electronico" class="box" id="Email" name="Email" required>
+            <input type="number" placeholder="Número de Teléfono" class="box" id="Phone" name="Phone" required>
+            <input type="text" placeholder="Asunto" class="box" id="Asunto" name="Asunto" required>
+            <textarea placeholder="Mensaje" class="box" rows="10" cols="30" id="Mensaje" name="Mensaje"
+                required></textarea>
             <input type="submit" value="Enviar Mensaje" class="btn">
         </form>
+
+        <div id="messageDiv">
+            <h1>@ViewData["Message"]</h1>
+        </div>
     </div>
 </section>
 <!---------------------------- contact section ends  ---------------------------->

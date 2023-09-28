@@ -13,4 +13,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser> {
 
     public DbSet<Producto> Producto  {get; set;}
     public DbSet<Proforma> DataCarrito { get; set; }
+
+    public DbSet<Contacto> DataContactos { get; set; }
 }
