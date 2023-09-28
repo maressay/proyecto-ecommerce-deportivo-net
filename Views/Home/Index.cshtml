@@ -4,7 +4,9 @@
 @{
     ViewData["Title"] = "AthletiX";
 }
-
+<div id="messageDiv">
+    <h1>@ViewData["Message"]</h1>
+</div>
 <div class="text-center">
     @if (SignInManager.IsSignedIn(User))
     {
@@ -18,7 +20,7 @@
     }
     else
     {
-        // Si el usuario no está autenticado, muestra un mensaje de bienvenida genérico
+    // Si el usuario no está autenticado, muestra un mensaje de bienvenida genérico
         <h1 class="display-4">Welcome</h1>
         <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     }
