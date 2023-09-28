@@ -4,8 +4,7 @@ using proyecto_ecommerce_deportivo_net.Models;
 
 namespace proyecto_ecommerce_deportivo_net.Data;
 
-public class ApplicationDbContext : IdentityDbContext
-{
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser> {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
