@@ -1,5 +1,4 @@
-@model IEnumerable<Producto>
-
+@model IEnumerable<proyecto_ecommerce_deportivo_net.Models.Producto>
 @{
   ViewData["Title"] = "AthletiX";
 }
@@ -543,7 +542,7 @@
           </div>
           <div class="price">Precio: S/.@producto.Precio</div>
           <div class="Stock">Stock: @producto.Stock</div>
-          <a class="btn">Ver Producto</a>
+          <a class="btn" asp-action="DetalleProducto" asp-route-id="@producto.id">Ver Producto</a>
         </div>
       }
     </div>

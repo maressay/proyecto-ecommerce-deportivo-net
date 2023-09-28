@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using proyecto_ecommerce_deportivo_net.Data;
+using proyecto_ecommerce_deportivo_net.Models;
 
 namespace proyecto_ecommerce_deportivo_net.Controllers
 {
@@ -26,6 +27,15 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             var productos = from o in _context.Producto  select o;
             return View(productos.ToList());
         }
+
+        public async Task<IActionResult> DetalleProducto(int? id){
+            Producto objProduct = await _context.Producto.FindAsync(id);
+            if(objProduct == null){
+                return NotFound();
+            }
+            return View(objProduct);
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
