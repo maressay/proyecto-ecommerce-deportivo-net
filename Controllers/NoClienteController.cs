@@ -23,8 +23,8 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         [HttpGet]
         public IActionResult Catalogo()
         {
-            var catalogo = _context.Producto.ToList();
-            return View("Catalogo", catalogo);
+            var productos = from o in _context.Producto  select o;
+            return View(productos.ToList());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

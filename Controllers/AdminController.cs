@@ -120,7 +120,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         public ActionResult ListaDeProductos(int? page)
         {
             int pageNumber = (page ?? 1); // Si no se especifica la página, asume la página 1
-            int pageSize = 10;
+            int pageSize = 3;
             IPagedList listaPaginada = _context.Producto.ToPagedList(pageNumber, pageSize);
             return View("ListaDeProductos", listaPaginada);
         }
