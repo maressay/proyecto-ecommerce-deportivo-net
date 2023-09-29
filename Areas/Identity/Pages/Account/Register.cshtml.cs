@@ -173,6 +173,7 @@ namespace proyecto_ecommerce_deportivo_net.Areas.Identity.Pages.Account
                 user.Nombres = Input.Nombres;
                 user.Apellidos = Input.Apellidos;
                 user.Dni = Input.Dni;
+                user.Rol = "Cliente"; // esta línea es para asignar el rol por defecto al usuario
                 return user;
             }
             catch
