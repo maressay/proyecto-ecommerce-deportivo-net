@@ -11,13 +11,17 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly ApplicationDbContext _context;
+
+    private readonly IMyEmailSender _emailSender;
     public HomeController(ILogger<HomeController> logger,
-        ApplicationDbContext context)
+        ApplicationDbContext context, IMyEmailSender emailSender)
     {
         _logger = logger;
 
         /* lineas agregadas */
         _context = context;
+
+        _emailSender = emailSender;
     }
 
     public IActionResult Index()
@@ -31,12 +35,16 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult Create(Contacto objContacto)
+    public async Task<IActionResult> Create(Contacto objContacto)
     {
         _context.Add(objContacto);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
 
-        ViewData["Message"] = "Estimado " + objContacto.Nombre + ", te estaremos contactando pronto";
+        var message = $"Estimado {objContacto.Nombre}, te estaremos contactando pronto";
+        ViewData["Message"] = message;
+
+        await _emailSender.SendEmailAsync(objContacto.Email, "Gracias por contactarnos", message);
+
         return View("~/Views/Home/Contacto.cshtml");
     }
 
