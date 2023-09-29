@@ -10,3 +10,6 @@ Agregando 3 atributos al register, falta agregar algunas cosas
 
 Agregando el logo de la empresa, el pdf de termino y condiciones, pdf para politica de privacidad,
 añadiendole un atributo a la tabla netusers llamado rol
+
+
+Le añadi en la rama de jesus_avance3 la misión, visión y descripción de la empresa
