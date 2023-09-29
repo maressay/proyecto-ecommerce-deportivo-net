@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/proyecto_ecommerce_deportivo_net.styles.css" asp-append-version="true" />
 
-    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
@@ -304,11 +304,11 @@
             <span>Athleti</span>X </a>
         <nav class="navbar">
             <a class="nav-link text-dark" asp-area="" asp-controller="NoCliente" asp-action="Catalogo">Catalogo</a>
-            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AgregarProducto">Agregar
-                Producto</a>
+            <!--<a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AgregarProducto">Agregar
+                Producto</a>-->
             <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListaDeProductos">Lista De
                 Productos</a>
-            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Contactame</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contacto">Contactame</a>
         </nav>
 
 
@@ -391,7 +391,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
     <script>
         let menu = document.querySelector('#menu-btn');
         let navbar = document.querySelector('.navbar');

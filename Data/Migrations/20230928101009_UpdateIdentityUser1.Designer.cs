@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using proyecto_ecommerce_deportivo_net.Data;
@@ -11,9 +12,11 @@ using proyecto_ecommerce_deportivo_net.Data;
 namespace proyecto_ecommerce_deportivo_net.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230928101009_UpdateIdentityUser1")]
+    partial class UpdateIdentityUser1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -234,72 +237,6 @@ namespace proyecto_ecommerce_deportivo_net.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("proyecto_ecommerce_deportivo_net.Models.Entity.Contacto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Asunto")
-                        .HasColumnType("text")
-                        .HasColumnName("Asunto");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text")
-                        .HasColumnName("Email");
-
-                    b.Property<string>("Mensaje")
-                        .HasColumnType("text")
-                        .HasColumnName("Mensaje");
-
-                    b.Property<string>("Nombre")
-                        .HasColumnType("text")
-                        .HasColumnName("Nombre");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("text")
-                        .HasColumnName("Phone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("t_contacto");
-                });
-
-            modelBuilder.Entity("proyecto_ecommerce_deportivo_net.Models.Entity.Proforma", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("integer");
-
-                    b.Property<double>("Precio")
-                        .HasColumnType("double precision");
-
-                    b.Property<int?>("Productoid")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserID")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Productoid");
-
-                    b.ToTable("t_proforma");
-                });
-
             modelBuilder.Entity("proyecto_ecommerce_deportivo_net.Models.Producto", b =>
                 {
                     b.Property<int>("id")
@@ -386,15 +323,6 @@ namespace proyecto_ecommerce_deportivo_net.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("proyecto_ecommerce_deportivo_net.Models.Entity.Proforma", b =>
-                {
-                    b.HasOne("proyecto_ecommerce_deportivo_net.Models.Producto", "Producto")
-                        .WithMany()
-                        .HasForeignKey("Productoid");
-
-                    b.Navigation("Producto");
                 });
 #pragma warning restore 612, 618
         }

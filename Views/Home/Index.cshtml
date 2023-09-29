@@ -1,8 +1,27 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
     ViewData["Title"] = "AthletiX";
 }
-
+<div id="messageDiv">
+    <h1>@ViewData["Message"]</h1>
+</div>
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        var userId = UserManager.GetUserId(User); // Obtén el ID del usuario autenticado
+        var user = await UserManager.FindByIdAsync(userId); // Busca el usuario en la base de datos por ID
+
+        // Si el usuario está autenticado, muestra un mensaje de bienvenida personalizado
+        <h1 class="display-4">Welcome @user.Nombres @user.Apellidos!</h1>
+        <p>DNI: @user.Dni</p>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    }
+    else
+    {
+    // Si el usuario no está autenticado, muestra un mensaje de bienvenida genérico
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    }
 </div>
