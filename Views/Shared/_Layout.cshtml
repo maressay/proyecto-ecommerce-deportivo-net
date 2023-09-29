@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="icon" href="~/images/logo.png"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/proyecto_ecommerce_deportivo_net.styles.css" asp-append-version="true" />
 
@@ -292,6 +293,10 @@
 
             /* ese codigo es hasta aca arriba */
         }
+
+        #imgLogoEmpresa{
+            border-radius: 50%;
+        }
     </style>
 
 </head>
@@ -301,6 +306,7 @@
     <header class="header">
         <div id="menu-btn" class="fas fa-bars"></div>
         <a class="logo" style="text-decoration: none;" asp-area="" asp-controller="Home" asp-action="Index">
+            <img src="~/images/logo.png" alt="Logo" style="height: 40px; width: 40px; border-radius:50%;" id="imgLogoEmpresa"> <!-- Añadiendo el logo al costado del nombre de la empresa -->
             <span>Athleti</span>X </a>
         <nav class="navbar">
             <a class="nav-link text-dark" asp-area="" asp-controller="NoCliente" asp-action="Catalogo">Catalogo</a>
