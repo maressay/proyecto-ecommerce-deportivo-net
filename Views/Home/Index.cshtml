@@ -14,14 +14,14 @@
         var user = await UserManager.FindByIdAsync(userId); // Busca el usuario en la base de datos por ID
 
         // Si el usuario está autenticado, muestra un mensaje de bienvenida personalizado
-        <h1 class="display-4">Welcome @user.Nombres @user.Apellidos!</h1>
+        <h1 class="display-4">Bienvenido @user.Nombres @user.Apellidos!</h1>
         <p>DNI: @user.Dni</p>
-        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        <p>Obtenga información <a href="https://docs.microsoft.com/aspnet/core">sobre cómo crear aplicaciones web con ASP.NET Core</a>.</p>
     }
     else
     {
     // Si el usuario no está autenticado, muestra un mensaje de bienvenida genérico
-        <h1 class="display-4">Welcome</h1>
-        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        <h1 class="display-4">Bienvenido</h1>
+        <p>Obtenga información <a href="https://docs.microsoft.com/aspnet/core">sobre cómo crear aplicaciones web con ASP.NET Core</a>.</p>
     }
 </div>
