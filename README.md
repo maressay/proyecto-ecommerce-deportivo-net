@@ -12,4 +12,4 @@ Agregando el logo de la empresa, el pdf de termino y condiciones, pdf para polit
 añadiendole un atributo a la tabla netusers llamado rol
 
 
-Le añadi en la rama de jesus_avance3 la misión, visión y descripción de la empresa, añadi exportación de pdf y excel en jesus_avance4
+Le añadi en la rama de jesus_avance3 la misión, visión y descripción de la empresa
