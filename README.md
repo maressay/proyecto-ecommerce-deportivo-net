@@ -13,3 +13,6 @@ añadiendole un atributo a la tabla netusers llamado rol
 
 
 Le añadi en la rama de jesus_avance3 la misión, visión y descripción de la empresa
+
+
+Añadi para exportar en pdf y excel toda la lista y uno solo, tambien le añadi el buscador de productos ya esta funcionando, tambien le añadi el eliminar producto, y valide que cuando se registre o edite un producto te salga un mensaje de que el registro o la actualizacion fue exitosa, eso lo hice en la rama jesus_avance5
