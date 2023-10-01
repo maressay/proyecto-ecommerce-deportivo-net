@@ -297,7 +297,6 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         [HttpGet("ExportProductsToExcel")]
         public IActionResult ExportProductsToExcel()
         {
-
             try
             {
                 using var package = new ExcelPackage();
@@ -341,7 +340,165 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         }
 
         /* Para exportar individualmente los productos */
+        public IActionResult ExportSingleProductToPdf(int id)
+        {
+            try
+            {
 
+                var product = _context.Producto.Find(id);
+                if (product == null)
+                {
+                    return NotFound();
+                }
+
+                var html = $@"
+            <html>
+                <head>
+                <meta charset='UTF-8'>
+                    <style>
+                        table {{
+                            width: 100%;
+                            border-collapse: collapse;
+                        }}
+                        th, td {{
+                            border: 1px solid black;
+                            padding: 8px;
+                            text-align: left;
+                        }}
+                        th {{
+                            background-color: #f2f2f2;
+                        }}
+                        img.logo {{
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            border-radius:50%;
+                            height:3.3rem;
+                            width:3.3rem;
+                        }}
+
+                        h1 {{
+                            color: #40E0D0; /* Color celeste */
+                        }}
+                    </style>
+                </head>
+                <body>
+                    <img src='https://firebasestorage.googleapis.com/v0/b/athletix-app.appspot.com/o/AthletiX%2FWhatsApp%20Image%202023-09-29%20at%206.58.13%20PM%20%281%29.jpeg?alt=media&token=2a97c125-f96c-413c-ba2b-c0c010cb1139' alt='Logo' width='100' class='logo'/>
+                    <h1>Reporte de Producto {id}</h1>
+                    <table>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Imagen</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Fecha de Creación</th>
+                            <th>Fecha de Actualización</th>
+                        </tr>";
+
+
+                // Verifica si la URL de la imagen es válida.
+                var imageUrl = Uri.IsWellFormedUriString(product.Imagen, UriKind.Absolute) ? product.Imagen : "URL de imagen no válida";
+
+                html += $@"
+                <tr>
+                    <td>{product.id}</td>
+                    <td>{product.Nombre}</td>
+                    <td>{product.Descripcion}</td>
+                    <td><img src='{imageUrl}' alt='Imagen del producto' width='40' onerror='this.onerror=null;this.src='https://firebasestorage.googleapis.com/v0/b/athletix-app.appspot.com/o/AthletiX%2FWhatsApp%20Image%202023-09-29%20at%206.58.13%20PM%20%281%29.jpeg?alt=media&token=2a97c125-f96c-413c-ba2b-c0c010cb1139';'/></td>
+                    <td>{product.Precio}</td>
+                    <td>{product.Stock}</td>
+                    <td>{product.fechaCreacion}</td>
+                    <td>{product.fechaActualizacion}</td>
+                </tr>";
+
+
+                html += @"
+                    </table>
+                </body>
+            </html>";
+
+                var globalSettings = new GlobalSettings
+                {
+                    ColorMode = ColorMode.Color,
+                    Orientation = Orientation.Portrait,
+                    PaperSize = PaperKind.A4,
+                };
+                var objectSettings = new ObjectSettings
+                {
+                    HtmlContent = html
+                };
+                var pdf = new HtmlToPdfDocument()
+                {
+                    GlobalSettings = globalSettings,
+                    Objects = { objectSettings }
+                };
+                var file = _converter.Convert(pdf);
+                return File(file, "application/pdf", $"Producto_{id}.pdf");
+
+            }
+            catch (Exception ex)
+            {
+                // Loguear el error para obtener más detalles
+                _logger.LogError(ex, $"Error al exportar el producto {id} a PDF");
+                // Retornar un mensaje de error al usuario
+                return StatusCode(500, $"Ocurrió un error al exportar el producto {id} a PDF. Por favor, inténtelo de nuevo más tarde.");
+            }
+        }
+
+
+
+        public IActionResult ExportSingleProductToExcel(int id)
+        {
+            try
+            {
+                var product = _context.Producto.Find(id);
+                if (product == null)
+                {
+                    return NotFound();
+                }
+
+                using var package = new ExcelPackage();
+                var worksheet = package.Workbook.Worksheets.Add("Producto");
+
+                // Agregando un título arriba de la tabla
+                worksheet.Cells[1, 1].Value = $"Reporte del Producto {id}";
+                worksheet.Cells[1, 1].Style.Font.Size = 20;
+                worksheet.Cells[1, 1].Style.Font.Bold = true;
+
+                // Cargar los datos en la fila 3 para dejar espacio para el título
+                var productList = new List<Producto> { product };
+                worksheet.Cells[3, 1].LoadFromCollection(productList, true);
+
+                // Dar formato a la tabla Reporte de Productos
+                var dataRange = worksheet.Cells[2, 1, worksheet.Dimension.End.Row, worksheet.Dimension.End.Column];
+                var table = worksheet.Tables.Add(dataRange, "Producto");
+                table.ShowHeader = true;
+                table.TableStyle = TableStyles.Light6;
+
+                // Estilo para los encabezados de las columnas 
+                worksheet.Cells[3, 1, 3, worksheet.Dimension.End.Column].Style.Font.Bold = true;
+                worksheet.Cells[3, 1, 3, worksheet.Dimension.End.Column].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                worksheet.Cells[3, 1, 3, worksheet.Dimension.End.Column].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
+                worksheet.Cells[3, 1, 3, worksheet.Dimension.End.Column].Style.Font.Color.SetColor(System.Drawing.Color.DarkBlue);
+
+                // Ajustar el ancho de las columnas automáticamente
+                worksheet.Cells.AutoFitColumns();
+
+                var stream = new MemoryStream();
+                package.SaveAs(stream);
+
+                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Producto_{id}.xlsx");
+            }
+            catch (Exception ex)
+            {
+                // Loguear el error para obtener más detalles
+                _logger.LogError(ex, $"Error al exportar el producto {id} a Excel");
+                // Retornar un mensaje de error al usuario
+                return StatusCode(500, $"Ocurrió un error al exportar el producto {id} a Excel. Por favor, inténtelo de nuevo más tarde.");
+            }
+        }
 
         /* Hasta aqui son los metodos para exportar */
     }

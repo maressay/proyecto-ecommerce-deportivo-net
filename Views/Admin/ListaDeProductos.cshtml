@@ -295,8 +295,8 @@
                         </td>
 
                         <td>
-                            <a >PDF</a>
-                            <a >EXcel</a>
+                            <a asp-controller="Admin" asp-action="ExportSingleProductToPdf" asp-route-id="@producto.id">PDF</a>
+                            <a asp-controller="Admin" asp-action="ExportSingleProductToExcel" asp-route-id="@producto.id">EXcel</a>
                         </td>
                     </tr>
                 }
