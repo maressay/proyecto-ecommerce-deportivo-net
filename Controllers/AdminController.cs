@@ -196,8 +196,10 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         /* metodos para exportar en pdf y excel desde aqui para abajo */
         public IActionResult ExportProductsToPdf()
         {
-            var products = _context.Producto.ToList();
-            var html = @"
+            try
+            {
+                var products = _context.Producto.ToList();
+                var html = @"
             <html>
                 <head>
                 <meta charset='UTF-8'>
@@ -243,12 +245,12 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                             <th>Fecha de Actualización</th>
                         </tr>";
 
-            foreach (var product in products)
-            {
-                // Verifica si la URL de la imagen es válida.
-                var imageUrl = Uri.IsWellFormedUriString(product.Imagen, UriKind.Absolute) ? product.Imagen : "URL de imagen no válida";
+                foreach (var product in products)
+                {
+                    // Verifica si la URL de la imagen es válida.
+                    var imageUrl = Uri.IsWellFormedUriString(product.Imagen, UriKind.Absolute) ? product.Imagen : "URL de imagen no válida";
 
-                html += $@"
+                    html += $@"
                 <tr>
                     <td>{product.id}</td>
                     <td>{product.Nombre}</td>
@@ -259,28 +261,37 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                     <td>{product.fechaCreacion}</td>
                     <td>{product.fechaActualizacion}</td>
                 </tr>";
-            }
+                }
 
-            html += @"
+                html += @"
                     </table>
                 </body>
             </html>";
 
-            var globalSettings = new GlobalSettings
-            {
-                ColorMode = ColorMode.Color,
-                Orientation = Orientation.Portrait,
-                PaperSize = PaperKind.A4,
-            };
-            var objectSettings = new ObjectSettings { HtmlContent = html };
-            var pdf = new HtmlToPdfDocument()
-            {
-                GlobalSettings = globalSettings,
-                Objects = { objectSettings }
-            };
-            var file = _converter.Convert(pdf);
+                var globalSettings = new GlobalSettings
+                {
+                    ColorMode = ColorMode.Color,
+                    Orientation = Orientation.Portrait,
+                    PaperSize = PaperKind.A4,
+                };
+                var objectSettings = new ObjectSettings { HtmlContent = html };
+                var pdf = new HtmlToPdfDocument()
+                {
+                    GlobalSettings = globalSettings,
+                    Objects = { objectSettings }
+                };
+                var file = _converter.Convert(pdf);
 
-            return File(file, "application/pdf", "Productos.pdf");
+                return File(file, "application/pdf", "Productos.pdf");
+
+            }
+            catch (Exception ex)
+            {
+                // Loguear el error para obtener más detalles
+                _logger.LogError(ex, "Error al exportar productos a PDF");
+                // Retornar un mensaje de error al usuario
+                return StatusCode(500, "Ocurrió un error al exportar los productos a PDF. Por favor, inténtelo de nuevo más tarde.");
+            }
         }
 
         [HttpGet("ExportProductsToExcel")]
@@ -320,7 +331,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
 
         /* Para exportar individualmente los productos */
 
-        
+
         /* Hasta aqui son los metodos para exportar */
     }
 
