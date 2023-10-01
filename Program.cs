@@ -6,6 +6,10 @@ using System.Diagnostics;
 using proyecto_ecommerce_deportivo_net.Models;
 using System.Configuration;
 
+/* PARA EXPORTAR A PDF Y EXCEL */
+using DinkToPdf;
+using DinkToPdf.Contracts;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHealthChecks();
@@ -32,6 +36,9 @@ builder.Services.AddTransient<IMyEmailSender, EmailSender>(i =>
         )
     );
 
+/* CONFIGURANDO PARA EXPORTAR EN EXCEL Y PDF */
+// Registro del convertidor de DinkToPdf
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)

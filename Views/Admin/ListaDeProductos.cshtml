@@ -101,7 +101,7 @@
         color: white;
     }
 
-    .table-product-form-container tr td a:hover {
+    .table-product-form-container tr:hover td a{
         color: white;
     }
 
@@ -116,7 +116,7 @@
         padding: 10px;
 
         /* Agregar margen superior para separar del encabezado */
-        max-width: 112rem;
+        max-width: 130rem;
     }
 
     .listar_product .table-product-form-container .Buscador span {
@@ -159,6 +159,39 @@
     .listar_product .table-product-form-container .Buscador .btnAgregar:hover {
         background: var(--amarillo);
     }
+
+
+    .listar_product .table-product-form-container .Buscador .btnPDF {
+			display: inline-block;
+			margin-top: 1rem;
+			border-radius: .5rem;
+			background: var(--light-rojo);
+			color: var(--black);
+			font-weight: 500;
+			font-size: 1.7rem;
+			cursor: pointer;
+			padding: .5rem 1.5rem;
+		}
+
+		.listar_product .table-product-form-container .Buscador .btnPDF:hover {
+			background: var(--rojo);
+		}
+
+		.listar_product .table-product-form-container .Buscador .btnExcel {
+			display: inline-block;
+			margin-top: 1rem;
+			border-radius: .5rem;
+			background: var(--light-verde);
+			color: var(--black);
+			font-weight: 500;
+			font-size: 1.7rem;
+			cursor: pointer;
+			padding: .5rem 1.5rem;
+		}
+
+		.listar_product .table-product-form-container .Buscador .btnExcel:hover {
+			background: var(--verde);
+		}
 
     .listar_product .table-product-form-container .Buscador input[type="text"] {
         flex: 0.5;
@@ -226,6 +259,9 @@
                 class="btnAgregar">
                 Agregar Producto
             </a>
+
+            <a style="text-decoration: none;" asp-area="" asp-controller="Admin" asp-action="ExportProductsToPdf" class="btnPDF">Exportar en PDF</a>
+            <a style="text-decoration: none;" asp-area="" asp-controller="Admin" asp-action="ExportProductsToExcel" class="btnExcel">Exportar en Excel</a>
         </div>
         <br>
         <table>
@@ -240,6 +276,7 @@
                     <th>Fecha de registro</th>
                     <th>Fecha de actualización</th>
                     <th>Editar</th>
+                    <th>Acciones de exportar</th>
                 </tr>
             </thead>
             <tbody>
@@ -255,6 +292,11 @@
                         <td>@producto.fechaCreacion</td>
                         <td>@producto.fechaActualizacion</td>
                         <td><a asp-controller="Admin" asp-action="EditarProducto" asp-route-id="@producto.id">Editar</a>
+                        </td>
+
+                        <td>
+                            <a >PDF</a>
+                            <a >EXcel</a>
                         </td>
                     </tr>
                 }
@@ -292,3 +334,7 @@
     </div>
 </section>
 <!---------------------------- listar producto ends  ---------------------------->
+
+<!---------------------------- javascript botones de exportar stars  ---------------------------->
+
+<!---------------------------- javascript botones de exportar ends  ---------------------------->

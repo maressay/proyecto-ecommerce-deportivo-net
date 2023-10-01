@@ -13,3 +13,6 @@ añadiendole un atributo a la tabla netusers llamado rol
 
 
 Le añadi en la rama de jesus_avance3 la misión, visión y descripción de la empresa
+
+// añadiendo dependencias para exportar en pdf y en excel
+
