@@ -8,6 +8,13 @@
 @{
     ViewData["Title"] = "Lista de Productos";
 }
+
+@if (TempData["MessageDeRespuesta"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["MessageDeRespuesta"]
+    </div>
+}
 <style>
     @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
 
@@ -101,13 +108,13 @@
         color: white;
     }
 
-    .table-product-form-container tr:hover td a{
+    .table-product-form-container tr:hover td a {
         color: white;
     }
 
     /* los buscadores */
     .listar_product .table-product-form-container .Buscador {
-        /*display: flex;*/
+        display: flex;
         justify-content: space-between;
         align-items: center;
         background: var(--my-blue);
@@ -116,7 +123,7 @@
         padding: 10px;
 
         /* Agregar margen superior para separar del encabezado */
-        max-width: 130rem;
+        max-width: 140rem;
     }
 
     .listar_product .table-product-form-container .Buscador span {
@@ -162,36 +169,36 @@
 
 
     .listar_product .table-product-form-container .Buscador .btnPDF {
-			display: inline-block;
-			margin-top: 1rem;
-			border-radius: .5rem;
-			background: var(--light-rojo);
-			color: var(--black);
-			font-weight: 500;
-			font-size: 1.7rem;
-			cursor: pointer;
-			padding: .5rem 1.5rem;
-		}
+        display: inline-block;
+        margin-top: 1rem;
+        border-radius: .5rem;
+        background: var(--light-rojo);
+        color: var(--black);
+        font-weight: 500;
+        font-size: 1.7rem;
+        cursor: pointer;
+        padding: .5rem 1.5rem;
+    }
 
-		.listar_product .table-product-form-container .Buscador .btnPDF:hover {
-			background: var(--rojo);
-		}
+    .listar_product .table-product-form-container .Buscador .btnPDF:hover {
+        background: var(--rojo);
+    }
 
-		.listar_product .table-product-form-container .Buscador .btnExcel {
-			display: inline-block;
-			margin-top: 1rem;
-			border-radius: .5rem;
-			background: var(--light-verde);
-			color: var(--black);
-			font-weight: 500;
-			font-size: 1.7rem;
-			cursor: pointer;
-			padding: .5rem 1.5rem;
-		}
+    .listar_product .table-product-form-container .Buscador .btnExcel {
+        display: inline-block;
+        margin-top: 1rem;
+        border-radius: .5rem;
+        background: var(--light-verde);
+        color: var(--black);
+        font-weight: 500;
+        font-size: 1.7rem;
+        cursor: pointer;
+        padding: .5rem 1.5rem;
+    }
 
-		.listar_product .table-product-form-container .Buscador .btnExcel:hover {
-			background: var(--verde);
-		}
+    .listar_product .table-product-form-container .Buscador .btnExcel:hover {
+        background: var(--verde);
+    }
 
     .listar_product .table-product-form-container .Buscador input[type="text"] {
         flex: 0.5;
@@ -245,6 +252,43 @@
         color: #ccc;
         cursor: not-allowed;
     }
+
+    /* estilo para el boton editar y eliminar */
+
+    .btnEditar {
+        display: inline-block;
+        margin-top: 1rem;
+        border-radius: .5rem;
+        background: var(--light-verde);
+        color: var(--black);
+
+        font-size: 1.7rem;
+        cursor: pointer;
+        padding: .2rem 1rem;
+    }
+
+    .btnEditar:hover {
+        background: var(--verde);
+    }
+
+    .btnEliminar {
+        display: inline-block;
+        margin-top: 1rem;
+        border-radius: .5rem;
+        background: var(--light-rojo);
+        color: var(--black);
+
+        font-size: 1.7rem;
+        cursor: pointer;
+        padding: .2rem 1rem;
+    }
+
+    .btnEliminar:hover {
+        background: var(--rojo);
+        color: white;
+    }
+
+    /* hasta aqui */
 </style>
 <!---------------------------- listar producto stars  ---------------------------->
 <section class="listar_product" id="listar_product">
@@ -253,15 +297,20 @@
 
         <div class="Buscador">
             <span>Buscar Producto</span>
-            <input type="text" placeholder="Ejemplo: Proteina....">
-            <input type="submit" value="Buscar Producto" class="btnBuscar">
+            <form asp-controller="Admin" asp-action="BuscarProducto" method="get">
+                <input type="text" name="query" />
+                <button type="submit" class="btnBuscar">Buscar</button>
+            </form>
+
             <a style="text-decoration: none;" asp-area="" asp-controller="Admin" asp-action="AgregarProducto"
                 class="btnAgregar">
                 Agregar Producto
             </a>
 
-            <a style="text-decoration: none;" asp-area="" asp-controller="Admin" asp-action="ExportProductsToPdf" class="btnPDF">Exportar en PDF</a>
-            <a style="text-decoration: none;" asp-area="" asp-controller="Admin" asp-action="ExportProductsToExcel" class="btnExcel">Exportar en Excel</a>
+            <a style="text-decoration: none;" asp-area="" asp-controller="Admin" asp-action="ExportarProductosEnPDF"
+                class="btnPDF">Exportar en PDF</a>
+            <a style="text-decoration: none;" asp-area="" asp-controller="Admin" asp-action="ExportarProductosEnExcel"
+                class="btnExcel">Exportar en Excel</a>
         </div>
         <br>
         <table>
@@ -276,6 +325,7 @@
                     <th>Fecha de registro</th>
                     <th>Fecha de actualización</th>
                     <th>Editar</th>
+                    <th>Eliminar</th>
                     <th>Acciones de exportar</th>
                 </tr>
             </thead>
@@ -291,17 +341,32 @@
                         <td>@producto.Stock</td>
                         <td>@producto.fechaCreacion</td>
                         <td>@producto.fechaActualizacion</td>
-                        <td><a asp-controller="Admin" asp-action="EditarProducto" asp-route-id="@producto.id">Editar</a>
+                        <td>
+                            <!-- Botón de Editar -->
+                            <a asp-controller="Admin" asp-action="EditarProducto" asp-route-id="@producto.id"
+                                class="btnEditar">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <!-- Botón de Eliminar -->
+                            <form asp-controller="Admin" asp-action="EliminarProducto" asp-route-id="@producto.id"
+                                method="post" onsubmit="return confirm('¿Está seguro de que desea eliminar este producto?')"
+                                class="d-inline-block">
+                                <button type="submit" class="btnEliminar">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
                         </td>
 
                         <td>
-                            <a asp-controller="Admin" asp-action="ExportSingleProductToPdf" asp-route-id="@producto.id">PDF</a>
-                            <a asp-controller="Admin" asp-action="ExportSingleProductToExcel" asp-route-id="@producto.id">EXcel</a>
+                            <a asp-controller="Admin" asp-action="ExportarUnSoloProductoEnPDF"
+                                asp-route-id="@producto.id">PDF</a>
+                            <a asp-controller="Admin" asp-action="ExportarUnSoloProductoEnExcel"
+                                asp-route-id="@producto.id">EXcel</a>
                         </td>
                     </tr>
                 }
-
-
             </tbody>
         </table>
         <br><br>
@@ -335,6 +400,6 @@
 </section>
 <!---------------------------- listar producto ends  ---------------------------->
 
-<!---------------------------- javascript botones de exportar stars  ---------------------------->
+<!---------------------------- javascript  stars  ---------------------------->
 
-<!---------------------------- javascript botones de exportar ends  ---------------------------->
+<!---------------------------- javascript  ends  ---------------------------->

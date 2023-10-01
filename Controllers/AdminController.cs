@@ -85,6 +85,8 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                 producto.fechaCreacion = DateTime.Now.ToUniversalTime(); ;
                 producto.fechaActualizacion = null;
 
+                TempData["MessageRegistrandoProducto"]= "Se Registraron exitosamente los datos.";
+
                 _context.Producto.Add(producto);
                 _context.SaveChanges();
 
@@ -135,8 +137,13 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         public ActionResult ListaDeProductos(int? page)
         {
             int pageNumber = (page ?? 1); // Si no se especifica la página, asume la página 1
-            int pageSize = 3;
+            int pageSize = 3; // maximo 3 productos por pagina
+
+
+            pageNumber = Math.Max(pageNumber, 1);// Con esto se asegura de que pageNumber nunca sea menor que 1
+
             IPagedList listaPaginada = _context.Producto.ToPagedList(pageNumber, pageSize);
+
             return View("ListaDeProductos", listaPaginada);
         }
 
@@ -183,6 +190,8 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                     string urlImagen = await SubirStorage(productoDTO.Imagen.OpenReadStream(), productoDTO.Imagen.FileName);
                     producto.Imagen = urlImagen;
                 }
+
+                TempData["MessageActualizandoProducto"] = "Se Actualizaron exitosamente los datos.";
                 _context.Producto.Update(producto);
                 _context.SaveChanges();
 
@@ -194,7 +203,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
 
 
         /* metodos para exportar en pdf y excel desde aqui para abajo */
-        public IActionResult ExportProductsToPdf()
+        public IActionResult ExportarProductosEnPDF()
         {
             try
             {
@@ -294,8 +303,8 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             }
         }
 
-        [HttpGet("ExportProductsToExcel")]
-        public IActionResult ExportProductsToExcel()
+        [HttpGet("ExportarProductosEnExcel")]
+        public IActionResult ExportarProductosEnExcel()
         {
             try
             {
@@ -340,7 +349,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         }
 
         /* Para exportar individualmente los productos */
-        public IActionResult ExportSingleProductToPdf(int id)
+        public IActionResult ExportarUnSoloProductoEnPDF(int id)
         {
             try
             {
@@ -449,7 +458,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
 
 
 
-        public IActionResult ExportSingleProductToExcel(int id)
+        public IActionResult ExportarUnSoloProductoEnExcel(int id)
         {
             try
             {
@@ -501,6 +510,62 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         }
 
         /* Hasta aqui son los metodos para exportar */
+
+        /* metodo para eliminar un producto */
+        [HttpPost]
+        public async Task<IActionResult> EliminarProducto(int id)
+        {
+            var producto = await _context.Producto.FindAsync(id);
+            if (producto == null)
+            {
+                return NotFound();
+            }
+            _context.Producto.Remove(producto);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ListaDeProductos));
+        }
+
+        /* metodo para buscar */
+
+        public async Task<IActionResult> BuscarProducto(string query)
+        {
+            // Declara la variable productosPagedList una sola vez aquí
+            IPagedList<Producto> productosPagedList;
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(query))
+                {
+                    var todosLosProductos = await _context.Producto.ToListAsync();
+                    productosPagedList = todosLosProductos.ToPagedList(1, todosLosProductos.Count);
+                }
+                else
+                {
+                    query = query.ToUpper();
+                    var productos = await _context.Producto
+                        .Where(p => p.Nombre.ToUpper().Contains(query))
+                        .ToListAsync();
+
+                    if (!productos.Any())
+                    {
+                        TempData["MessageDeRespuesta"] = "No se encontraron productos que coincidan con la búsqueda.";
+                        productosPagedList = new PagedList<Producto>(new List<Producto>(), 1, 1);
+                    }
+                    else
+                    {
+                        productosPagedList = productos.ToPagedList(1, productos.Count);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["MessageDeRespuesta"] = "Ocurrió un error al buscar productos. Por favor, inténtalo de nuevo más tarde.";
+                productosPagedList = new PagedList<Producto>(new List<Producto>(), 1, 1);
+            }
+
+            // Retorna la vista con productosPagedList, que siempre tendrá un valor asignado.
+            return View("ListaDeProductos", productosPagedList);
+        }
     }
 
 }

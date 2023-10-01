@@ -206,5 +206,11 @@
         <input type="submit" value="Registrar Producto" class="btn">
     </form>
 </div>
-
+<br>
+@if (TempData["MessageRegistrandoProducto"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["MessageRegistrandoProducto"]
+    </div>
+}
 <!---------------------------- register product form ---------------------------->
