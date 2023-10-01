@@ -297,36 +297,47 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         [HttpGet("ExportProductsToExcel")]
         public IActionResult ExportProductsToExcel()
         {
-            using var package = new ExcelPackage();
-            var worksheet = package.Workbook.Worksheets.Add("Productos");
 
-            // Agregando un título arriba de la tabla
-            worksheet.Cells[1, 1].Value = "Reporte de Productos";
-            worksheet.Cells[1, 1].Style.Font.Size = 20;
-            worksheet.Cells[1, 1].Style.Font.Bold = true;
+            try
+            {
+                using var package = new ExcelPackage();
+                var worksheet = package.Workbook.Worksheets.Add("Productos");
 
-            // Cargar los datos en la fila 3 para dejar espacio para el título de Reporte de Productos
-            worksheet.Cells[3, 1].LoadFromCollection(_context.Producto.ToList(), true);
+                // Agregando un título arriba de la tabla
+                worksheet.Cells[1, 1].Value = "Reporte de Productos";
+                worksheet.Cells[1, 1].Style.Font.Size = 20;
+                worksheet.Cells[1, 1].Style.Font.Bold = true;
 
-            // Dar formato a la tabla Reporte de Productos
-            var dataRange = worksheet.Cells[2, 1, worksheet.Dimension.End.Row, worksheet.Dimension.End.Column];
-            var table = worksheet.Tables.Add(dataRange, "Productos");
-            table.ShowHeader = true;
-            table.TableStyle = TableStyles.Light6;
+                // Cargar los datos en la fila 3 para dejar espacio para el título de Reporte de Productos
+                worksheet.Cells[3, 1].LoadFromCollection(_context.Producto.ToList(), true);
 
-            // Estilo para los encabezados de las columnas 
-            worksheet.Cells[3, 1, 3, worksheet.Dimension.End.Column].Style.Font.Bold = true;
-            worksheet.Cells[3, 1, 3, worksheet.Dimension.End.Column].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-            worksheet.Cells[3, 1, 3, worksheet.Dimension.End.Column].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
-            worksheet.Cells[3, 1, 3, worksheet.Dimension.End.Column].Style.Font.Color.SetColor(System.Drawing.Color.DarkBlue);
+                // Dar formato a la tabla Reporte de Productos
+                var dataRange = worksheet.Cells[2, 1, worksheet.Dimension.End.Row, worksheet.Dimension.End.Column];
+                var table = worksheet.Tables.Add(dataRange, "Productos");
+                table.ShowHeader = true;
+                table.TableStyle = TableStyles.Light6;
 
-            // Ajustar el ancho de las columnas automáticamente
-            worksheet.Cells.AutoFitColumns();
+                // Estilo para los encabezados de las columnas 
+                worksheet.Cells[3, 1, 3, worksheet.Dimension.End.Column].Style.Font.Bold = true;
+                worksheet.Cells[3, 1, 3, worksheet.Dimension.End.Column].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                worksheet.Cells[3, 1, 3, worksheet.Dimension.End.Column].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
+                worksheet.Cells[3, 1, 3, worksheet.Dimension.End.Column].Style.Font.Color.SetColor(System.Drawing.Color.DarkBlue);
 
-            var stream = new MemoryStream();
-            package.SaveAs(stream);
+                // Ajustar el ancho de las columnas automáticamente
+                worksheet.Cells.AutoFitColumns();
 
-            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Productos.xlsx");
+                var stream = new MemoryStream();
+                package.SaveAs(stream);
+
+                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Productos.xlsx");
+            }
+            catch (Exception ex)
+            {
+                // Loguear el error para obtener más detalles
+                _logger.LogError(ex, "Error al exportar productos a Excel");
+                // Retornar un mensaje de error al usuario
+                return StatusCode(500, "Ocurrió un error al exportar los productos a Excel. Por favor, inténtelo de nuevo más tarde.");
+            }
         }
 
         /* Para exportar individualmente los productos */
