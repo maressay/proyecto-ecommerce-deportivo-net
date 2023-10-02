@@ -244,8 +244,8 @@
                             </div>
                         </div>
                     </td>
-                    <td><input type="number" value="@item.Cantidad"></td>
-                    <td>S/. @item.Precio</td>
+                    <td><input type="number" value="@item.Cantidad" id="cantidad_@item.Id" data-id="@item.Id" onchange="actualizarCantidad(this)" min="1"></td>
+                    <td>S/. @(item.Precio * item.Cantidad) </td>
                 </tr>
             }
         </table>
@@ -278,3 +278,22 @@
 <!---------------------------- javascript para actualizar el carrito ---------------------------->
 
 
+<script>
+function actualizarCantidad(input) {
+    var id = input.getAttribute('data-id');
+    var cantidad = input.value;
+    fetch('/CarritoController/ActualizarCantidad', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: id, cantidad: cantidad })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('subtotal-general').innerText = 'S/. ' + data.subtotal.toFixed(2);
+        document.getElementById('descuento').innerText = 'S/. ' + data.descuento.toFixed(2);
+        document.getElementById('total').innerText = 'S/. ' + data.total.toFixed(2);
+    });
+}
+</script>

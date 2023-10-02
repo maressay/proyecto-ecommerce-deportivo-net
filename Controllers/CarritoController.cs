@@ -79,6 +79,30 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             return RedirectToAction("Index", "Carrito");
         }
 
+
+        [HttpPost]
+        public async Task<IActionResult> ActualizarCantidad(int id, int cantidad)
+        {
+            var item = await _context.DataCarrito.FindAsync(id);
+            if (item != null)
+            {
+                item.Cantidad = cantidad;
+                await _context.SaveChangesAsync();
+            }
+
+            var userID = _userManager.GetUserName(User);
+            var itemsEnCarrito = await _context.DataCarrito
+                .Where(p => p.UserID == userID)
+                .Include(p => p.Producto)
+                .ToListAsync();
+
+            double subtotal = itemsEnCarrito.Sum(item => item.Precio * item.Cantidad);
+            double descuento = CalcularDescuento(subtotal);
+            double total = subtotal - descuento;
+
+            return Json(new { subtotal = subtotal, descuento = descuento, total = total });
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

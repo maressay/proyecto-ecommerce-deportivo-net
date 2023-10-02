@@ -8,11 +8,13 @@ using Microsoft.Extensions.Logging;
 using proyecto_ecommerce_deportivo_net.Data;
 using proyecto_ecommerce_deportivo_net.Models;
 using proyecto_ecommerce_deportivo_net.Models.Entity;
-
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
-namespace proyecto_ecommerce_deportivo_net.Controllers {
-    public class NoClienteController : Controller {
+namespace proyecto_ecommerce_deportivo_net.Controllers
+{
+    public class NoClienteController : Controller
+    {
         private readonly ILogger<NoClienteController> _logger;
         private ApplicationDbContext _context;
 
@@ -23,7 +25,8 @@ namespace proyecto_ecommerce_deportivo_net.Controllers {
         private readonly SignInManager<ApplicationUser> _signInManager;
         public NoClienteController(ILogger<NoClienteController> logger, ApplicationDbContext context,
                 UserManager<ApplicationUser> userManager,
-                SignInManager<ApplicationUser> signInManager) {
+                SignInManager<ApplicationUser> signInManager)
+        {
             _logger = logger;
             _context = context;
 
@@ -33,49 +36,70 @@ namespace proyecto_ecommerce_deportivo_net.Controllers {
         }
 
         [HttpGet]
-        public IActionResult Catalogo() {
-            var productos = from o in _context.Producto  select o;
+        public IActionResult Catalogo()
+        {
+            var productos = from o in _context.Producto select o;
             return View(productos.ToList());
         }
 
-        public async Task<IActionResult> DetalleProducto(int? id){
+        public async Task<IActionResult> DetalleProducto(int? id)
+        {
             Producto objProduct = await _context.Producto.FindAsync(id);
-            if(objProduct == null){
+            if (objProduct == null)
+            {
                 return NotFound();
             }
             return View(objProduct);
         }
 
-        public async Task<IActionResult> AddCarrito(int? id){
+        [HttpPost] // Asegúrate de que es un método POST
+        public async Task<IActionResult> AddCarrito(int id, int cantidad)
+        {
             var userID = _userManager.GetUserName(User); //sesion
 
-            if(userID == null){
+            if (userID == null)
+            {
                 // no se ha logueado
                 ViewData["Message"] = "Por favor debe loguearse antes de agregar un producto";
-                //List<Producto> productos = new List<Producto>();
-                //return  View("Catalogo",productos);
                 return View("~/Views/Home/Index.cshtml");
-            } else {
-                // ya esta logueado
+            }
+            else
+            {
+                // ya está logueado
                 var producto = await _context.Producto.FindAsync(id);
 
-                Proforma proforma = new Proforma();
-                proforma.Producto = producto;
-                proforma.Precio = producto.Precio; //precio del producto en ese momento
-                proforma.Cantidad = 1;
-                proforma.UserID = userID;
-                _context.Add(proforma);
+                // Buscar una proforma existente para el usuario y producto
+                var proformaExistente = await _context.DataCarrito
+                    .Where(p => p.UserID == userID && p.Producto.id == id)
+                    .FirstOrDefaultAsync();
+
+                if (proformaExistente != null)
+                {
+                    // Si existe, actualizar la cantidad
+                    proformaExistente.Cantidad = cantidad;
+                }
+                else
+                {
+                    // Si no existe, crear una nueva proforma
+                    Proforma proforma = new Proforma
+                    {
+                        Producto = producto,
+                        Precio = producto.Precio,
+                        Cantidad = cantidad, // Usa la cantidad pasada desde el formulario
+                        UserID = userID
+                    };
+                    _context.Add(proforma);
+                }
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Carrito");
-
-                // Como primer parametro es la vista y como segundo el controlador donde esta esa vista
             }
-
         }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error() {
+        public IActionResult Error()
+        {
             return View("Error!");
         }
     }
