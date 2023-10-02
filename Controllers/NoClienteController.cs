@@ -66,7 +66,9 @@ namespace proyecto_ecommerce_deportivo_net.Controllers {
                 proforma.UserID = userID;
                 _context.Add(proforma);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Catalogo));
+                return RedirectToAction("Index", "Carrito");
+
+                // Como primer parametro es la vista y como segundo el controlador donde esta esa vista
             }
 
         }
