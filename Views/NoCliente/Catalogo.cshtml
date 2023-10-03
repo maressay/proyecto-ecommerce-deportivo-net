@@ -383,10 +383,54 @@
 
   /* codigo hasta aca arriba */
 
+  /* los buscadores */
+  .Buscador {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--my-blue);
+    border-radius: 0.5rem;
+    box-shadow: var(--box-shadow);
+    padding: 10px;
 
-  .none {
-    display: none;
-}
+    /* Agregar margen superior para separar del encabezado */
+    max-width: 60rem;
+  }
+
+  .Buscador span {
+    font-weight: bold;
+    margin: 10px;
+    font-size: 16px;
+    color: var(--black);
+
+    border: none;
+  }
+
+  .Buscador .btnBuscar {
+    display: inline-block;
+    margin-top: 1rem;
+    border-radius: .5rem;
+    background: var(--light-celeste);
+    color: var(--black);
+    font-weight: 500;
+    font-size: 1.7rem;
+    cursor: pointer;
+    padding: .5rem 1.5rem;
+  }
+
+  .Buscador .btnBuscar:hover {
+    background: var(--celeste);
+  }
+
+  .Buscador input[type="text"] {
+    flex: 0.5;
+    padding: 8px;
+    border: none;
+    border-radius: 0.5rem;
+    margin-right: 10px;
+    font-weight: 500;
+    font-size: 1.7rem;
+  }
 </style>
 <!-- section para el carrusel -start -->
 <h1>@ViewData["Message"]</h1>
@@ -548,11 +592,14 @@
 <section class="featured" id="featured">
   <h1 class="heading"> <span>Catálogo de Productos</span></h1>
 
-  <form asp-controller="NoCliente" asp-action="BuscarProducto" method="get">
-    <span>Buscar Producto</span>
-    <input type="text" name="query" id="query" />
-    <button type="submit" id="btnBuscar" class="btnBuscar">Buscar</button>
-  </form>
+  <div class="Buscador">
+    <form asp-controller="NoCliente" asp-action="BuscarProducto" method="get">
+      <span>Buscar Producto</span>
+      <input type="text" name="query" id="query" />
+      <button type="submit" id="btnBuscar" class="btnBuscar">Buscar</button>
+    </form>
+  </div>
+
 
   <div class="swiper featured-slider">
     <div class="swiper-wrapper">
