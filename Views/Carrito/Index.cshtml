@@ -238,14 +238,19 @@
                             <img src="@item.Producto.Imagen" class="d-block w-100 image-fit">
                             <div>
                                 <p>@item.Producto.Nombre</p>
-                                <small>Precio: S/. @item.Precio</small>
+                                <small>Precio: S/. @item.Precio.ToString("F2")</small>
                                 <br>
                                 <a href="@Url.Action("QuitarDelCarrito", "Carrito", new { id = item.Id })">Quitar</a>
                             </div>
                         </div>
                     </td>
-                    <td><input type="number" value="@item.Cantidad"></td>
-                    <td>S/. @item.Precio</td>
+                    <td>
+                        <form method="post" action="@Url.Action("ActualizarCantidad", "Carrito")" onchange="this.submit()">
+                            <input type="number" name="cantidad" value="@item.Cantidad" min="1">
+                            <input type="hidden" name="id" value="@item.Id">
+                        </form>
+                    </td>
+                    <td>S/. @(((double)item.Precio * item.Cantidad).ToString("F2")) </td>
                 </tr>
             }
         </table>
@@ -270,11 +275,9 @@
             </table>
         </div>
         <input type="submit" value="Comprar" class="btnComprar">
-        <input type="submit" value="Seguir comprando" class="btnSeguirComprando">
+        <a class="btnSeguirComprando" style="text-decoration: none;" asp-area="" asp-controller="NoCliente" asp-action="Catalogo">Seguir comprando</a>
     </div>
 </section>
 <!---------------------------- cart ends ---------------------------->
 
 <!---------------------------- javascript para actualizar el carrito ---------------------------->
-
-

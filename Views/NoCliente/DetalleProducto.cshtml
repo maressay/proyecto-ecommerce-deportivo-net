@@ -243,8 +243,13 @@
 				<h1>@Html.DisplayFor(model => model.Nombre)</h1>
 				<h4>@Html.DisplayFor(model => model.Precio)</h4>
 
-				<input type="number" value="1">
-				<a asp-action="AddCarrito" asp-route-id="@Model.id" class="btn">Añadir al Carrito</a>
+				<!-- Inicia el formulario aquí -->
+                <form asp-action="AddCarrito" asp-route-id="@Model.id" method="post">
+                    <!-- Asegúrate de que el input de cantidad tenga el name "cantidad" -->
+                    <input type="number" name="cantidad" value="1" min="1">
+                    <!-- El botón de enviar el formulario -->
+                    <button type="submit" class="btn">Añadir al Carrito</button>
+                </form>
 
 				<h3>Detalle del producto <i class="fa fa-indent"></i> </h3>
 				<br>

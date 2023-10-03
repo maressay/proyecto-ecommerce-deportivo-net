@@ -161,9 +161,12 @@
         clip-path: polygon(100% 0, 93% 50%, 100% 99%, 0% 100%, 7% 50%, 0% 0%);
     }
 </style>
-<div id="messageDiv">
-    <h1>@ViewData["Message"]</h1>
-</div>
+@if (TempData["MessageLOGUEARSE"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["MessageLOGUEARSE"]
+    </div>
+}
 <div class="text-center">
     @if (SignInManager.IsSignedIn(User))
     {

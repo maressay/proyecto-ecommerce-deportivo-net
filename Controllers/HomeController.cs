@@ -41,7 +41,7 @@ public class HomeController : Controller
         await _context.SaveChangesAsync();
 
         var message = $"Estimado {objContacto.Nombre}, te estaremos contactando pronto";
-        ViewData["Message"] = message;
+        TempData["MessageCONTACTO"] = message;
 
         await _emailSender.SendEmailAsync(objContacto.Email, "Gracias por contactarnos", message);
 
