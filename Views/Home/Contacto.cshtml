@@ -132,9 +132,12 @@
             <input type="submit" value="Enviar Mensaje" class="btn">
         </form>
 
-        <div id="messageDiv">
-            <h1>@ViewData["Message"]</h1>
-        </div>
+        @if (TempData["MessageCONTACTO"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["MessageCONTACTO"]
+            </div>
+        }
     </div>
 </section>
 <!---------------------------- contact section ends  ---------------------------->

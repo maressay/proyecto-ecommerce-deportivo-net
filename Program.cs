@@ -26,6 +26,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+// Aquí es donde debes agregar la configuración del servicio de carrito.
+builder.Services.AddTransient<ICarritoService, CarritoService>();
+
 // Aquí es donde debes hacer el cambio, usa builder.Configuration en lugar de Configuration
 builder.Services.AddTransient<IMyEmailSender, EmailSender>(i =>
         new EmailSender(

@@ -42,6 +42,52 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             return View(productos.ToList());
         }
 
+        [HttpGet] /* este index lo hice de prueba para arreglar el problema del carrusel NO TOCARLO */
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+
+        public async Task<IActionResult> BuscarProducto(string query)
+        {
+            try
+            {
+                // Si no hay una consulta de búsqueda, retorna todos los productos.
+                if (string.IsNullOrWhiteSpace(query))
+                {
+                    var todosLosProductos = await _context.Producto.ToListAsync();
+                    return View("Catalogo", todosLosProductos);
+                }
+
+                // Convierte la consulta de búsqueda a mayúsculas para la comparación.
+                query = query.ToUpper();
+
+                // Busca productos que coincidan con la consulta de búsqueda.
+                var productos = await _context.Producto
+                    .Where(p => p.Nombre.ToUpper().Contains(query))
+                    .ToListAsync();
+
+                // Si no se encontraron productos, establece un mensaje en TempData.
+                if (!productos.Any())
+                {
+                    TempData["MessageDeRespuesta"] = "No se encontraron productos que coincidan con la búsqueda.";
+                }
+                else
+                {
+                    TempData["MessageDeRespuesta1"] = "Si se encontraron productos que coincidan con la búsqueda.";
+                }
+                // Retorna la vista Catalogo con la lista de productos.
+                return View("Catalogo", productos);
+            }
+            catch (Exception ex)
+            {
+                // En caso de error, establece un mensaje en TempData y retorna una lista vacía a la vista.
+                TempData["MessageDeRespuesta"] = "Ocurrió un error al buscar productos. Por favor, inténtalo de nuevo más tarde.";
+                return View("Catalogo", new List<Producto>());
+            }
+        }
+
         public async Task<IActionResult> DetalleProducto(int? id)
         {
             Producto objProduct = await _context.Producto.FindAsync(id);
@@ -60,7 +106,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             if (userID == null)
             {
                 // no se ha logueado
-                ViewData["Message"] = "Por favor debe loguearse antes de agregar un producto";
+                TempData["MessageLOGUEARSE"] = "Por favor debe loguearse antes de agregar un producto";
                 return View("~/Views/Home/Index.cshtml");
             }
             else

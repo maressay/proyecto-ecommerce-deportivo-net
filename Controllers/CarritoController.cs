@@ -11,6 +11,7 @@ using proyecto_ecommerce_deportivo_net.Models.Entity;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace proyecto_ecommerce_deportivo_net.Controllers
 {
@@ -25,9 +26,11 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
 
         private readonly SignInManager<ApplicationUser> _signInManager;
+
+        private readonly ICarritoService _carritoService;
         public CarritoController(ILogger<CarritoController> logger, ApplicationDbContext context,
                 UserManager<ApplicationUser> userManager,
-                SignInManager<ApplicationUser> signInManager)
+                SignInManager<ApplicationUser> signInManager, ICarritoService carritoService)
         {
             _logger = logger;
 
@@ -37,71 +40,101 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             /* variables para el objeto iniciado */
             _userManager = userManager;
             _signInManager = signInManager;
+
+            _carritoService = carritoService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var userID = _userManager.GetUserName(User);
-            var itemsEnCarrito = await _context.DataCarrito
-                .Where(p => p.UserID == userID)
-                .Include(p => p.Producto)
-                .ToListAsync();
-
-            double subtotal = itemsEnCarrito.Sum(item => item.Precio * item.Cantidad);
-            double descuento = CalcularDescuento(subtotal); // Define este método según tu lógica de descuento.
-            double total = subtotal - descuento;
-
-            var viewModel = new CarritoViewModel
+            try
             {
-                Items = itemsEnCarrito,
-                Subtotal = subtotal,
-                Descuento = descuento,
-                Total = total
-            };
+                var userId = _userManager.GetUserName(User);
+                var items = await _carritoService.ObtenerItems(userId);
+                var subtotal = await _carritoService.ObtenerSubtotal(userId);
+                var descuento = await _carritoService.ObtenerDescuento(userId);
+                var total = await _carritoService.ObtenerTotal(userId);
 
-            return View(viewModel);
-        }
+                var viewModel = new CarritoViewModel
+                {
+                    Items = items.ToList(),
+                    Subtotal = subtotal,
+                    Descuento = descuento,
+                    Total = total
+                };
 
-        private double CalcularDescuento(double subtotal)
-        {
-            // Ejemplo: Descuento del 10%
-            return subtotal * 0.10;
+                return View(viewModel);
+            }
+            catch (NpgsqlException ex)
+            {
+                _logger.LogError(ex, "Un error ocurrió mientras se interactuaba con la base de datos.");
+                return View("DatabaseError");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Un error inesperado ocurrió mientras se obtenía el índice del carrito.");
+                return View("Error");
+            }
         }
 
         public async Task<IActionResult> QuitarDelCarrito(int id)
         {
-            var item = await _context.DataCarrito.FindAsync(id);
-            if (item != null)
+            try
             {
-                _context.DataCarrito.Remove(item);
-                await _context.SaveChangesAsync();
+                var userId = _userManager.GetUserName(User);
+                if (userId == null)
+                {
+                    throw new Exception("User is not authenticated.");
+                }
+                var result = await _carritoService.QuitarDelCarrito(id, userId);
+                if (result)
+                {
+                    return RedirectToAction("Index", "Carrito");
+                }
+                return View("Error");
             }
-            return RedirectToAction("Index", "Carrito");
+            catch (NpgsqlException ex)
+            {
+                _logger.LogError(ex, "Un error ocurrió mientras se interactuaba con la base de datos.");
+                return View("DatabaseError");
+            }
+            catch (EndOfStreamException ex)
+            {
+                _logger.LogError(ex, "Intento de leer más allá del final del flujo.");
+                return View("StreamError");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Un error ocurrió mientras se intentaba quitar el ítem con ID {id} del carrito.");
+                return View("Error");
+            }
         }
-
 
         [HttpPost]
         public async Task<IActionResult> ActualizarCantidad(int id, int cantidad)
         {
-            var item = await _context.DataCarrito.FindAsync(id);
-            if (item != null)
+            try
             {
-                item.Cantidad = cantidad;
-                await _context.SaveChangesAsync();
+                var userId = _userManager.GetUserName(User);
+                var result = await _carritoService.ActualizarCantidad(id, cantidad, userId);
+                if (result)
+                {
+                    return RedirectToAction("Index", "Carrito");
+                }
+                return View("Error");
+
             }
-
-            var userID = _userManager.GetUserName(User);
-            var itemsEnCarrito = await _context.DataCarrito
-                .Where(p => p.UserID == userID)
-                .Include(p => p.Producto)
-                .ToListAsync();
-
-            double subtotal = itemsEnCarrito.Sum(item => item.Precio * item.Cantidad);
-            double descuento = CalcularDescuento(subtotal);
-            double total = subtotal - descuento;
-
-            return Json(new { subtotal = subtotal, descuento = descuento, total = total });
+            catch (NpgsqlException ex)
+            {
+                _logger.LogError(ex, "Un error ocurrió mientras se interactuaba con la base de datos.");
+                return View("DatabaseError");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Un error ocurrió mientras se actualizaba la cantidad del ítem con ID {id}.");
+                return View("Error");
+            }
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

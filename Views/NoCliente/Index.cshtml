@@ -545,38 +545,7 @@
 <!-- section para el carrusel -ends -->
 
 <!---------------------------- featured section stars ---------------------------->
-<section class="featured" id="featured">
-  <h1 class="heading"> <span>Catálogo de Productos</span></h1>
 
-  <form asp-controller="NoCliente" asp-action="BuscarProducto" method="get">
-    <span>Buscar Producto</span>
-    <input type="text" name="query" id="query" />
-    <button type="submit" id="btnBuscar" class="btnBuscar">Buscar</button>
-  </form>
-
-  <div class="swiper featured-slider">
-    <div class="swiper-wrapper">
-      @foreach (var producto in Model)
-      {
-        <div class="swiper-slide box">
-
-          <img src="@producto.Imagen" alt="">
-          <h3>@producto.Nombre</h3>
-          <div class="stars">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-          </div>
-          <div class="price">Precio: S/.@producto.Precio</div>
-          <div class="Stock">Stock: @producto.Stock</div>
-          <a class="btn" asp-action="DetalleProducto" asp-route-id="@producto.id">Ver Producto</a>
-        </div>
-      }
-    </div>
-  </div>
-</section>
 <!---------------------------- featured section ends ---------------------------->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
