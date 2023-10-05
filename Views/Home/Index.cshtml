@@ -161,20 +161,20 @@
         clip-path: polygon(100% 0, 93% 50%, 100% 99%, 0% 100%, 7% 50%, 0% 0%);
     }
 
-    body {
-        background-image: url("~/images/image1.jpg");
+    body { /* Fondo del SALUDO PERSONALIZADO*/
+        background-image: url("https://lh3.googleusercontent.com/drive-viewer/AK7aPaALS3bio0TMMZqOWPVgTLtSKWXjP5G9XzKwfoGTGbqh6StuDNid6_vTsBBwn2NtIGFx7OTZlo5F8vSBlGojHQl5izIBqA=w1920-h880");
         background-size: 100% 100vh;
         background-attachment: fixed;
     }
 
-    .about {
-        background-image: url("~/images/image1.jpg");
+    .about { /* Fondo DESCRIPCION DE LA EMPRESA*/
+        background-image: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaA-tJkaMlrlxbW0SHjstDuhyejR05JtF-9zxV-QdII7_cG81hVLiE03F6o-hygvq6sqZzORSUEkWLJ9WJ5hmq1QnKbAMQ=w1908-h897");
         background-attachment: fixed;
         background-size: cover;
     }
 
-    .price {
-        background-image: url("~/images/image1.jpg");
+    .price { /* Fondo MISION*/
+        background-image: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaC8mUvKOExe4KC4wejA0-ZcM2a8aSy78nQWkgDugjbVP_ldp4GroGGaAa6dNShqB4DY02IQ3-h0uyQSrwNGDpSlc_Im2Q=w1908-h897");
         background-attachment: fixed;
         background-size: cover;
         text-align: center;
@@ -185,7 +185,7 @@
     }
 
     .contact {
-        background-image: url("~/images/image1.jpg");
+        background-image: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaDvhIxNjt1utT1Zg0Z0YSIliTaQhFvdw5JnHEM0bwLuqgGNzQ5t_Ap1dEv5BoKk6sHOzeonxHF7rBr7yu-LkXqn2F3z=w1908-h897");
         background-attachment: fixed;
         background-size: cover;
         padding-bottom: 0;
@@ -225,23 +225,39 @@
     .sau {
         padding: 30px;
         background-size: cover;
-        background-image: url("~/images/image1.jpg");
+        background-image: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaA3WnQcfMA1GFUn5Cy4uIJmyuu1mUWFlPQbb2ajyQ492SqGjhmS-0E_VY7SdD8t-4JEqks7RUhXSWV7Lsc4DHfG7liufA=w1908-h897");
         background-attachment: fixed;
     }
 </style>
+@if (TempData["MessageLOGUEARSE"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["MessageLOGUEARSE"]
+    </div>
+}
+
 
 <div class="headersec">
-    <br><br><br>
-    <h2 class="title">Nosotros</h2>
-    <p class="p">Empresa del Grupo Ramírez, dedicada a la producción
-        de conservas de pescado en sus diferentes presentaciones y formatos
-        de envases, nuestros productos se exportan en un 85% a Latinoamérica
-        y el Caribe y un 15% a negocios en el Perú para marcas como Gloria,
-        A1, Fanny, Florida, Compass, Montealto, etc.</p>
-    <p class="p">Lider en la producción e innovación de alimentos de
-        calidad, con una visión enfocada al cliente y confiabilidad a largo
-        plazo, acorde con las necesidades del mercado y con mejora continua
-        en cada uno de sus procesos.</p>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        var userId = UserManager.GetUserId(User); // Obtén el ID del usuario autenticado
+        var user = await UserManager.FindByIdAsync(userId); // Busca el usuario en la base de datos por ID
+
+        // Si el usuario está autenticado, muestra un mensaje de bienvenida personalizado
+        <h2 class="title"><span class="welcome">Bienvenido @user.Nombres @user.Apellidos!</span></h2>
+        <p>DNI: @user.Dni</p>
+        <!--<p>Obtenga información <a href="https://docs.microsoft.com/aspnet/core">sobre cómo crear aplicaciones web con
+                ASP.NET Core</a>.</p>-->
+    }
+    else
+    {
+        // Si el usuario no está autenticado, muestra un mensaje de bienvenida genérico
+        <h2 class="title"><span class="welcome">Bienvenido</span></h2>
+        <!--<p>Obtenga información <a href="https://docs.microsoft.com/aspnet/core">sobre cómo crear aplicaciones web con
+                ASP.NET Core</a>.</p>-->
+    }
+    <p class="p">MENSAJE DE BIENVENIDA AL USUARIO</p>
+    <p class="p">MAS MENSAJE DE BIENVENIDA BLA BLA BLA</p>
 </div>
 
 <section class="content sau">
@@ -254,43 +270,30 @@
 
 <section class="content about">
 
-    <h2 class="title" style="color: white;">Misión</h2>
-    <p class="p" style="color: white;">Satisfacer las necesidad de
-        nuestros clientes con confiabilidad a largo plazo, ofreciendo
-        productos de alta calidad acorde con las necesidades del mercado, con
-        mejora continua en cada uno de nuestros procesos, respetando el medio
-        ambiente y la responsabilidad social”</p>
+    <h2 class="title" style="color: white;">Descripción de la empresa</h2>
+    <p class="p" style="color: white;">AthletiX es una empresa pionera en el campo de la nutrición deportiva. Nos especializamos en la venta de
+                una amplia gama de productos, desde proteínas y aminoácidos hasta suplementos pre-entrenamiento y
+                vitaminas. Nuestra plataforma de ecommerce facilita a los clientes el acceso a productos de alta
+                calidad, garantizando una experiencia de compra cómoda y eficiente. En AthletiX, creemos en el poder de
+                la nutrición adecuada para potenciar el rendimiento y apoyar un estilo de vida activo y saludable</p>
 
 </section>
 
 <section class="content price">
     <article class="contain">
-        <h2 class="title" style="margin-top:20px;">Reseña Historica</h2>
-        <p class="p">PANAFOODS es una empresa líder en producción de
-            conservas, Harina y aceite de pescado, cuyas operaciones se
-            iniciaron en 1999, y cuya reingeniería e incremento de capacidad se
-            da en octubre del 2009 con el ingreso del Grupo “Ramírez Anaya” como
-            propietarios. La visión y el compromiso de todos los colaboradores
-            involucrados con los objetivos de la empresa, dan como resultado que
-            PANAFOODS se convirtiera rápidamente en la empresa conservera líder
-            en el Perú, ocupando anualmente el primer lugar en producciones y
-            casi 350 días de trabajo/año, generando aproximadamente 400 puestos
-            de empleos directos.</p>
+        <h2 class="title" style="margin-top:20px;">Misión</h2>
+        <p class="p">En AthletiX, nuestra misión es empoderar a atletas y entusiastas del fitness proporcionando suplementos
+                nutricionales de la más alta calidad. Nos comprometemos a apoyar a cada individuo en su viaje hacia el
+                bienestar y la excelencia física, ofreciendo productos que potencian el rendimiento, la recuperación y
+                la salud general.</p>
 
     </article>
 </section>
 
 <section class="content contact">
-    <h2 class="title" style="margin-top:30px;">Actualidad</h2>
-    <p class="p">Hoy la empresa cuenta varias líneas de producción en
-        sus diferentes presentaciones y formatos, cuyos productos se exportan
-        en un 90% a América latina y el Caribe y solo un 10% de negocios en
-        Perú, para marcas como; “A-1”, “Gloria”, etc., todos ellos basados en
-        un sistema de gestión de la seguridad alimentaria, como HACCP, BPM,
-        SSOP e ISO 22000</p>
-    <p class="p">Para nosotros la sostenibilidad de crecimiento de 10%
-        anual en los últimos 3 años, se basa en gestionar un negocio rentable
-        a largo plazo, tomando en consideración todos los efectos
-        medioambientales, sociales y económicos, con una visión enfocada al
-        cliente y generación de rentabilidad.</p>
+    <h2 class="title" style="margin-top:30px;">Visión</h2>
+    <p class="p">AthletiX aspira a consolidarse como la marca de referencia en el mundo de la nutrición deportiva, siendo
+                sinónimo de calidad, confianza e innovación. Buscamos inspirar y facilitar a cada persona el camino
+                hacia sus objetivos de salud y condición física, contribuyendo al mejoramiento continuo de su calidad de
+                vida.</p>
 </section>
