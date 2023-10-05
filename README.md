@@ -22,3 +22,5 @@ En la rama jesus_avance6 comence a ponerle el carrito de compras
 Puse cambios el 03/10/2023 en la rama de jesus_avance7
 
 En jesus_avance8 agregue cambios nuevos el 04/10/2023 17:30 como el logo en el pdf
+
+En jesus_avacen9 arregle la vista detalleproducto.cshtml el dia 05/10/2023
