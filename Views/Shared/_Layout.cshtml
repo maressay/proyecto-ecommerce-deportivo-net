@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="icon" href="~/images/logo.png"/>
+    <link rel="icon" href="~/images/logo.png" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/proyecto_ecommerce_deportivo_net.styles.css" asp-append-version="true" />
 
@@ -83,7 +83,7 @@
         }
 
         .header {
-            position: fixed;
+            position: sticky;
             top: 0;
             left: 0;
             right: 0;
@@ -153,18 +153,6 @@
             background: var(--celeste);
             color: #fff;
         }
-
-        /* section jesus */
-        .jesus {
-            padding-top: 10rem;
-            text-align: center;
-        }
-
-        .jesus2 {
-            padding-top: 5rem;
-            text-align: center;
-        }
-
 
         /* footer section  */
 
@@ -242,10 +230,6 @@
                 font-size: 55%;
             }
 
-            .header {
-                padding: 2rem;
-            }
-
             .header.active {
                 padding: 2rem;
             }
@@ -294,8 +278,14 @@
             /* ese codigo es hasta aca arriba */
         }
 
-        #imgLogoEmpresa{
+        #imgLogoEmpresa {
             border-radius: 50%;
+        }
+
+
+        .container-fluid {
+            margin: 0;
+            padding: 0;
         }
     </style>
 
@@ -306,7 +296,8 @@
     <header class="header">
         <div id="menu-btn" class="fas fa-bars"></div>
         <a class="logo" style="text-decoration: none;" asp-area="" asp-controller="Home" asp-action="Index">
-            <img src="~/images/logo.png" alt="Logo" style="height: 40px; width: 40px; border-radius:50%;" id="imgLogoEmpresa"> <!-- Añadiendo el logo al costado del nombre de la empresa -->
+            <img src="~/images/logo.png" alt="Logo" style="height: 40px; width: 40px; border-radius:50%;"
+                id="imgLogoEmpresa"> <!-- Añadiendo el logo al costado del nombre de la empresa -->
             <span>Athleti</span>X </a>
         <nav class="navbar">
             <a class="nav-link text-dark" asp-area="" asp-controller="NoCliente" asp-action="Catalogo">Catalogo</a>
@@ -322,37 +313,33 @@
             @if (SignInManager.IsSignedIn(User))
             {
                 <div class="nav-item custom-user-info">
-                    <a class="nav-link text-dark" style="text-decoration: none;" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hola
+                    <a class="nav-link text-dark" style="text-decoration: none;" asp-area="Identity"
+                        asp-page="/Account/Manage/Index" title="Manage">Hola
                         @User.Identity?.Name!</a>
                 </div>
                 <div>
-                    <a class="fas fa-sign-out-alt" style="text-decoration: none;" asp-area="Identity" asp-page="/Account/Logout"
+                    <a class="fas fa-sign-out-alt" style="text-decoration: none;" asp-area="Identity"
+                        asp-page="/Account/Logout"
                         asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"></a>
                 </div>
             }
             else
             {
 
-                <a class="fas fa-user-plus" style="text-decoration: none;" asp-area="Identity" asp-page="/Account/Register"></a>
-                <a class="fas fa-sign-in-alt" style="text-decoration: none;" asp-area="Identity" asp-page="/Account/Login"></a>
+                <a class="fas fa-user-plus" style="text-decoration: none;" asp-area="Identity"
+                    asp-page="/Account/Register"></a>
+                <a class="fas fa-sign-in-alt" style="text-decoration: none;" asp-area="Identity"
+                    asp-page="/Account/Login"></a>
             }
         </div>
 
     </header>
-
-    <section class="jesus">
-
-    </section>
     <!---------------------------- header section ends ---------------------------->
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="container-fluid">
+        <main role="main" class="p-0">
             @RenderBody()
         </main>
     </div>
-
-    <section class="jesus2">
-
-    </section>
     <!---------------------------- footer section stars  ---------------------------->
     <section class="footer">
         <div class="box-container">
@@ -374,13 +361,18 @@
 
             <div class="box">
                 <h3>Redes</h3>
-                <a href="https://www.facebook.com/profile.php?id=61552031275470"> <i class="fab fa-facebook-f"></i> Facebook </a>
+                <a href="https://www.facebook.com/profile.php?id=61552031275470"> <i class="fab fa-facebook-f"></i>
+                    Facebook </a>
                 <a href="https://api.whatsapp.com/send?phone=927572267" target="_blank"><i class="fab fa-whatsapp"></i>
                     WhatsApp</a>
                 <br><br>
                 <h3>Legal</h3>
-                <a href="https://usmppe-my.sharepoint.com/:b:/g/personal/kristell_flores_usmp_pe/EYbpg6ow49NOrrfsEipAhUMBLP58bki3_0xgGhMoMD2Gsg?e=IZjH3n"> <i class="fa fa-gavel"></i> Términos y Condiciones </a>
-                <a href="https://usmppe-my.sharepoint.com/:b:/g/personal/kristell_flores_usmp_pe/EawhNQa8nnFIvtA-mxdpmEABJECIjW4e5Y5DpHquDN5igQ?e=nUcCWC"> <i class="fa fa-lock"></i> Politicas de privacidad </a>
+                <a
+                    href="https://usmppe-my.sharepoint.com/:b:/g/personal/kristell_flores_usmp_pe/EYbpg6ow49NOrrfsEipAhUMBLP58bki3_0xgGhMoMD2Gsg?e=IZjH3n">
+                    <i class="fa fa-gavel"></i> Términos y Condiciones </a>
+                <a
+                    href="https://usmppe-my.sharepoint.com/:b:/g/personal/kristell_flores_usmp_pe/EawhNQa8nnFIvtA-mxdpmEABJECIjW4e5Y5DpHquDN5igQ?e=nUcCWC">
+                    <i class="fa fa-lock"></i> Politicas de privacidad </a>
             </div>
 
             <div class="box">
