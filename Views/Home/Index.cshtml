@@ -9,14 +9,28 @@
     /* codigo comun */
     @@importurl('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
 
-
     body {
-        /* Fondo del SALUDO PERSONALIZADO*/
         width: 100%;
-        /* Asegura que el body ocupe todo el ancho disponible */
-        background-image: url("https://lh3.googleusercontent.com/drive-viewer/AK7aPaALS3bio0TMMZqOWPVgTLtSKWXjP5G9XzKwfoGTGbqh6StuDNid6_vTsBBwn2NtIGFx7OTZlo5F8vSBlGojHQl5izIBqA=w1920-h880");
+        background-image: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaCwRLauu68w3_8qi6w6Dfn2HR9q8astLYtS3uTqlfD5QLjirxtQIKHbLTGIYDfJFnDwKGwq30_SyIjl5S8UJ-6LhGYCHg=w1908-h897");
         background-attachment: fixed;
         background-size: cover;
+        color: #FFFFFF;
+    }
+
+    .bienvenida .codigo {
+        color: #FFFFFF;
+        font-size: 18px;
+    }
+    
+    .bienvenida .gracias {
+        color: #FFFFFF;
+        font-size: 30px;
+        text-decoration: underline;
+    }
+
+    .bienvenida .conoce {
+        color: #FFFFFF;
+        font-size: 25px;
     }
 
     .content {
@@ -30,18 +44,31 @@
         text-align: center;
     }
 
-
     .libre {
-        background-image: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaA3WnQcfMA1GFUn5Cy4uIJmyuu1mUWFlPQbb2ajyQ492SqGjhmS-0E_VY7SdD8t-4JEqks7RUhXSWV7Lsc4DHfG7liufA=w1908-h897");
+        background-image: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaDJpcqtSlDqVKVL1mDO3Gh-NmPD63kJvMZ2BXFd3-2rRmtPY9DLDU1vF0i0fVSVmMWXEYnjMx9xOLKfheee_kCSInw=w1908-h897");
+        color: #FFFFFF;
+    }
+
+    .libre p {
+        color: #FFFFFF;
     }
 
     .descripcion {
-        background-image: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaA-tJkaMlrlxbW0SHjstDuhyejR05JtF-9zxV-QdII7_cG81hVLiE03F6o-hygvq6sqZzORSUEkWLJ9WJ5hmq1QnKbAMQ=w1908-h897");
+        background-image: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaADUPNy6H5HTJcXqsLR1E9uJR-MD1-rjH4uF0E0J-3OoSIRDGNgNgc1SEmPdq2ABiUrFNN4F33XSH3cvV1SFu1cNZZgOw=w1908-h897");
+        color: #FFFFFF;
+    }
+
+    .descripcion p {
+        color: #FFFFFF;
     }
 
     .mision {
-        background-image: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaC8mUvKOExe4KC4wejA0-ZcM2a8aSy78nQWkgDugjbVP_ldp4GroGGaAa6dNShqB4DY02IQ3-h0uyQSrwNGDpSlc_Im2Q=w1908-h897");
+        background-image: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaAKeJOv14hYWiDqTFsEQ4WpWu3p6YQgWQ_2h9L7kWgWKejW4lo1jxb3MnAOp0jMH5xvZvBKi8qwrjBajSMyNC8-vxAJ4Q=w1908-h897");
+        color: #FFFFFF;
+    }
 
+    .mision p {
+        color: #FFFFFF;
     }
 
     .vision {
@@ -49,7 +76,7 @@
         color: #FFFFFF;
     }
 
-    .vision p{
+    .vision p {
         color: #FFFFFF;
     }
 
@@ -57,12 +84,13 @@
         font-size: 60px;
         font-weight: 600;
         text-transform: uppercase;
+        padding: 20px;
     }
 
     .p {
         font-size: 18px;
         color: #000000;
-        padding: 0;
+        line-height: 2;
     }
 </style>
 
@@ -82,9 +110,9 @@
 
             // Si el usuario está autenticado, muestra un mensaje de bienvenida personalizado
             <h2 class="title"><span class="wellcome">¡Bienvenido, @user.Nombres @user.Apellidos!</span></h2>
-            <p class="p">DNI: @user.Dni</p>
+            <p class="codigo">COD. DE USUARIO: @user.Dni</p>
             <!--<p>Obtenga información <a href="https://docs.microsoft.com/aspnet/core">sobre cómo crear aplicaciones web con
-                        ASP.NET Core</a>.</p>-->
+                            ASP.NET Core</a>.</p>-->
         }
         else
         {
@@ -93,10 +121,10 @@
                 <span class="wellcome">Bienvenido</span>
             </h2>
             <!--<p>Obtenga información <a href="https://docs.microsoft.com/aspnet/core">sobre cómo crear aplicaciones web con
-                        ASP.NET Core</a>.</p>-->
+                            ASP.NET Core</a>.</p>-->
         }
-        <p class="p">MENSAJE DE BIENVENIDA AL USUARIO</p>
-        <p class="p">MAS MENSAJE DE BIENVENIDA BLA BLA BLA</p>
+        <p class="gracias">¡GRACIAS POR FORMAR PARTE DE LA FAMILIA ATHLETIX!</p>
+        <p class="conoce">CONOCE UN POCO MAS SOBRE NOSOTROS:</p>
     </section>
 
     <section class="content libre">
