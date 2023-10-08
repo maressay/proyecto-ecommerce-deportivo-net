@@ -12,29 +12,17 @@
     <link rel="icon" href="~/images/logo.png" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/proyecto_ecommerce_deportivo_net.styles.css" asp-append-version="true" />
-
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
     <style>
         @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
 
+        body{
+            margin: 0;
+        }
+
         :root {
-            --my-blue: #0074E4;
-            --light-my-blue: #6FA6FF;
-            /* Aquí defines el tono más claro */
-            --celeste: #40E0D0;
-            --light-celeste: hsl(177, 72%, 70%);
-            --amarillo: #f9d806;
-            --light-amarillo: #ffee80;
-            --rojo: #FF0000;
-            --light-rojo: #FFAFAF;
-            --verde: #369681;
-            --light-verde: #00B050;
-            --black: #130f40;
-            --light-color: #666;
-            --border: .1rem solid rgba(0, 0, 0, .1);
-            --box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
             --white: #FFFFFF;
             --black: #000000;
         }
@@ -50,7 +38,6 @@
             transition: all .2s linear;
         }
 
-
         html {
             font-size: 50.5%;
             scroll-behavior: smooth;
@@ -60,9 +47,7 @@
             padding: 2rem 6%;
         }
 
-        /* header */
-
-        /* hasta aca arriba */
+/*--------------------------------------------- HEADER --------------------------------------------------*/
 
         .header { /*IMPORTANTE*/
             position: sticky;
@@ -74,24 +59,16 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1.3rem 9%;
+            padding: 1.3rem 5%; /*AJUSTAR LOS ESPACIOS VACIOS EN EL HEADER*/
         }
 
-        .header .logo { /*IMPORTANTE PARA EL TEXTO DEL LOGO*/
-            font-size: 2.5rem;
+        .header .logo { /*TEXTO DEL LOGO "ATHLETIX"*/
+            font-size: 30px;
             color: var(--black);
             font-weight: bolder;
         }
 
-        .header .logo span { /*IMPORTANTE*/
-            color: #000000;
-            font-size: 30px;
-            font-weight: 0;
-        }
-
-
-
-        .header .navbar a { /*IMPORTANTE*/
+        .header .navbar a { /*PAGINAS EN EL NAVBAR "CATALOGO, PRODUCTOS Y CONTACTAME"*/
             font-size: 2.1rem;
             margin: 0 1rem;
             color: var(--black);
@@ -109,24 +86,16 @@
 
         #menu-btn {/*IMPORTANTE PARA EL BOTON DE MENU EN CELULAR*/
             font-size: 2.5rem;
-            color: var(--light-color);
+            padding: 0.7rem 0.92rem;
+            color: var(--black);
             cursor: pointer;
             display: none;
+            border-radius: 0.5rem;
         }
 
-
-
-        .header .iconosxd a { /* IMPORTANTE (TAMAÑO DE EL BOX PARA EL ICONO)*/
-            height: 4.5rem;
-            width: 4.5rem;
-            line-height: 4.5rem;
-            border-radius: .5rem;   
-            color: var(--black);
-            font-size: 2rem;
-            margin-left: 1rem;
-            text-align: center;
-            cursor: pointer;
-            text-decoration: none;
+        #menu-btn:hover {
+            background: var(--black);
+            color: var(--white);
         }
 
         .header .iconosxd a:hover {
@@ -134,10 +103,11 @@
             color: #fff;
         }
 
-        /* footer section  */
+/*--------------------------------------------- FOOTER --------------------------------------------------*/
 
         .footer {
-            background: var(--light-celeste);
+            background: var(--white);
+            color: var(--black);
         }
 
         .footer .box-container {
@@ -148,13 +118,14 @@
 
         .footer .box-container .box h3 {
             color: var(--black);
-            font-size: 1.2rem;
+            font-size: 2.5rem;
             padding: 1rem 0;
+            font-weight: bold;
         }
 
         .footer .box-container .box a {
             color: var(--light-color);
-            font-size: 1.1rem;
+            font-size: 1.5rem;
             display: block;
             padding: 1rem 0;
         }
@@ -169,12 +140,6 @@
             /* este codigo hace que las palabras en el footer se muevan para la izquierda o derecha la cosa es que se mueve */
         }
 
-        .iconosxd {
-            display: flex;
-            align-items: center;
-            /* Opcional: para alinear verticalmente los elementos en el centro */
-        }
-
         .footer .credit {
             text-align: center;
             border-top: var(--border);
@@ -184,20 +149,15 @@
             font-size: 2rem;
         }
 
-        .header .iconosxd .custom-user-info a { /*ESTILO PARA EL ICONO CON EL HOLA CORREO*/
-            width: auto;
-            border-radius: .5rem;
-            background: var(--black);
-            color: var(--white);
-            font-size: 1.5rem;
-            margin-left: .3rem;
-            margin: 3px;
-            text-align: center;
-            cursor: pointer;
-            font-weight: bold;
+        .box .footer-h3{
+            font-size: 30px;
         }
 
-        /*------------------ media queries ---------------------- */
+        .box .footer-a{
+            font-size: 8rem;
+        }
+
+/*------------------------------------------ MEDIA QUERIES -----------------------------------------------*/
 
         @@media (max-width:991px) {
             html {
@@ -232,29 +192,21 @@
                 clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
             }
 
-            /* con este codigo hago que se muestre el navbar activandolo */
             .header .navbar.active {
-                clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);/*ACTIVA NAVBAR PARA LOS CELULARES*/
             }
 
+            .header .navbar a {
+                display: block;
+                margin: 2rem;
+                font-size: 2rem;
+            }
         }
 
         @@media (max-width:450px) {
             html {
-                font-size: 50%;
+                font-size: 50%; /* ese codigo es hasta aca arriba */
             }
-
-            /* ese codigo es hasta aca arriba */
-        }
-
-        #imgLogoEmpresa {
-            border-radius: 50%;
-        }
-
-
-        .container-fluid {
-            margin: 0;
-            padding: 0;
         }
 
         @@media (max-width: 600px) {
@@ -262,12 +214,66 @@
                 display: none;
             }
         }
+
+/*---------------------------------------------- MAIN ----------------------------------------------------*/
+
+        .container-fluid {
+            margin: 0;
+            padding: 0;
+        }
+
+/*-----------------------------------------ICONOS DEL HEADER----------------------------------------------*/
+
+        .iconos{
+            display: flex;
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: center; /* Centrar verticalmente */
+        }
+
+        .icono-user a{
+            font-size: 15px;
+            padding: 1.2rem;
+            color: var(--black);
+            border-radius: .7rem;
+            margin: 0 1rem;
+        }
+
+        .icono-user a:hover{
+            color: var(--white);
+            background-color: var(--black);
+        }
+
+        .icono-login a{
+            font-size: 2.2rem;
+            padding: 1.2rem;
+            color: var(--black);
+            border-radius: .7rem;
+            margin: 0 1rem;
+        }
+
+        .icono-login a:hover{
+            color: var(--white);
+            background-color: var(--black);
+        }
+
+        .icono-logout a{
+            font-size: 2.2rem;
+            padding: 1.2rem;
+            color: var(--black);
+            border-radius: .7rem;
+            margin: 0 1rem;
+        }
+
+        .icono-logout a:hover{
+            color: var(--white);
+            background-color: var(--black);
+        }
     </style>
 
 </head>
 
 <body>
-    <!---------------------------- header section stars ---------------------------->
+<!-------------------------------------------- HEADER SECTION -------------------------------------------->
     <header class="header">
         <div id="menu-btn" class="fas fa-bars"></div>
         <a class="logo" style="text-decoration: none;" asp-area="" asp-controller="Home" asp-action="Index">
@@ -283,17 +289,14 @@
                 Productos</a>
             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contacto">Contactame</a>
         </nav>
-
-
-        <div class="iconosxd">
+        <div class="iconos">
             @if (SignInManager.IsSignedIn(User))
             {
-                <div class="nav-item custom-user-info">
-                    <a class="fas fa-sign-out-alt"asp-area="Identity"
-                        asp-page="/Account/Manage/Index" title="Manage">Hola
-                        @User.Identity?.Name!</a>
+                <div class="icono-user">
+                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index"
+                        title="Manage">Hola @User.Identity?.Name!</a>
                 </div>
-                <div class="nav-item">
+                <div class="icono-logout">
                     <a class="fas fa-sign-out-alt" style="text-decoration: none;" asp-area="Identity"
                         asp-page="/Account/Logout"
                         asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"></a>
@@ -301,22 +304,24 @@
             }
             else
             {
-
-                <a class="fas fa-user-plus" style="text-decoration: none;" asp-area="Identity"
-                    asp-page="/Account/Register"></a>
-                <a class="fas fa-sign-in-alt" style="text-decoration: none;" asp-area="Identity"
-                    asp-page="/Account/Login"></a>
+                <div class="icono-login">
+                    <a class="fas fa-user-plus" style="text-decoration: none;" asp-area="Identity"
+                        asp-page="/Account/Register"></a>
+                </div>
+                <div class="icono-logout">
+                    <a class="fas fa-sign-in-alt" style="text-decoration: none;" asp-area="Identity"
+                        asp-page="/Account/Login"></a>
+                </div>
             }
         </div>
-
     </header>
-    <!---------------------------- header section ends ---------------------------->
+<!--------------------------------------------- MAIN SECTION --------------------------------------------->
     <div class="container-fluid">
         <main role="main" class="p-0">
             @RenderBody()
         </main>
     </div>
-    <!---------------------------- footer section stars  ---------------------------->
+<!-------------------------------------------- FOOTER SECTION -------------------------------------------->
     <section class="footer">
         <div class="box-container">
             <div class="box">
@@ -352,16 +357,16 @@
             </div>
 
             <div class="box">
-                <h3>Desarrolladores</h3>
-                <a> <i class="fas fa-laptop-code"></i> Matias N Araujo Vera </a>
-                <a> <i class="fas fa-cogs"></i> Yasser M. Avalos Montero </a>
-                <a> <i class="fas fa-laptop"></i> Kristell Y. Flores Huamani </a>
-                <a> <i class="fas fa-user-cog"></i> Jesús A. Soria Llantoy </a>
+                <h3 class="footer-h3">Desarrolladores</h3>
+                <a class="footer-a"> <i class="fas fa-laptop-code"></i> Matias N Araujo Vera </a>
+                <a class="footer-a"> <i class="fas fa-cogs"></i> Yasser M. Avalos Montero </a>
+                <a class="footer-a"> <i class="fas fa-laptop"></i> Kristell Y. Flores Huamani </a>
+                <a class="footer-a"> <i class="fas fa-user-cog"></i> Jesús A. Soria Llantoy </a>
             </div>
         </div>
         <div class="credit"> @@Copyright - Todos los derechos reservados - Grupo ROJO! </div>
     </section>
-    <!---------------------------- footer section ends  ---------------------------->
+<!----------------------------------------- FOOTER SECTION ENDS ----------------------------------------->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -374,9 +379,6 @@
             menu.classList.toggle('fa-times');
             navbar.classList.toggle('active');
         }
-
-        /**/
-
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
