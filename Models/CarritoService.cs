@@ -19,7 +19,7 @@ namespace proyecto_ecommerce_deportivo_net.Models
         public async Task<IEnumerable<Proforma>> ObtenerItems(string userId)
         {
             return await _context.DataCarrito
-                .Where(p => p.UserID == userId)
+                .Where(p => p.UserID == userId && p.Status == "PENDIENTE")
                 .Include(p => p.Producto)
                 .ToListAsync();
         }
