@@ -303,7 +303,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             }
         }
 
-        [HttpGet("ExportarProductosEnExcel")]
+        
         public IActionResult ExportarProductosEnExcel()
         {
             try

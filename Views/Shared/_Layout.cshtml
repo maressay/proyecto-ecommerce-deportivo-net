@@ -313,14 +313,23 @@
             <!--<a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AgregarProducto">Agregar
                 Producto</a>-->
             <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListaDeProductos">Lista De
-                Productos</a>
+                Productos</a> 
+                <a class="nav-link text-dark" asp-area="" asp-controller="Pedido" asp-action="ListaDePedidos">Lista De
+                Pedidos</a>
             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contacto">Contactame</a>
+
         </nav>
 
 
         <div class="iconosxd">
             @if (SignInManager.IsSignedIn(User))
             {
+                <div>
+                    <a class="fas fa-shopping-bag" asp-area="" asp-controller="MisPedidos" asp-action="MisPedidos"></a>
+                </div>
+                <div>
+                    <a class="fas fa-shopping-cart" asp-area="" asp-controller="Carrito" asp-action="Index"></a>
+                </div>
                 <div class="nav-item custom-user-info">
                     <a class="nav-link text-dark" style="text-decoration: none;" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hola
                         @User.Identity?.Name!</a>
