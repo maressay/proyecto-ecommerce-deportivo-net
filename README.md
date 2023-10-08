@@ -24,3 +24,6 @@ Puse cambios el 03/10/2023 en la rama de jesus_avance7
 En jesus_avance8 agregue cambios nuevos el 04/10/2023 17:30 como el logo en el pdf
 
 En jesus_avacen9 arregle la vista detalleproducto.cshtml el dia 05/10/2023
+
+En la rama Agregando Funcionalidades añadi dos comits: añadiendo el método de pago, el pedido y el detalle del pedido. Y dejando todo listo la parte del carrito, pago, pedido y detalle pedido tanto para el cliente como el administrador. 8/10/23
+-Kristell Flores
