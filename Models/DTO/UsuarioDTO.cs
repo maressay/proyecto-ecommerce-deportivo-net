@@ -9,12 +9,13 @@ using FluentValidation;
 namespace proyecto_ecommerce_deportivo_net.Models.DTO
 {
 
-    public class UsuarioEditDTO
+    public class UsuarioDTO
     {
         public string? Id { get; set; }
         public string? Nombres { get; set; }
         public string? Apellidos { get; set; }
-        public string? Dni {get; set;}
+        public string? Dni { get; set; }
     }
 
 }
+

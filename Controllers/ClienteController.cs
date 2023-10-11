@@ -11,9 +11,8 @@ using proyecto_ecommerce_deportivo_net.Data;
 using proyecto_ecommerce_deportivo_net.Models;
 using proyecto_ecommerce_deportivo_net.Models.DTO;
 using proyecto_ecommerce_deportivo_net.Models.Validator;
-using proyecto_ecommerce_deportivo_net.Models.DTO.Models.DTO;
 
-namespace proyecto_inkamanu_net.Controllers
+namespace proyecto_ecommerce_deportivo_net.Controllers
 {
     public class ClienteController : Controller
     {private readonly ILogger<ClienteController> _logger;

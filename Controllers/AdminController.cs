@@ -27,6 +27,7 @@ using OfficeOpenXml;
 using System.IO;
 using System.Linq;
 using OfficeOpenXml.Table;
+using proyecto_ecommerce_deportivo_net.Models.DTO;
 namespace proyecto_ecommerce_deportivo_net.Controllers
 {
     public class AdminController : Controller
@@ -565,6 +566,270 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
 
             // Retorna la vista con productosPagedList, que siempre tendrá un valor asignado.
             return View("ListaDeProductos", productosPagedList);
+        }
+
+        
+        public ActionResult ListaDeUsuarios(int? page)
+        {
+            int pageNumber = (page ?? 1); // Si no se especifica la página, asume la página 1
+            int pageSize = 2; // maximo 3 productos por pagina
+
+
+            pageNumber = Math.Max(pageNumber, 1);// Con esto se asegura de que pageNumber nunca sea menor que 1
+
+            IPagedList listaPaginada = _context.Users.ToPagedList(pageNumber, pageSize);
+
+            return View("ListaDeUsuarios", listaPaginada);
+        }
+
+        // public IActionResult EditarUsuario() {
+
+        // }
+
+        [HttpPost]
+        public async Task<IActionResult> EliminarUsuario(string id)
+        {
+            var usuario = await _context.Users.FindAsync(id);
+
+            if (usuario != null)
+            {
+                _context.Users.Remove(usuario);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(ListaDeUsuarios));
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> EditarUsuario(string? id)
+        {
+
+            ApplicationUser? usuarioEditar = await _context.Users.FindAsync(id);
+
+            if (usuarioEditar == null)
+            {
+                Console.Write("No se encontro");
+                return NotFound();
+            }
+
+            UsuarioDTO usuarioEditarDTO = new UsuarioDTO();
+            usuarioEditarDTO.Id = usuarioEditar.Id;
+            usuarioEditarDTO.Nombres = usuarioEditar.Nombres;
+            usuarioEditarDTO.Apellidos = usuarioEditar.Apellidos;
+            usuarioEditarDTO.Dni = usuarioEditar.Dni;
+            return View("EditarUsuario", usuarioEditarDTO);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GuardarUsuarioEditado(UsuarioDTO usuarioDTO)
+        {
+
+            UsuarioValidator validator = new UsuarioValidator();
+            ValidationResult result = validator.Validate(usuarioDTO);
+
+            if (result.IsValid)
+            {
+                ApplicationUser? user = await _context.Users.FindAsync(usuarioDTO.Id);
+                user.Nombres = usuarioDTO.Nombres;
+                user.Apellidos = usuarioDTO.Apellidos;
+                user.Dni = usuarioDTO.Dni;
+
+                TempData["MessageActualizandoUsuario"] = "Se Actualizaron exitosamente los datos.";
+                _context.Users.Update(user);
+                _context.SaveChanges();
+
+                return RedirectToAction("EditarUsuario", new { id = usuarioDTO.Id });
+            }
+
+            foreach (var failure in result.Errors)
+            {
+                ModelState.AddModelError(failure.PropertyName, failure.ErrorMessage);
+            }
+            return View("EditarUsuario", usuarioDTO);
+
+        }
+
+        public async Task<IActionResult> buscarUsuario(string query)
+        {
+
+
+            IPagedList usuariosPagedList;
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(query))
+                {
+                    var todosLosUsuarios = await _context.Users.ToListAsync();
+                    usuariosPagedList = _context.Users.ToPagedList(1, todosLosUsuarios.Count);
+                }
+                else
+                {
+                    query = query.ToUpper();
+                    var usuarios = await _context.Users
+                        .Where(p => p.Nombres.ToUpper().Contains(query) || p.Id.ToUpper().Contains(query))
+                        .ToListAsync();
+
+                    if (!usuarios.Any())
+                    {
+                        TempData["MessageDeRespuesta"] = "No se encontraron productos que coincidan con la búsqueda.";
+                        usuariosPagedList = new PagedList<ApplicationUser>(new List<ApplicationUser>(), 1, 1);
+                    }
+                    else
+                    {
+                        usuariosPagedList = usuarios.ToPagedList(1, usuarios.Count);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["MessageDeRespuesta"] = "Ocurrió un error al buscar productos. Por favor, inténtalo de nuevo más tarde.";
+                usuariosPagedList = new PagedList<ApplicationUser>(new List<ApplicationUser>(), 1, 1);
+            }
+
+            // Retorna la vista con productosPagedList, que siempre tendrá un valor asignado.
+            return View("ListaDeUsuarios", usuariosPagedList);
+
+
+        }
+
+
+        public IActionResult ExportarUsuariosEnPDF()
+        {
+            try
+            {
+                var users = _context.Users.ToList();
+                var html = @"
+            <html>
+                <head>
+                <meta charset='UTF-8'>
+                    <style>
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+                        th, td {
+                            border: 1px solid black;
+                            padding: 8px;
+                            text-align: left;
+                        }
+                        th {
+                            background-color: #f2f2f2;
+                        }
+                        img.logo {
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            border-radius:50%;
+                            height:3.3rem;
+                            width:3.3rem;
+                        }
+
+                        h1 {
+                            color: #40E0D0; /* Color celeste */
+                        }
+                    </style>
+                </head>
+                <body>
+                    <img src='https://firebasestorage.googleapis.com/v0/b/proyectos-cb445.appspot.com/o/img_logo_inkamanu.jpeg?alt=media&token=3b834c39-f2ee-4555-8770-4f5a2bc88066&_gl=1*gxgr9z*_ga*MTcyOTkyMjIwMS4xNjk2NDU2NzU2*_ga_CW55HF8NVT*MTY5NjQ1Njc1NS4xLjEuMTY5NjQ1NzkyMy40OC4wLjA.' alt='Logo' width='100' class='logo'/>
+                    <h1>Reporte de Usuarios</h1>
+                    <table>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Dni</th>
+                            <th>Rol</th>
+                        </tr>";
+
+                foreach (var user in users)
+                {
+
+                    html += $@"
+                <tr>
+                    <td>{user.Id}</td>
+                    <td>{user.Nombres}</td>
+                    <td>{user.Apellidos}</td>
+                    <td>{user.Dni}</td>
+                    <td>{user.Rol}</td>
+                </tr>";
+                }
+
+                html += @"
+                    </table>
+                </body>
+            </html>";
+
+                var globalSettings = new GlobalSettings
+                {
+                    ColorMode = ColorMode.Color,
+                    Orientation = Orientation.Portrait,
+                    PaperSize = PaperKind.A4,
+                };
+                var objectSettings = new ObjectSettings { HtmlContent = html };
+                var pdf = new HtmlToPdfDocument()
+                {
+                    GlobalSettings = globalSettings,
+                    Objects = { objectSettings }
+                };
+                var file = _converter.Convert(pdf);
+
+                return File(file, "application/pdf", "Usuarios.pdf");
+
+            }
+            catch (Exception ex)
+            {
+                // Loguear el error para obtener más detalles
+                _logger.LogError(ex, "Error al exportar productos a PDF");
+                // Retornar un mensaje de error al usuario
+                return StatusCode(500, "Ocurrió un error al exportar los productos a PDF. Por favor, inténtelo de nuevo más tarde.");
+            }
+        }
+
+
+        public IActionResult ExportarUsuariosEnExcel()
+        {
+            try 
+            {
+                using var package = new ExcelPackage();
+                var worksheet = package.Workbook.Worksheets.Add("Usuarios");
+
+                // Agregando un título arriba de la tabla
+                worksheet.Cells[1, 1].Value = "Reporte de Usuarios";
+                worksheet.Cells[1, 1].Style.Font.Size = 20;
+                worksheet.Cells[1, 1].Style.Font.Bold = true;
+
+                // Cargar los datos en la fila 3 para dejar espacio para el título de Reporte de Productos
+                worksheet.Cells[3, 1].LoadFromCollection(_context.Users.ToList(), true);
+
+                // Dar formato a la tabla Reporte de Productos
+                var dataRange = worksheet.Cells[2, 1, worksheet.Dimension.End.Row, worksheet.Dimension.End.Column];
+                var table = worksheet.Tables.Add(dataRange, "Usuarios");
+                table.ShowHeader = true;
+                table.TableStyle = TableStyles.Light6;
+
+                // Estilo para los encabezados de las columnas 
+                worksheet.Cells[3, 1, 3, worksheet.Dimension.End.Column].Style.Font.Bold = true;
+                worksheet.Cells[3, 1, 3, worksheet.Dimension.End.Column].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                worksheet.Cells[3, 1, 3, worksheet.Dimension.End.Column].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
+                worksheet.Cells[3, 1, 3, worksheet.Dimension.End.Column].Style.Font.Color.SetColor(System.Drawing.Color.DarkBlue);
+
+                // Ajustar el ancho de las columnas automáticamente
+                worksheet.Cells.AutoFitColumns();
+
+                var stream = new MemoryStream();
+                package.SaveAs(stream);
+
+                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Usuarios.xlsx");
+            }
+            catch (Exception ex)
+            {
+                // Loguear el error para obtener más detalles
+                _logger.LogError(ex, "Error al exportar productos a Excel");
+                // Retornar un mensaje de error al usuario
+                return StatusCode(500, "Ocurrió un error al exportar los productos a Excel. Por favor, inténtelo de nuevo más tarde.");
+            }
         }
     }
 
