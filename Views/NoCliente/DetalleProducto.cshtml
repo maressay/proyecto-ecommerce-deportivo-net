@@ -300,3 +300,10 @@
 	</div>
 </section>
 <!---------------------------- section detalle_producto ends ---------------------------->
+
+@if (TempData["ErrorSTOCK"] != null)
+{
+  <div class="alert alert-danger" style="font-size: 15px; padding: 10px;">
+    @TempData["ErrorSTOCK"]
+  </div>
+}

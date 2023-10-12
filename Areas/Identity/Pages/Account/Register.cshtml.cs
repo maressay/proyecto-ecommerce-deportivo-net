@@ -29,14 +29,14 @@ namespace proyecto_ecommerce_deportivo_net.Areas.Identity.Pages.Account
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly IMyEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IMyEmailSender emailSender)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -110,7 +110,6 @@ namespace proyecto_ecommerce_deportivo_net.Areas.Identity.Pages.Account
 
         }
 
-
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
@@ -173,7 +172,7 @@ namespace proyecto_ecommerce_deportivo_net.Areas.Identity.Pages.Account
                 user.Nombres = Input.Nombres;
                 user.Apellidos = Input.Apellidos;
                 user.Dni = Input.Dni;
-                user.Rol = "Cliente"; // esta línea es para asignar el rol por defecto al usuario
+                user.Rol = "Cliente"; // esta línea es para asignar el rol por defecto al usuario
                 return user;
             }
             catch
