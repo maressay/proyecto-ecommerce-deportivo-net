@@ -98,16 +98,6 @@ namespace proyecto_ecommerce_deportivo_net.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-
-            [Required]
-            public string Nombres { get; set; }
-
-            [Required]
-            public string Apellidos { get; set; }
-
-            [Required]
-            public string Dni { get; set; }
-
         }
 
 
@@ -169,12 +159,7 @@ namespace proyecto_ecommerce_deportivo_net.Areas.Identity.Pages.Account
         {
             try
             {
-                var user = Activator.CreateInstance<ApplicationUser>();
-                user.Nombres = Input.Nombres;
-                user.Apellidos = Input.Apellidos;
-                user.Dni = Input.Dni;
-                user.Rol = "Cliente"; // esta línea es para asignar el rol por defecto al usuario
-                return user;
+                return Activator.CreateInstance<ApplicationUser>();
             }
             catch
             {
@@ -190,12 +175,7 @@ namespace proyecto_ecommerce_deportivo_net.Areas.Identity.Pages.Account
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            var emailStore = _userStore as IUserEmailStore<ApplicationUser>;
-            if (emailStore == null)
-            {
-                throw new InvalidCastException("The user store does not implement IUserEmailStore<ApplicationUser>.");
-            }
-            return emailStore;
+            return (IUserEmailStore<ApplicationUser>)_userStore;
         }
     }
 }
