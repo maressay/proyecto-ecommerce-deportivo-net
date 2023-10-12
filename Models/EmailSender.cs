@@ -43,12 +43,12 @@ namespace proyecto_ecommerce_deportivo_net.Models
         public async Task SendEmailAsync(string recipient, string subject, string body)
         {
             var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress("JESUS SORIA", "yisusoria@gmail.com"));
+            emailMessage.From.Add(new MailboxAddress("EMPRESA DEPORTIVA ATHLETIX", "albertosoriasoria74@gmail.com"));
             emailMessage.To.Add(new MailboxAddress("", recipient));
             emailMessage.Subject = subject;
 
             // Obtener la ruta completa de la imagen
-            var imagePath = "wwwroot/images/c1.jpeg"; // Asegúrate de que esta ruta es correcta
+            var imagePath = "wwwroot/images/logo.png"; // Asegúrate de que esta ruta es correcta
 
             // Crear el cuerpo del correo electrónico con texto y un archivo adjunto
             var textPart = new TextPart(TextFormat.Plain) { Text = body };
@@ -56,7 +56,7 @@ namespace proyecto_ecommerce_deportivo_net.Models
             // Abrir un stream de la imagen
             using var imageStream = File.OpenRead(imagePath);
 
-            var attachment = new MimePart("image", "jpeg")
+            var attachment = new MimePart("image", "png")
             {
                 Content = new MimeContent(imageStream),
                 ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
@@ -71,7 +71,7 @@ namespace proyecto_ecommerce_deportivo_net.Models
 
             using var client = new SmtpClient();
             await client.ConnectAsync("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-            await client.AuthenticateAsync("yisusoria@gmail.com", "wefnwxwiwcwotxxu");
+            await client.AuthenticateAsync("albertosoriasoria74@gmail.com", "lpap tsas phuv dbgg");
             await client.SendAsync(emailMessage);
 
             await client.DisconnectAsync(true);

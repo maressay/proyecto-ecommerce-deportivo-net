@@ -19,9 +19,9 @@ namespace proyecto_ecommerce_deportivo_net.Areas.Identity.Pages.Account
     public class RegisterConfirmationModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IEmailSender _sender;
+        private readonly IMyEmailSender _sender;
 
-        public RegisterConfirmationModel(UserManager<ApplicationUser> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(UserManager<ApplicationUser> userManager, IMyEmailSender sender)
         {
             _userManager = userManager;
             _sender = sender;
@@ -56,7 +56,7 @@ namespace proyecto_ecommerce_deportivo_net.Areas.Identity.Pages.Account
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
-                return NotFound($"Unable to load user with email '{email}'.");
+                return NotFound($"No se puede cargar el usuario con correo electrónico '{email}'.");
             }
 
             Email = email;

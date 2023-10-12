@@ -29,14 +29,14 @@ namespace proyecto_ecommerce_deportivo_net.Areas.Identity.Pages.Account
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly IMyEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IMyEmailSender emailSender)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -98,8 +98,17 @@ namespace proyecto_ecommerce_deportivo_net.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-        }
 
+            [Required]
+            public string Nombres { get; set; }
+
+            [Required]
+            public string Apellidos { get; set; }
+
+            [Required]
+            public string Dni { get; set; }
+
+        }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -159,7 +168,12 @@ namespace proyecto_ecommerce_deportivo_net.Areas.Identity.Pages.Account
         {
             try
             {
-                return Activator.CreateInstance<ApplicationUser>();
+                var user = Activator.CreateInstance<ApplicationUser>();
+                user.Nombres = Input.Nombres;
+                user.Apellidos = Input.Apellidos;
+                user.Dni = Input.Dni;
+                user.Rol = "Cliente"; // esta línea es para asignar el rol por defecto al usuario
+                return user;
             }
             catch
             {
@@ -175,7 +189,12 @@ namespace proyecto_ecommerce_deportivo_net.Areas.Identity.Pages.Account
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<ApplicationUser>)_userStore;
+            var emailStore = _userStore as IUserEmailStore<ApplicationUser>;
+            if (emailStore == null)
+            {
+                throw new InvalidCastException("The user store does not implement IUserEmailStore<ApplicationUser>.");
+            }
+            return emailStore;
         }
     }
 }
