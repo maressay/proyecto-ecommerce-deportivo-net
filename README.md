@@ -27,3 +27,7 @@ En jesus_avacen9 arregle la vista detalleproducto.cshtml el dia 05/10/2023
 
 En la rama Agregando Funcionalidades añadi dos comits: añadiendo el método de pago, el pedido y el detalle del pedido. Y dejando todo listo la parte del carrito, pago, pedido y detalle pedido tanto para el cliente como el administrador. 8/10/23
 -Kristell Flores
+
+En jesus_avacen10 valide lo del stock, tambien para restablecer la contraseña y confirmar el email, tambien puse este comando para generar toda la carpeta de identity
+
+dotnet aspnet-codegenerator identity -dc proyecto_ecommerce_deportivo_net.Data.ApplicationDbContext --force
