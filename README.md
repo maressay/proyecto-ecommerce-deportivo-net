@@ -31,3 +31,9 @@ En la rama Agregando Funcionalidades añadi dos comits: añadiendo el método de
 En jesus_avacen10 valide lo del stock, tambien para restablecer la contraseña y confirmar el email, tambien puse este comando para generar toda la carpeta de identity
 
 dotnet aspnet-codegenerator identity -dc proyecto_ecommerce_deportivo_net.Data.ApplicationDbContext --force
+
+En jesus_avance11 agregue estas dependencias para poder autenticarme con google
+dotnet add package Microsoft.AspNetCore.Authentication.Google
+dotnet add package Microsoft.AspNetCore.CookiePolicy
+
+En jesus_avance11 configue para autenticarme con google y en este commit también solo modifique la lista de cliente en vez de buscar producto es buscar usuario
