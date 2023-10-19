@@ -37,3 +37,5 @@ dotnet add package Microsoft.AspNetCore.Authentication.Google
 dotnet add package Microsoft.AspNetCore.CookiePolicy
 
 En jesus_avance11 configue para autenticarme con google y en este commit también solo modifique la lista de cliente en vez de buscar producto es buscar usuario
+
+En jesus_avance12 vincule ya la tabla AspNetUsers, AspNetRoles y AspNetUserRoles en mi dbeaver y en el codigo del backend ya programe que vera un admin y que vera un no admin y un no logueado
