@@ -21,11 +21,6 @@
 </head>
 
 @{
-    var user = await UserManager.GetUserAsync(User);
-}
-
-@*
-@{
     ApplicationUser myidentity = null;
     IList<string> roles = new List<string>();
 
@@ -38,7 +33,7 @@
         }
     }
 }
-*@
+
 
 <body>
     <!---------------------------- header section stars ---------------------------->
@@ -49,13 +44,13 @@
                 id="imgLogoEmpresa"> <!-- Añadiendo el logo al costado del nombre de la empresa -->
             <span>Athleti</span>X</a>
         <nav class="navbar">
-            @if (!SignInManager.IsSignedIn(User) || user.Rol.Equals("Cliente"))
+            @if (!SignInManager.IsSignedIn(User) || !roles.Contains("Admin"))
             {
                 <a class="nav-link" asp-area="" asp-controller="NoCliente" asp-action="Catalogo">Catalogo</a>
                 <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contacto">Contactanos</a>
             }
 
-            @if (SignInManager.IsSignedIn(User) && user.Rol.Equals("Administrador"))
+            @if (roles.Contains("Admin"))
             {
                 <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="ListaDeProductos">Lista De
                     Productos</a>
@@ -68,7 +63,7 @@
         <div class="iconos">
             @if (SignInManager.IsSignedIn(User))
             {
-                if (user.Rol.Equals("Cliente"))
+                if (!roles.Contains("Admin"))
                 {
                     <div class="icono-login">
                         <a class="fas fa-shopping-bag" style="text-decoration: none;" asp-area="" asp-controller="MisPedidos"
