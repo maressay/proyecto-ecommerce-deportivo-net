@@ -1,11 +1,14 @@
 * {
     box-sizing: border-box;
 }
-
-body {
-    background-color: whitesmoke;
+/*
+#main {
+    width: 100%;
+    background-image: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaAKI1pKAhTC_2o1WcsSQQpXv2bc8QAXqilkM827lgQUZCx0Ct3lfg_bvjrDTqcVLOZVYatnrLirGWwkvmY8LeOcPfzkag=w1908-h897");
+    background-attachment: fixed;
+    background-size: cover;
 }
-
+*/
 .catalogo {
     width: 100%;
     background-color: white;
