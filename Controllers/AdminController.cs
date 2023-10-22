@@ -86,7 +86,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                 producto.fechaCreacion = DateTime.Now.ToUniversalTime(); ;
                 producto.fechaActualizacion = null;
 
-                TempData["MessageRegistrandoProducto"]= "Se Registraron exitosamente los datos.";
+                TempData["MessageRegistrandoProducto"] = "Se Registraron exitosamente los datos.";
 
                 _context.Producto.Add(producto);
                 _context.SaveChanges();
@@ -304,7 +304,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             }
         }
 
-        
+
         public IActionResult ExportarProductosEnExcel()
         {
             try
@@ -568,7 +568,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             return View("ListaDeProductos", productosPagedList);
         }
 
-        
+
         public ActionResult ListaDeUsuarios(int? page)
         {
             int pageNumber = (page ?? 1); // Si no se especifica la página, asume la página 1
@@ -790,7 +790,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
 
         public IActionResult ExportarUsuariosEnExcel()
         {
-            try 
+            try
             {
                 using var package = new ExcelPackage();
                 var worksheet = package.Workbook.Worksheets.Add("Usuarios");
@@ -832,15 +832,26 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             }
         }
 
-        public async Task<IActionResult> DetalleProducto(int id) {
+        public async Task<IActionResult> DetalleProducto(int id)
+        {
 
             Producto? producto = await _context.Producto.FindAsync(id);
 
-            if(producto == null) {
+            if (producto == null)
+            {
                 return NotFound();
             }
 
             return View("DetalleProducto", producto);
+        }
+
+        /* CON ESTA VISTA SE MOSTRARAN GRAFICOS DE LINEA DE TIEMPO Y GRAFICO 
+        DE BARRAS QUE LE PERMITIRA AL ADMINISTRADOR VER EN CUANTO A CRECIDO LAS VENTAS, 
+        TAMBIEN CUANTOS CLIENTES ESTAN REGISTRADOS Y CUANTOS PRODUCTOS SON LOS MAS VENDIDOS
+        Toodo esto en formato JSON aplicando la logica y el chart.js */
+        public IActionResult Estadisticas()
+        {
+            return View();
         }
     }
 
