@@ -13,7 +13,7 @@ using proyecto_ecommerce_deportivo_net.Models.Entity;
 
 namespace proyecto_ecommerce_deportivo_net.Controllers
 {
-    
+
     public class PagoController : Controller
     {
         private readonly ILogger<PagoController> _logger;
@@ -27,6 +27,12 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Crea una instancia de un pago con un monto especificado. Si el monto es cero, 
+        /// redirige al usuario al carrito con un mensaje de error. De lo contrario, 
+        /// inicializa un nuevo objeto de pago con el monto y el ID del usuario actual, 
+        /// y muestra la vista correspondiente para procesar el pago.
+        /// </summary>
         public IActionResult Create(Double monto)
         {
 
@@ -37,13 +43,39 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                 return RedirectToAction("Index", "Carrito");
             }
 
+            // Obtener los ítems del carrito del usuario actual
+            var itemsCarrito = _context.DataCarrito
+                .Include(p => p.Producto)
+                .Where(s => s.UserID.Equals(_userManager.GetUserName(User)) && s.Status.Equals("PENDIENTE"))
+                .ToList();
 
+            // Verificar el stock de cada producto
+            foreach (var item in itemsCarrito)
+            {
+                if (item.Producto.Stock < item.Cantidad)
+                {
+                    TempData["Error"] = $"No hay suficiente stock para el producto {item.Producto.Nombre}.";
+                    return RedirectToAction("Index", "Carrito");
+                }
+            }
+
+            // Si todo está bien, proceder a la vista de pago
             Pago pago = new Pago();
             pago.UserID = _userManager.GetUserName(User);
             pago.MontoTotal = monto;
             return View(pago);
         }
 
+        /// <summary>
+        /// Procesa el pago del carrito del usuario. Inicia una transacción para asegurar la integridad de las operaciones.
+        /// 1. Establece la fecha de pago y agrega el pago a la base de datos.
+        /// 2. Verifica la disponibilidad de stock de los productos en el carrito.
+        /// 3. Si hay suficiente stock, crea un nuevo pedido y sus detalles asociados.
+        /// 4. Actualiza el stock de los productos vendidos y marca los productos en el carrito como "PROCESADO".
+        /// 5. Si todo es exitoso, confirma la transacción y notifica al usuario.
+        /// 6. En caso de error, revierte la transacción y muestra un mensaje de error al usuario.
+        /// Este método es esencial para entender cómo manejar transacciones y operaciones
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Pagar(Pago pago)
         {

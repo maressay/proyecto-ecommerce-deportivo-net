@@ -64,6 +64,12 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             return View("Error!");
         }
 
+        /// <summary>
+        /// Obtiene una lista paginada de pedidos. Si no se especifica un número de página, 
+        /// se asume la primera página. Cada página muestra un máximo de 2 pedidos. 
+        /// Esta función me ayuda a entender cómo implementar la paginación en ASP.NET Core 
+        /// y cómo manejar parámetros opcionales en los controladores.
+        /// </summary>
         public ActionResult ListaDePedidos(int? page)
         {
             int pageNumber = (page ?? 1); // Si no se especifica la página, asume la página 1
@@ -172,7 +178,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             }
         }
 
-    
+
         public IActionResult ExportarPedidosEnExcel()
         {
             try
@@ -431,7 +437,13 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
 
 
         /* metodo para buscar PEDIDO */
-
+        /// <summary>
+        /// Busca pedidos basados en el nombre de usuario(segun correo) y/o el estado del pedido. 
+        /// Utiliza LINQ para filtrar los resultados en la base de datos. 
+        /// Si no se encuentran coincidencias, muestra un mensaje al usuario. 
+        /// Esta función me permite practicar cómo realizar búsquedas y filtrados 
+        /// en ASP.NET Core y cómo manejar múltiples parámetros opcionales en los controladores.
+        /// </summary>
         public async Task<IActionResult> BuscarPedido(string? searchUsername, string? orderStatus)
         {
             // Declara la variable pedidosPagedList una sola vez aquí
@@ -476,6 +488,13 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             return View("ListaDePedidos", pedidosPagedList);
         }
 
+        /// <summary>
+        /// Busca un pedido específico por su ID para editar. 
+        /// Si el ID no se proporciona o el pedido no se encuentra, 
+        /// retorna un error de "No Encontrado". 
+        /// Esta función es crucial para entender cómo manejar consultas 
+        /// a la base de datos y errores comunes en una aplicación web ASP.NET Core.
+        /// </summary>
         public async Task<ActionResult> EditarPedido(int? id)
         {
             if (id == null)
@@ -493,6 +512,13 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             return View("EditarPedido", pedido);
         }
 
+        /// <summary>
+        /// Actualiza el estado de un pedido específico en la base de datos. 
+        /// Primero verifica si el pedido existe, y luego actualiza solo el estado del pedido. 
+        /// Si la actualización es exitosa, redirige al usuario de nuevo a la página de edición con un mensaje de éxito. 
+        /// En caso de error, muestra un mensaje de error y vuelve a la vista de edición. 
+        /// Esta función me ayuda a comprender cómo manejar actualizaciones parciales en ASP.NET Core y cómo gestionar errores en operaciones de base de datos.
+        /// </summary>
         [HttpPost]
         public async Task<ActionResult> GuardarPedidoEditado(int id, Pedido pedidoActualizado)
         {
@@ -522,6 +548,14 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             }
         }
 
+        /// <summary>
+        /// Obtiene y muestra los detalles de un pedido específico basado en su ID. 
+        /// Recupera el pedido y sus detalles asociados, y luego construye un modelo de vista 
+        /// que combina la información del pedido y sus productos relacionados. 
+        /// Si el pedido no se encuentra, muestra una página de error. 
+        /// Esta función es esencial para entender cómo realizar consultas relacionadas 
+        /// y cómo construir modelos de vista complejos en ASP.NET Core.
+        /// </summary>
         public async Task<IActionResult> VerPedido(int? id)
         {
             try
