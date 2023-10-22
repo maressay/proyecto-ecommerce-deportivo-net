@@ -86,7 +86,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                 producto.fechaCreacion = DateTime.Now.ToUniversalTime(); ;
                 producto.fechaActualizacion = null;
 
-                TempData["MessageRegistrandoProducto"]= "Se Registraron exitosamente los datos.";
+                TempData["MessageRegistrandoProducto"] = "Se Registraron exitosamente los datos.";
 
                 _context.Producto.Add(producto);
                 _context.SaveChanges();
@@ -241,7 +241,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                     </style>
                 </head>
                 <body>
-                    <img src='https://firebasestorage.googleapis.com/v0/b/proyectos-cb445.appspot.com/o/logo.png?alt=media&token=b4dc8219-9bbd-4101-918f-153bc4bb87e8&_gl=1*1eklxby*_ga*MTcyOTkyMjIwMS4xNjk2NDU2NzU2*_ga_CW55HF8NVT*MTY5NjQ1Njc1NS4xLjEuMTY5NjQ1NzY1NS4yLjAuMA..' alt='Logo' width='100' class='logo'/>
+                    <img src='https://firebasestorage.googleapis.com/v0/b/proyectos-cb445.appspot.com/o/img_logo_athletix.png?alt=media&token=a32e429b-4ece-45d2-bf00-85a8f9081a9c&_gl=1*14iryjj*_ga*MTcyOTkyMjIwMS4xNjk2NDU2NzU2*_ga_CW55HF8NVT*MTY5ODAxNDc2Mi4yLjEuMTY5ODAxNDg0Ny40OC4wLjA.' alt='Logo' width='100' class='logo'/>
                     <h1>Reporte de Productos</h1>
                     <table>
                         <tr>
@@ -304,7 +304,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             }
         }
 
-        
+
         public IActionResult ExportarProductosEnExcel()
         {
             try
@@ -393,7 +393,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                     </style>
                 </head>
                 <body>
-                    <img src='https://firebasestorage.googleapis.com/v0/b/proyectos-cb445.appspot.com/o/logo.png?alt=media&token=b4dc8219-9bbd-4101-918f-153bc4bb87e8&_gl=1*1eklxby*_ga*MTcyOTkyMjIwMS4xNjk2NDU2NzU2*_ga_CW55HF8NVT*MTY5NjQ1Njc1NS4xLjEuMTY5NjQ1NzY1NS4yLjAuMA..' alt='Logo' width='100' class='logo'/>
+                    <img src='https://firebasestorage.googleapis.com/v0/b/proyectos-cb445.appspot.com/o/img_logo_athletix.png?alt=media&token=a32e429b-4ece-45d2-bf00-85a8f9081a9c&_gl=1*14iryjj*_ga*MTcyOTkyMjIwMS4xNjk2NDU2NzU2*_ga_CW55HF8NVT*MTY5ODAxNDc2Mi4yLjEuMTY5ODAxNDg0Ny40OC4wLjA.' alt='Logo' width='100' class='logo'/>
                     <h1>Reporte de Producto {id}</h1>
                     <table>
                         <tr>
@@ -568,7 +568,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             return View("ListaDeProductos", productosPagedList);
         }
 
-        
+
         public ActionResult ListaDeUsuarios(int? page)
         {
             int pageNumber = (page ?? 1); // Si no se especifica la página, asume la página 1
@@ -732,7 +732,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                     </style>
                 </head>
                 <body>
-                    <img src='https://firebasestorage.googleapis.com/v0/b/proyectos-cb445.appspot.com/o/img_logo_inkamanu.jpeg?alt=media&token=3b834c39-f2ee-4555-8770-4f5a2bc88066&_gl=1*gxgr9z*_ga*MTcyOTkyMjIwMS4xNjk2NDU2NzU2*_ga_CW55HF8NVT*MTY5NjQ1Njc1NS4xLjEuMTY5NjQ1NzkyMy40OC4wLjA.' alt='Logo' width='100' class='logo'/>
+                    <img src='https://firebasestorage.googleapis.com/v0/b/proyectos-cb445.appspot.com/o/img_logo_athletix.png?alt=media&token=a32e429b-4ece-45d2-bf00-85a8f9081a9c&_gl=1*14iryjj*_ga*MTcyOTkyMjIwMS4xNjk2NDU2NzU2*_ga_CW55HF8NVT*MTY5ODAxNDc2Mi4yLjEuMTY5ODAxNDg0Ny40OC4wLjA.' alt='Logo' width='100' class='logo'/>
                     <h1>Reporte de Usuarios</h1>
                     <table>
                         <tr>
@@ -790,7 +790,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
 
         public IActionResult ExportarUsuariosEnExcel()
         {
-            try 
+            try
             {
                 using var package = new ExcelPackage();
                 var worksheet = package.Workbook.Worksheets.Add("Usuarios");
@@ -832,15 +832,26 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             }
         }
 
-        public async Task<IActionResult> DetalleProducto(int id) {
+        public async Task<IActionResult> DetalleProducto(int id)
+        {
 
             Producto? producto = await _context.Producto.FindAsync(id);
 
-            if(producto == null) {
+            if (producto == null)
+            {
                 return NotFound();
             }
 
             return View("DetalleProducto", producto);
+        }
+
+        /* CON ESTA VISTA SE MOSTRARAN GRAFICOS DE LINEA DE TIEMPO Y GRAFICO 
+        DE BARRAS QUE LE PERMITIRA AL ADMINISTRADOR VER EN CUANTO A CRECIDO LAS VENTAS, 
+        TAMBIEN CUANTOS CLIENTES ESTAN REGISTRADOS Y CUANTOS PRODUCTOS SON LOS MAS VENDIDOS
+        Toodo esto en formato JSON aplicando la logica y el chart.js */
+        public IActionResult Estadisticas()
+        {
+            return View();
         }
     }
 
