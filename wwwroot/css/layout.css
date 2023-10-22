@@ -197,15 +197,13 @@ section {
     }
 }
 
+/*
 @media (max-width: 600px) {
-    .logo-text {
-        display: none;
-    }
-
     #imgLogoEmpresa{
         display: none;
     }
 }
+*/
 
 /*---------------------------------------------- MAIN ----------------------------------------------------*/
 
