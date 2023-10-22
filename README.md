@@ -43,3 +43,5 @@ En jesus_avance12 vincule ya la tabla AspNetUsers, AspNetRoles y AspNetUserRoles
 En 8-pasarela-de-pagos arregle el metodo create del controller de pago
 
 Tambien en 8-pasarela-de-pagos le puse en la vista detalle producto el stock y valide lo que tenia que validar
+
+probando probando xdxd
