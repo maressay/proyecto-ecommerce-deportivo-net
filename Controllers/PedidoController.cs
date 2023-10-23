@@ -122,7 +122,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                     </style>
                 </head>
                 <body>
-                    <img src='https://firebasestorage.googleapis.com/v0/b/proyectos-cb445.appspot.com/o/logo.png?alt=media&token=b4dc8219-9bbd-4101-918f-153bc4bb87e8&_gl=1*1eklxby*_ga*MTcyOTkyMjIwMS4xNjk2NDU2NzU2*_ga_CW55HF8NVT*MTY5NjQ1Njc1NS4xLjEuMTY5NjQ1NzY1NS4yLjAuMA..' alt='Logo' width='100' class='logo'/>
+                    <img src='https://firebasestorage.googleapis.com/v0/b/proyectos-cb445.appspot.com/o/img_logo_athletix.png?alt=media&token=a32e429b-4ece-45d2-bf00-85a8f9081a9c&_gl=1*14iryjj*_ga*MTcyOTkyMjIwMS4xNjk2NDU2NzU2*_ga_CW55HF8NVT*MTY5ODAxNDc2Mi4yLjEuMTY5ODAxNDg0Ny40OC4wLjA.' alt='Logo' width='100' class='logo'/>
                     <h1>Reporte de Pedidos</h1>
                     <table>
                         <tr>
@@ -292,7 +292,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                     </style>
                 </head>
                 <body>
-                    <img src='https://firebasestorage.googleapis.com/v0/b/proyectos-cb445.appspot.com/o/logo.png?alt=media&token=b4dc8219-9bbd-4101-918f-153bc4bb87e8&_gl=1*1eklxby*_ga*MTcyOTkyMjIwMS4xNjk2NDU2NzU2*_ga_CW55HF8NVT*MTY5NjQ1Njc1NS4xLjEuMTY5NjQ1NzY1NS4yLjAuMA..' alt='Logo' width='100' class='logo'/>
+                    <img src='https://firebasestorage.googleapis.com/v0/b/proyectos-cb445.appspot.com/o/img_logo_athletix.png?alt=media&token=a32e429b-4ece-45d2-bf00-85a8f9081a9c&_gl=1*14iryjj*_ga*MTcyOTkyMjIwMS4xNjk2NDU2NzU2*_ga_CW55HF8NVT*MTY5ODAxNDc2Mi4yLjEuMTY5ODAxNDg0Ny40OC4wLjA.' alt='Logo' width='100' class='logo'/>
                     <h1>Reporte de Pedido {id}</h1>
                     <table>
                         <tr>

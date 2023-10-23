@@ -45,3 +45,7 @@ En 8-pasarela-de-pagos arregle el metodo create del controller de pago
 Tambien en 8-pasarela-de-pagos le puse en la vista detalle producto el stock y valide lo que tenia que validar
 
 probando probando xdxd
+
+En la rama 4-carrito-de-compras arregle el logo de los metodos de exportacion de pdf para productos, usuarios, y pedidos.
+
+Tambien añadi una vista que luego la programare para que se muestren graficos estadisticos de lineas de tiempo mostrando las ventas del mes o semanales xdxd
