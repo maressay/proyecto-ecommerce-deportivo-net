@@ -28,6 +28,7 @@ using System.IO;
 using System.Linq;
 using OfficeOpenXml.Table;
 using proyecto_ecommerce_deportivo_net.Models.DTO;
+using proyecto_ecommerce_deportivo_net.Models.Service;
 namespace proyecto_ecommerce_deportivo_net.Controllers
 {
     public class AdminController : Controller
@@ -35,14 +36,16 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         private readonly ILogger<AdminController> _logger;
         private readonly ApplicationDbContext _context;
 
+        private readonly ProductoService _productoService;
 
         // Objeto para la exportación
         private readonly IConverter _converter;
 
-        public AdminController(ILogger<AdminController> logger, ApplicationDbContext context, IConverter converter)
+        public AdminController(ILogger<AdminController> logger, ApplicationDbContext context, IConverter converter, ProductoService productoService)
         {
             _logger = logger;
             _context = context;
+            _productoService = productoService;
             ModelState.Clear();
 
             _converter = converter; // PARA EXPORTAR
@@ -79,7 +82,16 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
 
                 producto.Nombre = productoDTO.Nombre;
                 producto.Descripcion = productoDTO.Descripcion;
-                string urlImagen = await SubirStorage(productoDTO.Imagen.OpenReadStream(), productoDTO.Imagen.FileName);
+                string urlImagen;
+                if (productoDTO.Imagen != null)
+                {
+                    urlImagen = await SubirStorage(productoDTO.Imagen.OpenReadStream(), productoDTO.Imagen.FileName);
+                }
+                else
+                {
+                    urlImagen = "No Content";
+                }
+
                 producto.Imagen = urlImagen;
                 producto.Precio = productoDTO.Precio;
                 producto.Stock = productoDTO.Stock;
@@ -88,8 +100,10 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
 
                 TempData["MessageRegistrandoProducto"] = "Se Registraron exitosamente los datos.";
 
-                _context.Producto.Add(producto);
-                _context.SaveChanges();
+                var p = await _productoService.CreateOrUpdate(producto);
+
+                // _context.Producto.Add(producto);
+                // _context.SaveChanges();
 
                 return RedirectToAction("AgregarProducto");
             }
@@ -135,15 +149,16 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             return downloadURL;
         }
 
-        public ActionResult ListaDeProductos(int? page)
+        public async Task<ActionResult> ListaDeProductos(int? page)
         {
-            int pageNumber = (page ?? 1); // Si no se especifica la página, asume la página 1
-            int pageSize = 3; // maximo 3 productos por pagina
+            // int pageNumber = (page ?? 1); // Si no se especifica la página, asume la página 1
+            // int pageSize = 3; // maximo 3 productos por pagina
 
 
-            pageNumber = Math.Max(pageNumber, 1);// Con esto se asegura de que pageNumber nunca sea menor que 1
+            // pageNumber = Math.Max(pageNumber, 1);// Con esto se asegura de que pageNumber nunca sea menor que 1
 
-            IPagedList listaPaginada = _context.Producto.ToPagedList(pageNumber, pageSize);
+            // IPagedList listaPaginada = _context.Producto.ToPagedList(pageNumber, pageSize);
+            IPagedList listaPaginada = await _productoService.GetAll(page);
 
             return View("ListaDeProductos", listaPaginada);
         }
@@ -151,7 +166,8 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         public async Task<ActionResult> EditarProducto(int? id)
         {
 
-            Producto? producto = await _context.Producto.FindAsync(id);
+            // Producto? producto = await _context.Producto.FindAsync(id);
+            Producto? producto = await _productoService.Get(id);
 
             if (producto == null)
             {
@@ -178,7 +194,9 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             System.Console.Write(productoDTO.Nombre);
             if (result.IsValid)
             {
-                Producto? producto = _context.Producto.Find(id);
+                Producto? producto = await _productoService.Get(id);
+
+                if (producto == null) return NotFound();
 
                 producto.Nombre = productoDTO.Nombre;
                 producto.Descripcion = productoDTO.Descripcion;
@@ -193,9 +211,9 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                 }
 
                 TempData["MessageActualizandoProducto"] = "Se Actualizaron exitosamente los datos.";
-                _context.Producto.Update(producto);
-                _context.SaveChanges();
-
+                // _context.Producto.Update(producto);
+                // _context.SaveChanges();
+                await _productoService.CreateOrUpdate(producto);
                 return RedirectToAction("EditarProducto", new { id = producto.id });
 
             }
@@ -208,7 +226,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         {
             try
             {
-                var products = _context.Producto.ToList();
+                var products = _productoService.GetAll();
                 var html = @"
             <html>
                 <head>
@@ -318,7 +336,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                 worksheet.Cells[1, 1].Style.Font.Bold = true;
 
                 // Cargar los datos en la fila 3 para dejar espacio para el título de Reporte de Productos
-                worksheet.Cells[3, 1].LoadFromCollection(_context.Producto.ToList(), true);
+                worksheet.Cells[3, 1].LoadFromCollection(_productoService.GetAll(), true);
 
                 // Dar formato a la tabla Reporte de Productos
                 var dataRange = worksheet.Cells[2, 1, worksheet.Dimension.End.Row, worksheet.Dimension.End.Column];
@@ -350,12 +368,13 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         }
 
         /* Para exportar individualmente los productos */
-        public IActionResult ExportarUnSoloProductoEnPDF(int id)
+        public async Task<IActionResult> ExportarUnSoloProductoEnPDF(int id)
         {
             try
             {
 
-                var product = _context.Producto.Find(id);
+                // var product = _context.Producto.Find(id);
+                var product = await _productoService.Get(id);
                 if (product == null)
                 {
                     return NotFound();
@@ -459,11 +478,12 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
 
 
 
-        public IActionResult ExportarUnSoloProductoEnExcel(int id)
+        public async Task<IActionResult> ExportarUnSoloProductoEnExcel(int id)
         {
             try
             {
-                var product = _context.Producto.Find(id);
+                // var product = _context.Producto.Find(id);
+                var product = await _productoService.Get(id);
                 if (product == null)
                 {
                     return NotFound();
@@ -516,13 +536,13 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         [HttpPost]
         public async Task<IActionResult> EliminarProducto(int id)
         {
-            var producto = await _context.Producto.FindAsync(id);
+            // var producto = await _context.Producto.FindAsync(id);
+            var producto = await _productoService.Get(id);
             if (producto == null)
             {
                 return NotFound();
             }
-            _context.Producto.Remove(producto);
-            await _context.SaveChangesAsync();
+            await _productoService.Delete(id);
             return RedirectToAction(nameof(ListaDeProductos));
         }
 
@@ -537,7 +557,8 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             {
                 if (string.IsNullOrWhiteSpace(query))
                 {
-                    var todosLosProductos = await _context.Producto.ToListAsync();
+                    // var todosLosProductos = await _context.Producto.ToListAsync();
+                    var todosLosProductos = await _productoService.GetAllAsync();
                     productosPagedList = todosLosProductos.ToPagedList(1, todosLosProductos.Count);
                 }
                 else

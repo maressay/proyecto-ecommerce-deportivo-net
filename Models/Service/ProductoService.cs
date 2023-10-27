@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.CodeAnalysis.Elfie.Extensions;
 using Microsoft.EntityFrameworkCore;
 using proyecto_ecommerce_deportivo_net.Data;
+using X.PagedList;
 
 namespace proyecto_ecommerce_deportivo_net.Models.Service
 {
@@ -19,14 +21,41 @@ namespace proyecto_ecommerce_deportivo_net.Models.Service
             _context = context;
         }
 
-        public async Task<Producto> guardarProducto(Producto producto)
+        public async Task<Producto> CreateOrUpdate(Producto producto)
         {
-            _context.Producto.Add(producto);
+            var p = _context.Producto.Find(producto.id);
+            if (p != null)
+            {
+                _context.Producto.Update(producto);
+            }
+            else
+            {
+                _context.Producto.Add(producto);
+            }
+
             await _context.SaveChangesAsync();
             return producto;
         }
 
-        public async Task<List<Producto>?> GetAll()
+        public async Task<IPagedList> GetAll(int? page)
+        {
+            int pageNumber = (page ?? 1); // Si no se especifica la página, asume la página 1
+            int pageSize = 3; // maximo 3 productos por pagina
+
+
+            pageNumber = Math.Max(pageNumber, 1);// Con esto se asegura de que pageNumber nunca sea menor que 1
+
+            return await _context.Producto.ToPagedListAsync(pageNumber, pageSize);
+        }
+
+        public List<Producto>? GetAll()
+        {
+            if (_context.Producto == null)
+                return null;
+            return _context.Producto.ToList();
+        }
+
+        public async Task<List<Producto>?> GetAllAsync()
         {
             if (_context.Producto == null)
                 return null;
@@ -59,13 +88,14 @@ namespace proyecto_ecommerce_deportivo_net.Models.Service
             return producto;
         }
 
-        public async Task Delete(int? id)
+        public async Task Delete(int id)
         {
             var producto = await _context.Producto.FindAsync(id);
             if (producto != null)
             {
                 _context.Producto.Remove(producto);
             }
+
             await _context.SaveChangesAsync();
         }
 
