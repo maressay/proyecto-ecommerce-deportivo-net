@@ -110,7 +110,7 @@
                         </div>
                         <div id="botones">
                             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
-                                asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                                asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post">
                                 <button type="submit">Cerrar Sesión</button>
                             </form>
                             <button id="cerrarTarjeta">Mantener Sesión</button>
@@ -155,25 +155,15 @@
                 <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Index"> <i
                         class="fas fa-arrow-right"></i>
                     Principal</a>
-<<<<<<< HEAD
-                <a id="detalles-footer" asp-area="" asp-controller="NoCliente" asp-action="Catalogo"> <i
-                        class="fas fa-arrow-right"></i>
-                    Productos </a>
-                <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Index"> <i
-                        class="fas fa-arrow-right"></i>
-=======
                 <a id="detalles-footer" asp-area="" asp-controller="NoCliente" asp-action="Catalogo"> <i class="fas fa-arrow-right"></i>
                     Catálogo de Productos </a>
                 <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Index"> <i class="fas fa-arrow-right"></i> 
->>>>>>> 74a4428fd6071f729c60430729dc61849365a2fa
                     Descripción</a>
                 <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Index"> <i
                         class="fas fa-arrow-right"></i>
                     Misión y Visión </a>
-=======
                 <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Contacto"> <i class="fas fa-arrow-right"></i>
                     Contáctanos </a>
->>>>>>> 74a4428fd6071f729c60430729dc61849365a2fa
             </div>
 
             <div class="box">
