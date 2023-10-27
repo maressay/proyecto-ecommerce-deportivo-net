@@ -1,3 +1,18 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+@section scripts {
+    <script>
+        document.getElementById("showAlertButton").addEventListener("click", function () {
+            document.getElementById("alertCard").style.display = "block";
+        });
 
+        document.getElementById("cancelButton").addEventListener("click", function () {
+            document.getElementById("alertCard").style.display = "none";
+        });
+
+        document.getElementById("confirmButton").addEventListener("click", function () {
+            // Realiza la acción de cierre de sesión aquí
+            // Puedes redirigir al método de cierre de sesión o realizar otras acciones necesarias
+        });
+    </script>
+    }

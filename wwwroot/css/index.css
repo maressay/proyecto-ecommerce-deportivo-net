@@ -119,5 +119,12 @@ body {
         background-image: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaB1eexY41A1u0wxCMN3mb-5FvJZVSD3ml68YxA3BSxW0GniBvXiU9JbuM0nDPy_kE1Ak8Bs-QUTLrQ8l4kfaL-z5dpDBw=w1908-h897");
     }
 
+    .title{
+        font-size: 35px;
+        padding: 0 20px;
+    }
 
+    .gracias .p{
+        font-size: 10px;
+    }
 }

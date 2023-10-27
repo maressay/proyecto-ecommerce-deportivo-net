@@ -3,6 +3,7 @@
 @using System.Collections.Generic;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +11,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="icon" href="~/images/logo.png" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -76,7 +79,7 @@
                     </div>
                     <style>
                         @@media (max-width: 600px) {
-                            #span-logo{
+                            #span-logo {
                                 display: none;
                             }
                         }
@@ -86,11 +89,36 @@
                     <a class="fas fa-user" style="text-decoration: none;" asp-area="Identity"
                         asp-page="/Account/Manage/Index" title="Manage"></a>
                 </div>
+                @*
+            <div class="icono-logout">
+            <a class="fas fa-sign-out-alt" style="text-decoration: none;" asp-area="Identity"
+            asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home",
+            new { area = "" })">
+            </a>
+            </div>
+            *@
                 <div class="icono-logout">
-                    <a class="fas fa-sign-out-alt" style="text-decoration: none;" asp-area="Identity"
-                        asp-page="/Account/Logout"
-                        asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"></a>
+                    <button id="mostrarTarjeta">
+                        <a class="fas fa-sign-out-alt" style="text-decoration: none;"></a>
+                    </button>
                 </div>
+
+                <div class="tarjeta" id="tarjeta">
+                    <div id="tarjeta-sesion">
+                        <div id="cerrar-sesion">
+                            <h1>¿Deseas cerrar sesión?</h1>
+                        </div>
+                        <div id="botones">
+                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
+                                asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                                <button type="submit">Cerrar Sesión</button>
+                            </form>
+                            <button id="cerrarTarjeta">Mantener Sesión</button>
+                        </div>
+                    </div>
+                </div>
+
+                <script src="~/js/script.js"></script>
 
             }
             else
@@ -105,7 +133,7 @@
                 </div>
                 <style>
                     @@media (max-width: 600px) {
-                        #imgLogoEmpresa{
+                        #imgLogoEmpresa {
                             display: none;
                         }
                     }
@@ -124,15 +152,20 @@
         <div class="box-container">
             <div class="box">
                 <h3 class="footer-h3">Enlaces Rápidos</h3>
-                <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Index"> <i class="fas fa-arrow-right"></i>
+                <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Index"> <i
+                        class="fas fa-arrow-right"></i>
                     Principal</a>
-                <a id="detalles-footer" asp-area="" asp-controller="NoCliente" asp-action="Catalogo"> <i class="fas fa-arrow-right"></i>
+                <a id="detalles-footer" asp-area="" asp-controller="NoCliente" asp-action="Catalogo"> <i
+                        class="fas fa-arrow-right"></i>
                     Productos </a>
-                <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Index"> <i class="fas fa-arrow-right"></i> 
+                <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Index"> <i
+                        class="fas fa-arrow-right"></i>
                     Descripción</a>
-                <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Index"> <i class="fas fa-arrow-right"></i> 
+                <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Index"> <i
+                        class="fas fa-arrow-right"></i>
                     Misión y Visión </a>
-                <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Contacto"> <i class="fas fa-arrow-right"></i>
+                <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Contacto"> <i
+                        class="fas fa-arrow-right"></i>
                     Contactanos </a>
             </div>
 
@@ -140,20 +173,25 @@
                 <h3>Datos De Contacto</h3>
                 <a id="detalles-footer"> <i class="fas fa-phone"></i> +51 927 572 267 </a>
                 <a id="detalles-footer"> <i class="fas fa-envelope"></i> jesus_soria@usmp.pe </a>
-                <a id="detalles-footer"> <i class="fas fa-map-marker-alt"></i> Av. Prol. Javier Prado Este 8680, Ate 15494 </a>
+                <a id="detalles-footer"> <i class="fas fa-map-marker-alt"></i> Av. Prol. Javier Prado Este 8680, Ate
+                    15494 </a>
             </div>
 
             <div class="box">
                 <h3>Redes</h3>
-                <a id="detalles-footer" href="https://www.facebook.com/profile.php?id=61552031275470"> <i class="fab fa-facebook-f"></i>
+                <a id="detalles-footer" href="https://www.facebook.com/profile.php?id=61552031275470"> <i
+                        class="fab fa-facebook-f"></i>
                     Facebook </a>
-                <a id="detalles-footer" href="https://api.whatsapp.com/send?phone=927572267" target="_blank"><i class="fab fa-whatsapp"></i>
+                <a id="detalles-footer" href="https://api.whatsapp.com/send?phone=927572267" target="_blank"><i
+                        class="fab fa-whatsapp"></i>
                     WhatsApp</a>
 
-                <h3 style="margin-top: 2rem;" >Legal</h3>
-                <a id="detalles-footer" href="https://usmppe-my.sharepoint.com/:b:/g/personal/kristell_flores_usmp_pe/EYbpg6ow49NOrrfsEipAhUMBLP58bki3_0xgGhMoMD2Gsg?e=IZjH3n">
+                <h3 style="margin-top: 2rem;">Legal</h3>
+                <a id="detalles-footer"
+                    href="https://usmppe-my.sharepoint.com/:b:/g/personal/kristell_flores_usmp_pe/EYbpg6ow49NOrrfsEipAhUMBLP58bki3_0xgGhMoMD2Gsg?e=IZjH3n">
                     <i class="fa fa-gavel"></i> Términos y Condiciones </a>
-                <a id="detalles-footer" href="https://usmppe-my.sharepoint.com/:b:/g/personal/kristell_flores_usmp_pe/EawhNQa8nnFIvtA-mxdpmEABJECIjW4e5Y5DpHquDN5igQ?e=nUcCWC">
+                <a id="detalles-footer"
+                    href="https://usmppe-my.sharepoint.com/:b:/g/personal/kristell_flores_usmp_pe/EawhNQa8nnFIvtA-mxdpmEABJECIjW4e5Y5DpHquDN5igQ?e=nUcCWC">
                     <i class="fa fa-lock"></i> Politicas de privacidad </a>
             </div>
 
