@@ -5,6 +5,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL;
 using System.Diagnostics;
 using proyecto_ecommerce_deportivo_net.Models;
 using System.Configuration;
+using proyecto_ecommerce_deportivo_net.Models.Service;
 
 /* PARA EXPORTAR A PDF Y EXCEL */
 using DinkToPdf;
@@ -68,6 +69,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<ProductoService, ProductoService>();
 
 var app = builder.Build();
 
