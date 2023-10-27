@@ -9,9 +9,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
-using proyecto_ecommerce_deportivo_net.Data;
-using proyecto_ecommerce_deportivo_net.Models;
-using proyecto_ecommerce_deportivo_net.Models.Validator;
+
+
+using System.Globalization;
+
+
+using Npgsql;
 /*LIBRERIAS PARA LA PAGINACION DE LISTAR PRODUCTOS */
 using X.PagedList;
 
@@ -27,6 +30,13 @@ using OfficeOpenXml;
 using System.IO;
 using System.Linq;
 using OfficeOpenXml.Table;
+
+using proyecto_ecommerce_deportivo_net.Data;
+using proyecto_ecommerce_deportivo_net.Models;
+using proyecto_ecommerce_deportivo_net.Models.Validator;
+
+using proyecto_ecommerce_deportivo_net.Models.Entity;
+
 using proyecto_ecommerce_deportivo_net.Models.DTO;
 using proyecto_ecommerce_deportivo_net.Models.Service;
 namespace proyecto_ecommerce_deportivo_net.Controllers
@@ -41,6 +51,8 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         // Objeto para la exportación
         private readonly IConverter _converter;
 
+      
+
         public AdminController(ILogger<AdminController> logger, ApplicationDbContext context, IConverter converter, ProductoService productoService)
         {
             _logger = logger;
@@ -49,6 +61,8 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             ModelState.Clear();
 
             _converter = converter; // PARA EXPORTAR
+
+    
         }
 
         public IActionResult Index()
@@ -866,14 +880,13 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
             return View("DetalleProducto", producto);
         }
 
-        /* CON ESTA VISTA SE MOSTRARAN GRAFICOS DE LINEA DE TIEMPO Y GRAFICO 
-        DE BARRAS QUE LE PERMITIRA AL ADMINISTRADOR VER EN CUANTO A CRECIDO LAS VENTAS, 
-        TAMBIEN CUANTOS CLIENTES ESTAN REGISTRADOS Y CUANTOS PRODUCTOS SON LOS MAS VENDIDOS
-        Toodo esto en formato JSON aplicando la logica y el chart.js */
+        /* GRAFICOS DE ESTADISTICAS */
+
         public IActionResult Estadisticas()
         {
             return View();
         }
+
     }
 
 }
