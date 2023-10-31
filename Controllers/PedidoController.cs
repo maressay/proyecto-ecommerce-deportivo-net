@@ -23,6 +23,7 @@ using System.Web.WebPages;
 using DinkToPdf;
 using DinkToPdf.Contracts;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System.IO;
 using System.Linq;
 using OfficeOpenXml.Table;
@@ -484,26 +485,59 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                 using var package = new ExcelPackage();
                 var worksheet = package.Workbook.Worksheets.Add("Pedido");
 
-                // Descargar la imagen del logo
-                using var client = new HttpClient();
-                var logoBytes = await client.GetByteArrayAsync("https://firebasestorage.googleapis.com/v0/b/proyectos-cb445.appspot.com/o/img_logo_athletix.png?alt=media&token=a32e429b-4ece-45d2-bf00-85a8f9081a9c&_gl=1*14iryjj*_ga*MTcyOTkyMjIwMS4xNjk2NDU2NzU2*_ga_CW55HF8NVT*MTY5ODAxNDc6Mi4yLjEuMTY5ODAxNDg0Ny40OC4wLjA.");
-
-                // Agregar la imagen al archivo Excel
-                var image = worksheet.Drawings.AddPicture("Logo", new MemoryStream(logoBytes));
-                // image.SetPosition(0, 0, 0, 0); // CELDA A1 Y FILA 1
-                image.SetPosition(1, 0, 1, 0);
-                image.SetSize(100, 100); // Puedes ajustar el tamaño según tus necesidades
-
                 // Estilos personalizados
                 var titleStyle = package.Workbook.Styles.CreateNamedStyle("TitleStyle");
-                titleStyle.Style.Font.Size = 20;
+                titleStyle.Style.Font.Size = 28; // Aumentado para que se vea proporcional al logo
                 titleStyle.Style.Font.Bold = true;
+                titleStyle.Style.Font.Color.SetColor(System.Drawing.Color.DarkBlue); // Cambiar el color de la fuente a azul oscuro
+                titleStyle.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid; // Establecer un fondo sólido
+                
+                // prueba para ver el fondo del titulo y logo del archivo
+                
+                // 1.- titleStyle.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray); // Color de fondo claro
+                titleStyle.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightSkyBlue);  // Color de fondo Azul Suave
+                // titleStyle.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.MintCream);  // Color de fondo Verde Menta
+                // titleStyle.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.Lavender);  // Color de fondo Lavanda
+                // titleStyle.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.MistyRose);  // Color de fondo Melocotón
+                // titleStyle.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.Gainsboro);  // Color de fondo Gris Neutro
 
+
+
+                titleStyle.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Centrar horizontalmente
+                titleStyle.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; // Centrar verticalmente
+
+                // <summary>
+               
+                var titleStyle2 = package.Workbook.Styles.CreateNamedStyle("TitleStyle2");
+                titleStyle2.Style.Font.Size = 24; // Aumentado para que se vea proporcional al logo
+                titleStyle2.Style.Font.Bold = true;
+
+                // otro var de estilos de pruebas
+
+                var subtotal = package.Workbook.Styles.CreateNamedStyle("subtotal");
+                subtotal.Style.Font.Size = 24; // Aumentado para que se vea proporcional al logo
+                subtotal.Style.Font.Bold = true;
+
+                var total = package.Workbook.Styles.CreateNamedStyle("total");
+                total.Style.Font.Size = 24; // Aumentado para que se vea proporcional al logo
+                total.Style.Font.Bold = true;
+
+
+                // otro var
                 var headerStyle = package.Workbook.Styles.CreateNamedStyle("HeaderStyle");
                 headerStyle.Style.Font.Bold = true;
                 headerStyle.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                headerStyle.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
+                headerStyle.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightSkyBlue);
                 headerStyle.Style.Font.Color.SetColor(System.Drawing.Color.DarkBlue);
+                headerStyle.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Centrar horizontalmente
+                headerStyle.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; // Centrar verticalmente
+
+                // para ponerle bordes a los encabezados de productos descripcion, etc
+                headerStyle.Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                headerStyle.Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                headerStyle.Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                headerStyle.Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                headerStyle.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
 
                 // Estilo para los bordes de las celdas
                 var borderStyle = package.Workbook.Styles.CreateNamedStyle("BorderStyle");
@@ -511,18 +545,32 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                 borderStyle.Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
                 borderStyle.Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
                 borderStyle.Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                borderStyle.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Centrar horizontalmente
+                borderStyle.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
 
                 // Información de la Empresa
                 worksheet.Cells[1, 1].Value = "AthletiX";
                 worksheet.Cells[1, 1].StyleName = "TitleStyle";
+                worksheet.Cells[1, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; // Alinear verticalmente en el centro
+                worksheet.Cells["A1:E1"].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, System.Drawing.Color.Black);
+                worksheet.Row(1).Height = 80; // Ajusta el tamaño de la fila para el logo y el título
+
+                // Descargar la imagen del logo
+                using var client = new HttpClient();
+                var logoBytes = await client.GetByteArrayAsync("https://firebasestorage.googleapis.com/v0/b/proyectos-cb445.appspot.com/o/img_logo_athletix.png?alt=media&token=a32e429b-4ece-45d2-bf00-85a8f9081a9c&_gl=1*14iryjj*_ga*MTcyOTkyMjIwMS4xNjk2NDU2NzU2*_ga_CW55HF8NVT*MTY5ODAxNDc6Mi4yLjEuMTY5ODAxNDg0Ny40OC4wLjA.");
+
+                // Agregar la imagen al archivo Excel
+                var image = worksheet.Drawings.AddPicture("Logo", new MemoryStream(logoBytes));
+                image.SetPosition(0, 15, 3, 0); // Coloca el logo en la primera fila, columna E
+                image.SetSize(100, 100);
+
+                // Continuar con el resto de la información
                 worksheet.Cells[2, 1].Value = "La Molina, Av. la Fontana 1250, Lima 15024";
                 worksheet.Cells[3, 1].Value = "Teléfono: +51 927572267";
                 worksheet.Cells[4, 1].Value = "Email: jesus_soria@usmp.pe";
 
                 // Información del Cliente
                 worksheet.Cells[6, 1].Value = "Información del Cliente:";
-                worksheet.Cells[6, 1].StyleName = "TitleStyle";
+                worksheet.Cells[6, 1].StyleName = "titleStyle2";
                 worksheet.Cells[7, 1].Value = $"Nombre: {cliente.Nombres} {cliente.Apellidos}";
                 worksheet.Cells[8, 1].Value = $"Email: {cliente.Email}";
 
@@ -538,6 +586,8 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                     worksheet.Cells[14, i + 1].Value = encabezados[i];
                     worksheet.Cells[14, i + 1].StyleName = "HeaderStyle";
                 }
+             
+                worksheet.Row(14).Height = 20; // Ajusta el tamaño de la fila para el logo y el título
 
                 // Combinar celdas para títulos
                 worksheet.Cells["A1:E1"].Merge = true;
