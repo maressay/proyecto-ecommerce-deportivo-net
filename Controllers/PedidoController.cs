@@ -266,7 +266,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
 
                 if (cliente == null)
                 {
-                    return NotFound($"El cliente con ID {pedido.UserID} no fue encontrado.");
+                    return NotFound($"El cliente con ID {pedido.UserID} no fue encontrado en la tabla de Clientes.");
                 }
 
                 var detalles = (from detalle in _context.DataDetallePedido
@@ -466,7 +466,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
 
                 if (cliente == null)
                 {
-                    return NotFound($"El cliente con ID {pedido.UserID} no fue encontrado.");
+                    return NotFound($"El cliente con ID {pedido.UserID} no fue encontrado en la tabla de Clientes.");
                 }
 
                 var detalles = (from detalle in _context.DataDetallePedido
@@ -483,6 +483,16 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
 
                 using var package = new ExcelPackage();
                 var worksheet = package.Workbook.Worksheets.Add("Pedido");
+
+                // Descargar la imagen del logo
+                using var client = new HttpClient();
+                var logoBytes = await client.GetByteArrayAsync("https://firebasestorage.googleapis.com/v0/b/proyectos-cb445.appspot.com/o/img_logo_athletix.png?alt=media&token=a32e429b-4ece-45d2-bf00-85a8f9081a9c&_gl=1*14iryjj*_ga*MTcyOTkyMjIwMS4xNjk2NDU2NzU2*_ga_CW55HF8NVT*MTY5ODAxNDc6Mi4yLjEuMTY5ODAxNDg0Ny40OC4wLjA.");
+
+                // Agregar la imagen al archivo Excel
+                var image = worksheet.Drawings.AddPicture("Logo", new MemoryStream(logoBytes));
+                // image.SetPosition(0, 0, 0, 0); // CELDA A1 Y FILA 1
+                image.SetPosition(1, 0, 1, 0);
+                image.SetSize(100, 100); // Puedes ajustar el tamaño según tus necesidades
 
                 // Estilos personalizados
                 var titleStyle = package.Workbook.Styles.CreateNamedStyle("TitleStyle");
