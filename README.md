@@ -54,6 +54,8 @@ En la rama 4-carrito-de-compras arregle el logo de los metodos de exportacion de
 
 Tambien añadi una vista que luego la programare para que se muestren graficos estadisticos de lineas de tiempo mostrando las ventas del mes o semanales xdxd
 
+## IMAGEN DE LA FACTURA O PEDIDO Nro 5 de AthletiX
+![Alt text](image.png)
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
