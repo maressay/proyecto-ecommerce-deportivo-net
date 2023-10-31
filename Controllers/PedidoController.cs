@@ -491,9 +491,9 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                 titleStyle.Style.Font.Bold = true;
                 titleStyle.Style.Font.Color.SetColor(System.Drawing.Color.DarkBlue); // Cambiar el color de la fuente a azul oscuro
                 titleStyle.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid; // Establecer un fondo sólido
-                
+
                 // prueba para ver el fondo del titulo y logo del archivo
-                
+
                 // 1.- titleStyle.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray); // Color de fondo claro
                 titleStyle.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightSkyBlue);  // Color de fondo Azul Suave
                 // titleStyle.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.MintCream);  // Color de fondo Verde Menta
@@ -507,21 +507,12 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                 titleStyle.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; // Centrar verticalmente
 
                 // <summary>
-               
+
                 var titleStyle2 = package.Workbook.Styles.CreateNamedStyle("TitleStyle2");
                 titleStyle2.Style.Font.Size = 24; // Aumentado para que se vea proporcional al logo
                 titleStyle2.Style.Font.Bold = true;
 
                 // otro var de estilos de pruebas
-
-                var subtotal = package.Workbook.Styles.CreateNamedStyle("subtotal");
-                subtotal.Style.Font.Size = 24; // Aumentado para que se vea proporcional al logo
-                subtotal.Style.Font.Bold = true;
-
-                var total = package.Workbook.Styles.CreateNamedStyle("total");
-                total.Style.Font.Size = 24; // Aumentado para que se vea proporcional al logo
-                total.Style.Font.Bold = true;
-
 
                 // otro var
                 var headerStyle = package.Workbook.Styles.CreateNamedStyle("HeaderStyle");
@@ -586,7 +577,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                     worksheet.Cells[14, i + 1].Value = encabezados[i];
                     worksheet.Cells[14, i + 1].StyleName = "HeaderStyle";
                 }
-             
+
                 worksheet.Row(14).Height = 20; // Ajusta el tamaño de la fila para el logo y el título
 
                 // Combinar celdas para títulos
@@ -622,8 +613,18 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                 worksheet.Cells[filaInicio + 2, 4].Value = "Total:";
                 worksheet.Cells[filaInicio + 2, 5].Value = detalles.Sum(d => d.Importe); // Ajusta esto si agregas impuestos y descuentos
 
-                worksheet.Cells[filaInicio + 1, 4, filaInicio + 2, 5].StyleName = "CellStyle";
-                worksheet.Cells[filaInicio + 1, 4, filaInicio + 2, 5].Style.Font.Bold = true; // Hacer totales en negrita
+                // Aplicar el estilo headerStyle a las celdas "Subtotal" y "Total"
+                worksheet.Cells[filaInicio + 1, 4].StyleName = "HeaderStyle";
+                worksheet.Cells[filaInicio + 2, 4].StyleName = "HeaderStyle";
+
+                // Aplicar bordes a las celdas "Subtotal", "Total" y sus montos
+                worksheet.Cells[filaInicio + 1, 4, filaInicio + 2, 5].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                worksheet.Cells[filaInicio + 1, 4, filaInicio + 2, 5].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                worksheet.Cells[filaInicio + 1, 4, filaInicio + 2, 5].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                worksheet.Cells[filaInicio + 1, 4, filaInicio + 2, 5].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+
+                // Asegurarse de que los montos estén en negrita
+                worksheet.Cells[filaInicio + 1, 5, filaInicio + 2, 5].Style.Font.Bold = true;
 
                 // Formato de números
                 worksheet.Cells[15, 3, filaInicio, 3].Style.Numberformat.Format = "#,##0";
