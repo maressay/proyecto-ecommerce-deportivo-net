@@ -262,7 +262,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                     return NotFound($"El pedido con ID {id} no fue encontrado, por eso no se puede exportar en PDF.");
                 }
 
-                // Obtener la información del cliente
+                // Obtener la información del cliente - color al del excel --- background-color: #87CEFA ---------- background-color: 40E0D0;
                 ApplicationUser? cliente = await _context.Users.FirstOrDefaultAsync(u => u.UserName == pedido.UserID);
 
                 if (cliente == null)
@@ -283,139 +283,139 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
                                 }).ToList();
 
                 var html = $@"
-<html>
-    <head>
-        <meta charset='UTF-8'>
-        <style>
-            body {{
-                font-family: 'Arial', sans-serif;
-                margin: 40px;
-            }}
-            header {{
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                border-bottom: 2px solid #40E0D0;
-                padding-bottom: 20px;
-                margin-bottom: 40px;
-            }}
-            header img.logo {{
-                height: 80px;
-                width: auto;
-            }}
-            header .company-details {{
-                text-align: right;
-            }}
-            .client-info {{
-                background-color: #f2f2f2;
-                padding: 10px;
-                margin-bottom: 20px;
-                border-radius: 5px;
-            }}
-            .invoice-details {{
-                margin-bottom: 40px;
-            }}
-            table {{
-                width: 100%;
-                border-collapse: collapse;
-            }}
-            th, td {{
-                border: 1px solid black;
-                padding: 8px;
-                text-align: left;
-            }}
-            th {{
-                background-color: #f2f2f2;
-            }}
-            .total {{
-                text-align: right;
-                margin-top: 30px;
-            }}
-            .footer {{
-                margin-top: 50px;
-                font-size: 12px;
-                color: #888;
-            }}
+                    <html>
+                        <head>
+                            <meta charset='UTF-8'>
+                            <style>
+                                body {{
+                                    font-family: 'Arial', sans-serif;
+                                    margin: 40px;
+                                }}
+                                header {{
+                                    display: flex;
+                                    justify-content: space-between;
+                                    align-items: center;
+                                    border-bottom: 2px solid #87CEFA;
+                                    padding-bottom: 20px;
+                                    margin-bottom: 40px;
+                                }}
+                                header img.logo {{
+                                    height: 80px;
+                                    width: auto;
+                                }}
+                                header .company-details {{
+                                    text-align: right;
+                                }}
+                                .client-info {{
+                                    background-color: #f2f2f2;
+                                    padding: 10px;
+                                    margin-bottom: 20px;
+                                    border-radius: 5px;
+                                }}
+                                .invoice-details {{
+                                    margin-bottom: 40px;
+                                }}
+                                table {{
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                }}
+                                th, td {{
+                                    border: 1px solid black;
+                                    padding: 8px;
+                                    text-align: left;
+                                }}
+                                th {{
+                                    background-color: #f2f2f2;
+                                }}
+                                .total {{
+                                    text-align: right;
+                                    margin-top: 30px;
+                                }}
+                                .footer {{
+                                    margin-top: 50px;
+                                    font-size: 12px;
+                                    color: #888;
+                                }}
 
-            .highlighted {{
-      
-                background-color: #40E0D0;
-                color: white;
-                font-weight: bold;
-                border: 1px solid #40E0D0;
-            }}
-            
-        </style>
-    </head>
-    <body>
-        <header>
-            <img src='https://firebasestorage.googleapis.com/v0/b/proyectos-cb445.appspot.com/o/img_logo_athletix.png?alt=media&token=a32e429b-4ece-45d2-bf00-85a8f9081a9c&_gl=1*14iryjj*_ga*MTcyOTkyMjIwMS4xNjk2NDU2NzU2*_ga_CW55HF8NVT*MTY5ODAxNDc6Mi4yLjEuMTY5ODAxNDg0Ny40OC4wLjA.' alt='Logo' class='logo'/>
-            <div class='company-details'>
-                <strong>AthletiX</strong><br>
-                La Molina, Av. la Fontana 1250, Lima 15024<br>
-                Teléfono: +51 927572267<br>
-                Email: jesus_soria@usmp.pe
-            </div>
-        </header>
-        <div class='client-info'>
-            <strong>Información del Cliente:</strong><br>
-            <strong>Nombre:</strong> {cliente.Nombres} {cliente.Apellidos}<br>
-            <strong>Email:</strong> {cliente.Email}<br>
-        </div>
-        <div class='invoice-details'>
-            <strong>Factura N°: {id}</strong><br>
-            Fecha: {DateTime.Now.ToString("dd/MM/yyyy")}<br>
-            <strong>Estado del Pedido:</strong> {pedido.Status}
-        </div>
-        <table>
-            <tr>
-                <th>Producto</th>
-                <th>Descripción</th>
-                <th>Cantidad</th>
-                <th>Precio Unitario (S/)</th>
-                <th>Importe (S/)</th>
-            </tr>";
+                                .highlighted {{
+                        
+                                    background-color: #87CEFA;
+                                    color: black;
+                                    font-weight: bold;
+                                    border: 1px solid #87CEFA;
+                                }}
+                                
+                            </style>
+                        </head>
+                        <body>
+                            <header>
+                                <img src='https://firebasestorage.googleapis.com/v0/b/proyectos-cb445.appspot.com/o/img_logo_athletix.png?alt=media&token=a32e429b-4ece-45d2-bf00-85a8f9081a9c&_gl=1*14iryjj*_ga*MTcyOTkyMjIwMS4xNjk2NDU2NzU2*_ga_CW55HF8NVT*MTY5ODAxNDc6Mi4yLjEuMTY5ODAxNDg0Ny40OC4wLjA.' alt='Logo' class='logo'/>
+                                <div class='company-details'>
+                                    <strong>AthletiX</strong><br>
+                                    La Molina, Av. la Fontana 1250, Lima 15024<br>
+                                    Teléfono: +51 927572267<br>
+                                    Email: jesus_soria@usmp.pe
+                                </div>
+                            </header>
+                            <div class='client-info'>
+                                <strong>Información del Cliente:</strong><br>
+                                <strong>Nombre:</strong> {cliente.Nombres} {cliente.Apellidos}<br>
+                                <strong>Email:</strong> {cliente.Email}<br>
+                            </div>
+                            <div class='invoice-details'>
+                                <strong>Factura N°: {id}</strong><br>
+                                Fecha: {DateTime.Now.ToString("dd/MM/yyyy")}<br>
+                                <strong>Estado del Pedido:</strong> {pedido.Status}
+                            </div>
+                            <table>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Descripción</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio Unitario (S/)</th>
+                                    <th>Importe (S/)</th>
+                                </tr>";
 
-                foreach (var detalle in detalles)
-                {
-                    html += $@"
-    <tr>
-        <td>{detalle.NombreProducto}</td>
-        <td>{detalle.DescripcionProducto}</td>
-        <td>{detalle.Cantidad}</td>
-        <td>S/ {detalle.PrecioUnitario}</td>
-        <td>S/ {detalle.Importe}</td>
-    </tr>";
-                }
+                                    foreach (var detalle in detalles)
+                                    {
+                                        html += $@"
+                                        <tr>
+                                            <td>{detalle.NombreProducto}</td>
+                                            <td>{detalle.DescripcionProducto}</td>
+                                            <td>{detalle.Cantidad}</td>
+                                            <td>S/ {detalle.PrecioUnitario}</td>
+                                            <td>S/ {detalle.Importe}</td>
+                                        </tr>";
+                                    }
 
-                double subtotal = detalles.Sum(d => d.Importe);
-                double impuesto = 0; // Aquí puedes calcular el impuesto si lo tienes.
-                double descuento = 0; // Aquí puedes calcular el descuento si lo tienes.
-                double total = subtotal + impuesto - descuento;
+                                    double subtotal = detalles.Sum(d => d.Importe);
+                                    double impuesto = 0; // Aquí puedes calcular el impuesto si lo tienes.
+                                    double descuento = 0; // Aquí puedes calcular el descuento si lo tienes.
+                                    double total = subtotal + impuesto - descuento;
 
-                html += $@"
-    <tr>
-        <td colspan='4' style='text-align:right;'><strong>Subtotal:</strong></td>
-        <td>S/ {subtotal}</td>
-    </tr>
-    <tr>
-        <td colspan='4' style='text-align:right;'><strong>Impuesto:</strong></td>
-        <td>S/ {impuesto}</td>
-    </tr>
-    <tr>
-        <td colspan='4' style='text-align:right;'><strong>Descuento:</strong></td>
-        <td>S/ {descuento}</td>
-    </tr>
-    <tr class='highlighted'>
-        <td colspan='4' style='text-align:right;'><strong>Total:</strong></td>
-        <td >S/ {total}</td>
-    </tr>
-</table>
-<div class='footer'>
-    Gracias por su compra.
-</div>
-</body>
-</html>";
+                                    html += $@"
+                                    <tr>
+                                        <td colspan='4' style='text-align:right;'><strong>Subtotal:</strong></td>
+                                        <td>S/ {subtotal}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan='4' style='text-align:right;'><strong>Impuesto:</strong></td>
+                                        <td>S/ {impuesto}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan='4' style='text-align:right;'><strong>Descuento:</strong></td>
+                                        <td>S/ {descuento}</td>
+                                    </tr>
+                                    <tr class='highlighted'>
+                                        <td colspan='4' style='text-align:right;'><strong>Total:</strong></td>
+                                        <td >S/ {total}</td>
+                                    </tr>
+                            </table>
+                            <div class='footer'>
+                                Gracias por su compra.
+                            </div>
+                        </body>
+                    </html>";
 
                 var globalSettings = new GlobalSettings
                 {
