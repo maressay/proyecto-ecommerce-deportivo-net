@@ -1,0 +1,35 @@
+# Obtener todos los productos
+GET http://localhost:5052/api/productos
+
+# Obtener un producto por ID (reemplaza {id} con el ID del producto)
+GET http://localhost:5052/api/productos/{id}
+
+# Crear un nuevo producto
+POST http://localhost:5052/api/productos
+Content-Type: application/json
+
+{
+    "Nombre": "Nuevo Producto",
+    "Descripcion": "Descripción del nuevo producto",
+    "Imagen": "imagen.jpg",
+    "Precio": 19.99,
+    "Stock": 100,
+    "fechaCreacion": "2023-10-30T12:00:00"
+}
+
+# Actualizar un producto por ID (reemplaza {id} con el ID del producto)
+PUT http://localhost:5052/api/productos/22
+Content-Type: application/json
+
+{
+    "id": 22,
+    "Nombre": "Producto Actualizado",
+    "Descripcion": "Descripción actualizada",
+    "Imagen": "nueva-imagen.jpg",
+    "Precio": 29.99,
+    "Stock": 150,
+    "fechaActualizacion": "2023-10-30T14:30:00"
+}
+
+# Eliminar un producto por ID (reemplaza {id} con el ID del producto)
+DELETE http://localhost:5052/api/productos/{id}
