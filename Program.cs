@@ -11,6 +11,8 @@ using proyecto_ecommerce_deportivo_net.Models.Service;
 using DinkToPdf;
 using DinkToPdf.Contracts;
 
+using Microsoft.OpenApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHealthChecks();
@@ -72,6 +74,18 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ProductoService, ProductoService>();
 
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "API",
+        Version = "v1",
+        Description = "Descripción de la API"
+    });
+});
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -85,6 +99,20 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+// Generando la documentacion de la API
+
+app.UseSwagger();
+
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
+});
+
+/* LINK PARA PONERLO EN MI URL 
+CUANDO ESTA EJECUTADO EL PROYECTO 
+http://localhost:5052/swagger/index.html */
+
 
 app.UseHttpsRedirection();
 
