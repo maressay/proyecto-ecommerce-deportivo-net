@@ -12,6 +12,7 @@ using DinkToPdf;
 using DinkToPdf.Contracts;
 
 using Microsoft.OpenApi.Models;
+using proyecto_ecommerce_deportivo_net.Integrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,6 +74,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ProductoService, ProductoService>();
+builder.Services.AddScoped<CurrencyExchangeApiIntegration, CurrencyExchangeApiIntegration>();
+
 
 builder.Services.AddSwaggerGen(c =>
 {
