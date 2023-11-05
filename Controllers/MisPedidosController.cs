@@ -27,7 +27,7 @@ using System.IO;
 using System.Linq;
 using OfficeOpenXml.Table;
 using OfficeOpenXml.Style;
-using proyecto_ecommerce_deportivo_net.Models;
+
 using proyecto_ecommerce_deportivo_net.Models.Entity;
 using Microsoft.AspNetCore.Identity;
 
