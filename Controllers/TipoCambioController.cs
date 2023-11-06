@@ -35,6 +35,8 @@ namespace proyecto_ecommerce_deportivo_net.Controllers
         {
             double rate = await _currency.GetExchangeRate(tipoCambio.From, tipoCambio.To);
             var cambio = tipoCambio.Cantidad * rate;
+            ViewData["From"] = tipoCambio.From;
+            ViewData["To"] = tipoCambio.To;
             ViewData["rate"] = rate;
             ViewData["cambio"] = cambio;
             return View("Index");
