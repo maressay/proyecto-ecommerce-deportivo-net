@@ -38,26 +38,27 @@ DELETE http://localhost:5052/api/productos/{id}
 
 
 
+// USO DE LA API DE rapidapi.com
 
 
 GET https://weatherapi-com.p.rapidapi.com/current.json?q=-12.0464%2C-77.0428 HTTP/1.1
 Accept: application/json
-X-RapidAPI-Key: 0480f8b7a5mshe85c70b898a64c9p12b6eajsn98b3968305bb
+X-RapidAPI-Key: 0f60cfd355msh859001a93668e79p1ca0e3jsn94c365a6deee
 //X-RapidAPI-Host: weatherapi-com.p.rapidapi.com
 
 GET https://weatherapi-com.p.rapidapi.com/forecast.json?q=Lima&days=3 HTTP/1.1
 Accept: application/json
-X-RapidAPI-Key: 0480f8b7a5mshe85c70b898a64c9p12b6eajsn98b3968305bb
+X-RapidAPI-Key: 0f60cfd355msh859001a93668e79p1ca0e3jsn94c365a6deee
 
 
 GET https://weatherapi-com.p.rapidapi.com/sports.json?q=Lima HTTP/1.1
 Accept: application/json
-X-RapidAPI-Key: 0480f8b7a5mshe85c70b898a64c9p12b6eajsn98b3968305bb
+X-RapidAPI-Key: 0f60cfd355msh859001a93668e79p1ca0e3jsn94c365a6deee
 
 
 POST https://rapidprod-sendgrid-v1.p.rapidapi.com/mail/send HTTP/1.1
 Accept: application/json
-X-RapidAPI-Key: 0480f8b7a5mshe85c70b898a64c9p12b6eajsn98b3968305bb
+X-RapidAPI-Key: 0f60cfd355msh859001a93668e79p1ca0e3jsn94c365a6deee
 Content-Type: application/json
 
 {
@@ -65,10 +66,10 @@ Content-Type: application/json
         {
             "to": [
                 {
-                    "email": "fduartej@usmp.pe"
+                    "email": "john@example.com"
                 }
             ],
-            "subject": "Hello, World2!"
+            "subject": "Hello, World!"
         }
     ],
     "from": {
@@ -84,8 +85,9 @@ Content-Type: application/json
 
 GET https://currency-exchange.p.rapidapi.com/exchange?from=USD&to=PEN&q=1.0 HTTP/1.1
 Accept: application/json
-X-RapidAPI-Key: 0480f8b7a5mshe85c70b898a64c9p12b6eajsn98b3968305bb
+X-RapidAPI-Key: 0f60cfd355msh859001a93668e79p1ca0e3jsn94c365a6deee
 
 GET https://currency-exchange.p.rapidapi.com/exchange?from=PEN&to=USD&q=1.0 HTTP/1.1
 Accept: application/json
-X-RapidAPI-Key: 0480f8b7a5mshe85c70b898a64c9p12b6eajsn98b3968305bb
+X-RapidAPI-Key: 0f60cfd355msh859001a93668e79p1ca0e3jsn94c365a6deee
+
