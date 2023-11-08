@@ -76,6 +76,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ProductoService, ProductoService>();
 builder.Services.AddScoped<CurrencyExchangeApiIntegration, CurrencyExchangeApiIntegration>();
 
+builder.Services.AddScoped<WeatherAPIIntegration, WeatherAPIIntegration>();
+builder.Services.AddScoped<SendGridAPIIntegration, SendGridAPIIntegration>();
 
 builder.Services.AddSwaggerGen(c =>
 {
