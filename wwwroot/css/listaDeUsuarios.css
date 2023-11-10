@@ -103,9 +103,8 @@ td {
     border-radius: 0.5rem;
     box-shadow: var(--box-shadow);
     padding: 10px;
-
-    /* Agregar margen superior para separar del encabezado */
-    max-width: 100%;
+    width: 80%;
+    margin: 0 auto
 }
 
 .listar_product .table-product-form-container .Buscador span {
@@ -281,4 +280,9 @@ table, thead, tbody, tr, td, th {
 
 .Buscador {
     width: 100%;
+}
+
+.table {
+    width: 80%;
+    margin: 0 auto
 }
