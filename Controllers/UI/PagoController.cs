@@ -11,7 +11,7 @@ using proyecto_ecommerce_deportivo_net.Data;
 using proyecto_ecommerce_deportivo_net.Models;
 using proyecto_ecommerce_deportivo_net.Models.Entity;
 using System.Text;
-namespace proyecto_ecommerce_deportivo_net.Controllers
+namespace proyecto_ecommerce_deportivo_net.Controllers.UI
 {
 
     public class PagoController : Controller

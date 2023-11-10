@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using proyecto_ecommerce_deportivo_net.Data;
 using proyecto_ecommerce_deportivo_net.Models.Entity;
 
-namespace proyecto_ecommerce_deportivo_net.Controllers;
+namespace proyecto_ecommerce_deportivo_net.Controllers.UI;
 
 public class HomeController : Controller
 {

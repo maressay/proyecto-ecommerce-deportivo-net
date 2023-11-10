@@ -12,7 +12,7 @@ using proyecto_ecommerce_deportivo_net.Models;
 
 using System.Globalization;
 
-namespace proyecto_ecommerce_deportivo_net.Controllers
+namespace proyecto_ecommerce_deportivo_net.Controllers.UI
 {
 
     public class EstadisticaController : Controller

@@ -39,7 +39,7 @@ using proyecto_ecommerce_deportivo_net.Models.Entity;
 
 using proyecto_ecommerce_deportivo_net.Models.DTO;
 using proyecto_ecommerce_deportivo_net.Models.Service;
-namespace proyecto_ecommerce_deportivo_net.Controllers
+namespace proyecto_ecommerce_deportivo_net.Controllers.UI
 {
     public class AdminController : Controller
     {

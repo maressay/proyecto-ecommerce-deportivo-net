@@ -10,7 +10,7 @@ using proyecto_ecommerce_deportivo_net.Models;
 using proyecto_ecommerce_deportivo_net.DTO;
 using proyecto_ecommerce_deportivo_net.Data;
 
-namespace proyecto_ecommerce_deportivo_net.Controllers
+namespace proyecto_ecommerce_deportivo_net.Controllers.UI
 {
 
     public class TipoCambioController : Controller

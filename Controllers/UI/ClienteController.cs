@@ -12,7 +12,7 @@ using proyecto_ecommerce_deportivo_net.Models;
 using proyecto_ecommerce_deportivo_net.Models.DTO;
 using proyecto_ecommerce_deportivo_net.Models.Validator;
 
-namespace proyecto_ecommerce_deportivo_net.Controllers
+namespace proyecto_ecommerce_deportivo_net.Controllers.UI
 {
     public class ClienteController : Controller
     {private readonly ILogger<ClienteController> _logger;

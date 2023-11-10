@@ -11,7 +11,7 @@ using proyecto_ecommerce_deportivo_net.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
-namespace proyecto_ecommerce_deportivo_net.Controllers
+namespace proyecto_ecommerce_deportivo_net.Controllers.UI
 {
     public class NoClienteController : Controller
     {
