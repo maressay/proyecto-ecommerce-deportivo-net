@@ -40,22 +40,31 @@ DELETE http://localhost:5052/api/productos/{id}
 
 // USO DE LA API DE rapidapi.com
 
-
+//Esta consulta obtiene la información del clima actual para una ubicación específica 
+//(en este caso, las coordenadas corresponden a Lima, Perú). Devuelve datos como la temperatura, 
+//humedad, velocidad del viento, etc.
 GET https://weatherapi-com.p.rapidapi.com/current.json?q=-12.0464%2C-77.0428 HTTP/1.1
 Accept: application/json
 X-RapidAPI-Key: 0f60cfd355msh859001a93668e79p1ca0e3jsn94c365a6deee
 //X-RapidAPI-Host: weatherapi-com.p.rapidapi.com
 
+
+//Esta solicitud obtiene el pronóstico del clima para los próximos 3 días para la ciudad de Lima. 
+//Incluye información detallada como pronósticos diarios, condiciones climáticas esperadas, etc.
 GET https://weatherapi-com.p.rapidapi.com/forecast.json?q=Lima&days=3 HTTP/1.1
 Accept: application/json
 X-RapidAPI-Key: 0f60cfd355msh859001a93668e79p1ca0e3jsn94c365a6deee
 
-
+//Esta consulta proporciona información sobre las condiciones climáticas relacionadas con 
+//actividades deportivas en una ubicación específica (Lima, en este caso). Puede incluir 
+//detalles como la idoneidad del clima para diferentes deportes.
 GET https://weatherapi-com.p.rapidapi.com/sports.json?q=Lima HTTP/1.1
 Accept: application/json
 X-RapidAPI-Key: 0f60cfd355msh859001a93668e79p1ca0e3jsn94c365a6deee
 
-
+//Esta es una solicitud para enviar un correo electrónico a través de la API de SendGrid. 
+//La solicitud incluye el destinatario, el asunto y el contenido del correo electrónico. 
+//Es útil para enviar notificaciones, confirmaciones, etc.
 POST https://rapidprod-sendgrid-v1.p.rapidapi.com/mail/send HTTP/1.1
 Accept: application/json
 X-RapidAPI-Key: 0f60cfd355msh859001a93668e79p1ca0e3jsn94c365a6deee
@@ -83,6 +92,7 @@ Content-Type: application/json
     ]
 }
 
+//Consulta de Tasa de Cambio de Divisas (USD a PEN y PEN a USD):
 GET https://currency-exchange.p.rapidapi.com/exchange?from=USD&to=PEN&q=1.0 HTTP/1.1
 Accept: application/json
 X-RapidAPI-Key: 0f60cfd355msh859001a93668e79p1ca0e3jsn94c365a6deee
