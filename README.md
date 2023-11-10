@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
+</p>
+
 # Ecommerce Tienda Deportiva
 
 Prueba de docker con web service, realizare un merge de mi rama
@@ -49,3 +53,19 @@ probando probando xdxd
 En la rama 4-carrito-de-compras arregle el logo de los metodos de exportacion de pdf para productos, usuarios, y pedidos.
 
 Tambien añadi una vista que luego la programare para que se muestren graficos estadisticos de lineas de tiempo mostrando las ventas del mes o semanales xdxd
+
+## IMAGEN DE LA FACTURA O PEDIDO Nro 5 de AthletiX
+EN PDF
+![Alt text](image-3.png)
+
+EN EXCEL
+![Alt text](image-2.png)
+
+Dandole creditos a kristell xd
+
+Dandole creditos a kristell x2 xd
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
+</p>
+

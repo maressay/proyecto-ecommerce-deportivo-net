@@ -11,7 +11,7 @@
 
 @if (TempData["MessageDeRespuesta"] != null)
 {
-    <div class="alert alert-danger" style="font-size: 15px; padding: 10px;">
+    <div class="alert alert-danger" id="MensajesVerdeRojo">
         @TempData["MessageDeRespuesta"]
     </div>
 }
@@ -121,9 +121,9 @@
         border-radius: 0.5rem;
         box-shadow: var(--box-shadow);
         padding: 10px;
-
+        margin: 0 auto;
+        width: 80%;
         /* Agregar margen superior para separar del encabezado */
-        max-width: 140rem;
     }
 
     .listar_pedido .table-pedido-form-container .Buscador span {
@@ -282,6 +282,10 @@
         color: white;
     }
 
+    .table {
+        width: 80%;
+        margin: 0 auto;
+    }
     /* hasta aqui */
 </style>
 <!---------------------------- listar pedidos stars  ---------------------------->
@@ -307,7 +311,7 @@
                 class="btnExcel">Exportar en Excel</a>
         </div>
         <br>
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <th>Código Pedido</th>

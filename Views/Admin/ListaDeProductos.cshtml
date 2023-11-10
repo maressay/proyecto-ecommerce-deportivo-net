@@ -11,7 +11,7 @@
 
 @if (TempData["MessageDeRespuesta"] != null)
 {
-    <div class="alert alert-danger" style="font-size: 15px; padding: 10px;">
+    <div class="alert alert-danger" id="MensajesVerdeRojo">
         @TempData["MessageDeRespuesta"]
     </div>
 }
@@ -99,6 +99,11 @@
         color: white;
     }
 
+    .table {
+        width: 100%;
+        margin: 0 auto;
+    }
+
     .table-product-form-container tr:nth-child(even) {
         background-color: #ddd;
     }
@@ -123,7 +128,6 @@
         padding: 10px;
 
         /* Agregar margen superior para separar del encabezado */
-        max-width: 140rem;
     }
 
     .listar_product .table-product-form-container .Buscador span {
@@ -313,7 +317,7 @@
                 class="btnExcel">Exportar en Excel</a>
         </div>
         <br>
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <th>Código</th>

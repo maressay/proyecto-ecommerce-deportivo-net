@@ -1,0 +1,93 @@
+# Obtener todos los productos
+GET http://localhost:5052/api/productos
+
+# Obtener un producto por ID (reemplaza {id} con el ID del producto)
+GET http://localhost:5052/api/productos/{id}
+
+# Crear un nuevo producto
+POST http://localhost:5052/api/productos
+Content-Type: application/json
+
+{
+    "Nombre": "Nuevo Producto",
+    "Descripcion": "Descripción del nuevo producto",
+    "Imagen": "imagen.jpg",
+    "Precio": 19.99,
+    "Stock": 100,
+    "fechaCreacion": "2023-10-30T12:00:00"
+}
+
+# Actualizar un producto por ID (reemplaza {id} con el ID del producto)
+PUT http://localhost:5052/api/productos/22
+Content-Type: application/json
+
+{
+    "id": 22,
+    "Nombre": "Producto Actualizado",
+    "Descripcion": "Descripción actualizada",
+    "Imagen": "nueva-imagen.jpg",
+    "Precio": 29.99,
+    "Stock": 150,
+    "fechaActualizacion": "2023-10-30T14:30:00"
+}
+
+# Eliminar un producto por ID (reemplaza {id} con el ID del producto)
+DELETE http://localhost:5052/api/productos/{id}
+
+
+
+
+
+// USO DE LA API DE rapidapi.com
+
+
+GET https://weatherapi-com.p.rapidapi.com/current.json?q=-12.0464%2C-77.0428 HTTP/1.1
+Accept: application/json
+X-RapidAPI-Key: 0f60cfd355msh859001a93668e79p1ca0e3jsn94c365a6deee
+//X-RapidAPI-Host: weatherapi-com.p.rapidapi.com
+
+GET https://weatherapi-com.p.rapidapi.com/forecast.json?q=Lima&days=3 HTTP/1.1
+Accept: application/json
+X-RapidAPI-Key: 0f60cfd355msh859001a93668e79p1ca0e3jsn94c365a6deee
+
+
+GET https://weatherapi-com.p.rapidapi.com/sports.json?q=Lima HTTP/1.1
+Accept: application/json
+X-RapidAPI-Key: 0f60cfd355msh859001a93668e79p1ca0e3jsn94c365a6deee
+
+
+POST https://rapidprod-sendgrid-v1.p.rapidapi.com/mail/send HTTP/1.1
+Accept: application/json
+X-RapidAPI-Key: 0f60cfd355msh859001a93668e79p1ca0e3jsn94c365a6deee
+Content-Type: application/json
+
+{
+    "personalizations": [
+        {
+            "to": [
+                {
+                    "email": "john@example.com"
+                }
+            ],
+            "subject": "Hello, World!"
+        }
+    ],
+    "from": {
+        "email": "from_address@example.com"
+    },
+    "content": [
+        {
+            "type": "text/plain",
+            "value": "Hello, World!"
+        }
+    ]
+}
+
+GET https://currency-exchange.p.rapidapi.com/exchange?from=USD&to=PEN&q=1.0 HTTP/1.1
+Accept: application/json
+X-RapidAPI-Key: 0f60cfd355msh859001a93668e79p1ca0e3jsn94c365a6deee
+
+GET https://currency-exchange.p.rapidapi.com/exchange?from=PEN&to=USD&q=1.0 HTTP/1.1
+Accept: application/json
+X-RapidAPI-Key: 0f60cfd355msh859001a93668e79p1ca0e3jsn94c365a6deee
+

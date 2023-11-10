@@ -3,12 +3,27 @@
 @{
     ViewData["Title"] = "Registro";
 }
-<br>
-<h1>@ViewData["Title"]</h1>
 
-<div class="row">
-    <div class="col-md-4">
+<style>
+    .contenedor-register {
+        width: 50%;
+        margin: 0 auto;
+    }
+
+    @@media (width <=800px) {
+        .contenedor-register {
+            width: 100%;
+            margin: 0 auto;
+        }
+    }
+</style>
+
+<br>
+
+<div class="row contenedor-register">
+    <div class="col-md-7">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h1>@ViewData["Title"]</h1>
             <h2>Crea una cuenta nueva.</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
@@ -47,7 +62,7 @@
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registrar</button>
         </form>
     </div>
-    <div class="col-md-6 col-md-offset-2">
+    <div class="col-md-5 col-md-offset-2">
         <section>
             <h3>Utilice otro servicio para registrarse.</h3>
             <hr />

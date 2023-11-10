@@ -1,0 +1,362 @@
+@{
+    ViewData["Title"] = "Graficos de Estadisticas";
+}
+
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
+
+    :root {
+        --my-blue: #0074E4;
+        --light-my-blue: #6FA6FF;
+        /* Aquí defines el tono más claro */
+        --yellow: #40E0D0;
+        --light-yellow: hsl(177, 72%, 70%);
+        --amarillo: #f9d806;
+        --light-amarillo: #ffee80;
+        --rojo: #FF0000;
+        --light-rojo: #FFAFAF;
+        --verde: #369681;
+        --light-verde: #00B050;
+        --black: #130f40;
+        --light-color: #666;
+        --border: .1rem solid rgba(0, 0, 0, .1);
+        --box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
+        --outline: .1rem solid rgba(0, 0, 0, .1);
+        /* lineas agregadas */
+        --outline-hover: .2rem solid var(--black);
+    }
+
+    * {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        outline: none;
+        border: none;
+        text-decoration: none;
+     
+        transition: all .2s linear;
+    }
+
+    /* PROBANDO EL CODIGO DE YASSER */
+
+    .links_admin a {
+        text-decoration: none;
+        color: var(--black);
+    }
+
+    .links_admin {
+        padding: 0;
+        list-style: circle;
+        margin-bottom: 40px;
+    }
+
+    .contenedor_links_admin {
+        padding-top: 70px;
+        padding-left: 30px;
+        height: 100vh;
+        width: 240px;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        background-color: var(--light-yellow);
+
+        font-size: 18px;
+    }
+
+    .contenedor_links_admin a:hover {
+        color: var(--rojo);
+    }
+
+    .contenedor-cosas {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        /* Ajusta las filas según sea necesario */
+        width: 50%;
+        margin: 0 auto;
+    }
+
+    .cards-contadores {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin-bottom: 50px;
+        /* Ajusta este valor según tus necesidades */
+    }
+
+
+    .card {
+        background-color: #0d0d0e;
+        padding: 1rem;
+        /* Ajusta el padding */
+        border-radius: 8px;
+        color: var(--black);
+        text-align: center;
+        min-width: 180px;
+        /* Establece un ancho mínimo */
+        max-width: 25%;
+        /* Establece un ancho máximo */
+        /* height: 200px; */
+        /* Comentado para permitir que la altura se ajuste automáticamente */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        overflow: auto;
+        /* Agrega barras de desplazamiento si es necesario */
+    }
+
+    .card h3 {
+        margin: 0;
+        font-size: 1rem;
+        /* Usa unidades relativas */
+        width: 100%;
+        /* Ocupa todo el ancho disponible */
+        overflow-wrap: break-word;
+        /* Rompe palabras largas */
+    }
+
+    .card .contador {
+        font-size: 2rem;
+        /* Usa unidades relativas */
+        font-weight: bold;
+        width: 100%;
+        /* Ocupa todo el ancho disponible */
+        overflow-wrap: break-word;
+        /* Rompe palabras largas */
+    }
+
+    .contenedor-cosas .cards-contadores:first-child {
+        margin-bottom: 2rem;
+    }
+
+    .contenedor-cosas .cards-contadores .card {
+        background: linear-gradient(to bottom, #ffffff, #eeeeee);
+        border-radius: 1rem;
+        text-align: center;
+        padding: 3rem 2rem;
+        outline-offset: -1rem;
+        outline: var(--outline);
+        box-shadow: var(--box-shadow);
+        transition: .2s linear;
+    }
+
+    .contenedor-cosas .cards-contadores .card:hover {
+        outline-offset: 0rem;
+        outline: var(--outline-hover);
+    }
+
+    /* graficos
+        .grafico {
+            Ocupar la mitad del espacio disponible
+            flex: 1;
+            text-align: center;
+            Centrar el contenido
+            Añadir espacio superior 
+            height: auto;
+            Elimina la altura fija para que se ajuste automáticamente
+        }*/
+
+    /* Estilo CSS para ajustar el tamaño del gráfico */
+    .miGraficoDeLineas {
+
+        /* Ocupar todas las columnas disponibles */
+        text-align: center;
+        /* Centrar el contenido */
+        /* Añadir espacio superior */
+        height: 25rem;
+
+        display: grid;
+        /* Establece el contenedor como un grid container */
+        grid-template-columns: 1fr 1fr;
+        /* Divide el espacio en dos columnas iguales */
+        gap: 20px;
+        /* Espacio entre los elementos */
+    }
+</style>
+
+
+<br><br>
+<!---------------------------- graficos stars  ---------------------------->
+<div class="contenedor-cosas">
+
+    <div>
+
+        <div class="grafico">
+            <div class="miGraficoDeLineas">
+                <canvas id="clientesChart"></canvas>
+                <canvas id="productosChart"></canvas>
+                <canvas id="ventasMensualesChart"></canvas>
+                <canvas id="ventasSemanalesLineChart"></canvas>
+            </div>
+        </div>
+        <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+        <div class="cards-contadores">
+            <div class="card">
+                <h3>Clientes totales</h3>
+                <h3 class="contador">@ViewBag.TotalClientes</h3>
+            </div>
+            <div class="card">
+                <h3>Productos totales</h3>
+                <h3 class="contador">@ViewBag.TotalProductos</h3>
+            </div>
+            <div class="card">
+                <h3>Pedidos totales</h3>
+                <h3 class="contador">@ViewBag.TotalPedidos</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---------------------------- graficos ends  ---------------------------->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Gráfico de Clientes
+        function initClientesChart(data) {
+            var ctx = document.getElementById('clientesChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Clientes Registrados'],
+                    datasets: [{
+                        label: 'Total de Clientes',
+                        data: [data.totalClientes],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                }
+            });
+        }
+
+        // Gráfico de Productos más vendidos
+        function initProductosChart(data) {
+            var ctx = document.getElementById('productosChart').getContext('2d');
+            var nombres = data.map(p => p.nombre);
+            var ventas = data.map(p => p.totalVentas);
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: nombres,
+                    datasets: [{
+                        label: 'Ventas por Producto',
+                        data: ventas,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                }
+            });
+        }
+
+        // Gráfico de Ventas Mensuales
+        function initVentasMensualesChart(data) {
+            console.log(data);  // <-- Agrega esta línea
+
+            var ctx = document.getElementById('ventasMensualesChart').getContext('2d');
+            var nombresMes = data.map(d => d.mes);
+            var ventasT = data.map(d => d.totalVentas);
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: nombresMes,
+                    datasets: [{
+                        label: 'Ventas Mensuales',
+                        data: ventasT,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                }
+            });
+        }
+
+        function initVentasMensualesLineChart(data) {
+            var ctx = document.getElementById('ventasMensualesLineChart').getContext('2d');
+            var nombresMes = data.map(d => d.mes);
+            var ventasT = data.map(d => d.totalVentas);
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: nombresMes,
+                    datasets: [{
+                        label: 'Ventas Mensuales De Linea De Tiempo',
+                        data: ventasT,
+                        fill: false, // Esto asegura que el área bajo la línea no esté coloreada
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(75, 192, 192, 1)'
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function initVentasSemanalesLineChart(data) {
+            var ctx = document.getElementById('ventasSemanalesLineChart').getContext('2d');
+            var semanas = data.map(d => d.semana);
+            var ventasT = data.map(d => d.totalVentas);
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: semanas,
+                    datasets: [{
+                        label: 'Ventas Semanales De Linea De Tiempo',
+                        data: ventasT,
+                        fill: false, // Esto asegura que el área bajo la línea no esté coloreada
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(75, 192, 192, 1)'
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Obtener datos y inicializar gráficos
+        fetch('/AthetiX/Estadistica/TotalClientesRegistrados')
+            .then(response => response.json())
+            .then(data => {
+                initClientesChart(data);
+            });
+
+        fetch('/AthetiX/Estadistica/ProductosMasVendidos')
+            .then(response => response.json())
+            .then(data => {
+                initProductosChart(data);
+            });
+
+        fetch('/AthetiX/Estadistica/VentasMensuales')
+            .then(response => response.json())
+            .then(data => {
+                initVentasMensualesChart(data);
+                //initVentasMensualesLineChart(data);
+            });
+
+        fetch('/AthetiX/Estadistica/VentasSemanales')
+            .then(response => response.json())
+            .then(data => {
+                initVentasSemanalesLineChart(data);
+            });
+
+    });
+</script>
