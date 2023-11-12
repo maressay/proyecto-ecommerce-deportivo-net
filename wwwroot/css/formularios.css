@@ -120,6 +120,10 @@
 
 /* Media Queries */
 @media (max-width: 600px) {
+    .formulario{
+        background-color: white;
+    }
+
     #title h1 {
         font-size: 3.75rem;
     }
