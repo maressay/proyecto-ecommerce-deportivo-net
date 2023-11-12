@@ -1,8 +1,35 @@
 ﻿@page
 @model ConfirmEmailModel
 @{
-    ViewData["Title"] = "Confirmar correo electrónico";
+    ViewData["Title"] = "¡Gracias por confirmar su correo electrónico.!";
 }
 
-<h1>@ViewData["Title"]</h1>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+<head>
+    <link rel="stylesheet" href="~/css/formularios.css" />
+    <link rel="stylesheet" href="~/css/login.css" />
+</head>
+
+<div class="formulario">
+    <form method="post">
+        <div id="title">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        <div class="imagen">
+            <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaBX83ROT4qeY1GZGs995skh3VMJ0wkMQE7hVisHwcSIzL7HKCmJIXP5FbYgioS0tDzOXPzpVY7QAiwSNcZMs6ERZ10o3A=w1908-h897">
+        </div>
+    </form>
+</div>
+
+<style>
+    .imagen{
+        margin: 2rem;
+    }
+    .imagen img{
+        border-radius: 2rem;
+        width: 60%;
+        height: 60%;
+    }
+    #confirm-link{
+        font-size: 18px;
+    }
+</style>
