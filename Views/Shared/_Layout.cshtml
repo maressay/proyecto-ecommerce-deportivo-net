@@ -90,8 +90,10 @@
                     </style>
                 }
                 <div class="icono-login">
-                    <a class="fas fa-user" style="text-decoration: none;" asp-controller="Cliente"
-                        asp-action="EditarUsuario" asp-route-id="@UserManager.GetUserId(User)"></a>
+                    <!--<a class="fas fa-user" style="text-decoration: none;" asp-controller="Cliente"
+                        asp-action="EditarUsuario" asp-route-id="@UserManager.GetUserId(User)"></a>-->
+
+                    <a class="fas fa-user" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"></a>
                 </div>
                 @*
             <div class="icono-logout">
