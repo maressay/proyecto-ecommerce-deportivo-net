@@ -1,8 +1,11 @@
 @model proyecto_ecommerce_deportivo_net.Models.Entity.CarritoViewModel
+@inject proyecto_ecommerce_deportivo_net.Integrations.CurrencyExchangeApiIntegration CurrencyExchangeService
+
 @using System.Collections.Generic;
 @using Microsoft.AspNetCore.Mvc.ViewFeatures
 @{
     ViewData["Title"] = "Carrito de compras";
+    var totalEnUSD = Model.Total / await CurrencyExchangeService.GetExchangeRate("PEN", "USD");
 }
 
 <Style>
@@ -274,7 +277,7 @@
 
                 <tr>
                     <td>Total</td>
-                    <td id="total">S/. @Model.Total.ToString("F2")</td>
+                    <td id="total">S/. @Model.Total.ToString("F2") (USD @totalEnUSD.ToString("F2"))</td>
                 </tr>
             </table>
         </div>

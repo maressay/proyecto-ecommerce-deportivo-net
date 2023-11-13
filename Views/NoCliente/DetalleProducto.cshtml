@@ -1,6 +1,10 @@
 @model proyecto_ecommerce_deportivo_net.Models.Producto
+
+@inject proyecto_ecommerce_deportivo_net.Integrations.CurrencyExchangeApiIntegration CurrencyExchangeService
+
 @{
 	ViewData["Title"] = "Detalle Producto";
+	var precioEnUSD = Model.Precio / await CurrencyExchangeService.GetExchangeRate("PEN", "USD");
 }
 <link rel="stylesheet" href="~/css/detalleproducto.css" />
 
@@ -20,7 +24,7 @@
 			<div class="contenedores">
 				<div id="text-all">
 					<h1 id="nom-prod">@Html.DisplayFor(model => model.Nombre)</h1>
-					<h4 id="price">Precio: S/. @Html.DisplayFor(model => model.Precio)</h4>
+					<h4 id="price">Precio: S/. @Html.DisplayFor(model => model.Precio) (USD @precioEnUSD.ToString("F2"))</h4>
 					<h3 id="stock">Stock: @Html.DisplayFor(model => model.Stock)</h3>
 
 					<div id="formulario">
