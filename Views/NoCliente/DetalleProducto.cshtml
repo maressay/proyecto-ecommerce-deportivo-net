@@ -4,7 +4,7 @@
 
 @{
 	ViewData["Title"] = "Detalle Producto";
-	var precioEnUSD = Model.Precio / await CurrencyExchangeService.GetExchangeRate("PEN", "USD");
+	var precioEnUSD = Model.Precio * await CurrencyExchangeService.GetExchangeRate("PEN", "USD");
 }
 <link rel="stylesheet" href="~/css/detalleproducto.css" />
 
