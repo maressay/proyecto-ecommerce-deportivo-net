@@ -81,13 +81,22 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
         /// Este método es esencial para entender cómo manejar transacciones y operaciones
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Pagar(Pago pago)
+        public async Task<IActionResult> Pagar(Pago pago, string cardNumber, string cardName, string cardMonth, string cardYear, string cardCvv, string shipping)
         {
             Pedido pedido = null; // Declarar pedido fuera del bloque using para usarlo después en el correo electrónico
             using (var transaction = _context.Database.BeginTransaction()) // Iniciar transacción
             {
                 try
                 {
+                    /* ESTO LE AÑADI */
+                    pago.NumeroTarjeta = cardNumber;
+                    pago.NombreTarjeta = cardName;
+
+                    pago.DueDateYYMM = cardMonth + "/" + cardYear;
+                    pago.Cvv = cardCvv;
+
+                    /* ESTO LE AÑADI */
+
                     pago.PaymentDate = DateTime.UtcNow;
                     _context.Add(pago);
 
@@ -146,7 +155,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
 
                     transaction.Commit(); // Confirmar transacción
 
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -158,7 +167,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
                 }
             }
 
-             // Si llegamos aquí, la transacción fue exitosa
+            // Si llegamos aquí, la transacción fue exitosa
             if (pedido != null) // Asegúrate de que pedido no es null
             {
                 try
