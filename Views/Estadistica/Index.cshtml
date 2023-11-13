@@ -34,7 +34,7 @@
         outline: none;
         border: none;
         text-decoration: none;
-     
+
         transition: all .2s linear;
     }
 
@@ -66,13 +66,25 @@
         color: var(--rojo);
     }
 
+    .contenedor-flex {
+        display: flex;
+        justify-content: center;
+        /* Centra horizontalmente */
+        align-items: center;
+        /* Centra verticalmente */
+        height: 100vh;
+        /* Altura del contenedor */
+        margin-top: 20px; /* Añade un espacio en la parte superior */
+    /* Puedes ajustar el valor de 20px según tus necesidades */
+    }
+
     .contenedor-cosas {
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
-        /* Ajusta las filas según sea necesario */
-        width: 50%;
-        margin: 0 auto;
+    
+        /* Ajusta según necesidad, pero no 100% */
+        /* margin: 0 auto; ya no es necesario debido a flex en el contenedor */
     }
 
     .cards-contadores {
@@ -80,7 +92,7 @@
         align-items: center;
         flex-wrap: wrap;
         justify-content: space-around;
-        margin-bottom: 50px;
+        margin-bottom: 60px;
         /* Ajusta este valor según tus necesidades */
     }
 
@@ -178,36 +190,35 @@
 
 <br><br>
 <!---------------------------- graficos stars  ---------------------------->
-<div class="contenedor-cosas">
-
-    <div>
-
-        <div class="grafico">
-            <div class="miGraficoDeLineas">
-                <canvas id="clientesChart"></canvas>
-                <canvas id="productosChart"></canvas>
-                <canvas id="ventasMensualesChart"></canvas>
-                <canvas id="ventasSemanalesLineChart"></canvas>
+<div class="contenedor-flex">
+    <div class="contenedor-cosas">
+        <div>
+            <div class="grafico">
+                <div class="miGraficoDeLineas">
+                    <canvas id="clientesChart"></canvas>
+                    <canvas id="productosChart"></canvas>
+                    <canvas id="ventasMensualesChart"></canvas>
+                    <canvas id="ventasSemanalesLineChart"></canvas>
+                </div>
             </div>
-        </div>
-        <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
-        <div class="cards-contadores">
-            <div class="card">
-                <h3>Clientes totales</h3>
-                <h3 class="contador">@ViewBag.TotalClientes</h3>
-            </div>
-            <div class="card">
-                <h3>Productos totales</h3>
-                <h3 class="contador">@ViewBag.TotalProductos</h3>
-            </div>
-            <div class="card">
-                <h3>Pedidos totales</h3>
-                <h3 class="contador">@ViewBag.TotalPedidos</h3>
+            <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+            <div class="cards-contadores">
+                <div class="card">
+                    <h3>Clientes totales</h3>
+                    <h3 class="contador">@ViewBag.TotalClientes</h3>
+                </div>
+                <div class="card">
+                    <h3>Productos totales</h3>
+                    <h3 class="contador">@ViewBag.TotalProductos</h3>
+                </div>
+                <div class="card">
+                    <h3>Pedidos totales</h3>
+                    <h3 class="contador">@ViewBag.TotalPedidos</h3>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 <!---------------------------- graficos ends  ---------------------------->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
