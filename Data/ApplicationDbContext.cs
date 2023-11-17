@@ -22,4 +22,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser> {
     public DbSet<Pedido> DataPedido { get; set; }
 
     public DbSet<DetallePedido> DataDetallePedido { get; set; }
+
+
+
+    /* EN AQUI SE CREA Y SE CONECTA NUESTRA APLICACION CON LA BASE DE DATOS POSGRESS QUE ESTA EN LA NUBE USANDO RENDER */
 }
