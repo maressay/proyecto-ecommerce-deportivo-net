@@ -71,7 +71,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
             else
             {
                 int pageNumber = (page ?? 1); // Si no se especifica la página, asume la página 1
-                int pageSize = 3; // Máximo 3 pedidos por página
+                int pageSize = 10; // Máximo 10 pedidos por página
 
                 pageNumber = Math.Max(pageNumber, 1); // Con esto se asegura de que pageNumber nunca sea menor que 1
 
