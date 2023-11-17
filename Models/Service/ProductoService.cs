@@ -104,5 +104,9 @@ namespace proyecto_ecommerce_deportivo_net.Models.Service
             return (_context.Producto?.Any(e => e.id == id)).GetValueOrDefault();
         }
 
+        /* EL CRUD DE PRODUCTOS ESTA HECHO USANDO APIS, Y ESTE CRUD YA TIENE SU DOCUMENTACION
+        EN EL PROGRAM.CS ESTA EL LINK PARA CUANDO ESTE EEJCUTADO PUEDAN VERLO,
+        https://athletix.onrender.com/swagger/index.html  AQUI ESTA PARA QUE PUEDAN VERLO EN LA NUBE */
+
     }
 }
