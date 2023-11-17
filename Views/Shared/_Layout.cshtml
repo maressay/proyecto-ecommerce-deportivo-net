@@ -91,9 +91,9 @@
                 }
                 <div class="icono-login">
                     <!--<a class="fas fa-user" style="text-decoration: none;" asp-controller="Cliente"
-                        asp-action="EditarUsuario" asp-route-id="@UserManager.GetUserId(User)"></a>-->
+                                asp-action="EditarUsuario" asp-route-id="@UserManager.GetUserId(User)"></a>-->
 
-                    <a class="fas fa-user" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"></a>
+                    <a class="fas fa-user" style="text-decoration: none;" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"></a>
                 </div>
                 @*
             <div class="icono-logout">
@@ -161,22 +161,32 @@
                 <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Index"> <i
                         class="fas fa-arrow-right"></i>
                     Principal</a>
-                <a id="detalles-footer" asp-area="" asp-controller="NoCliente" asp-action="Catalogo"> <i class="fas fa-arrow-right"></i>
-                    Catálogo de Productos </a>
-                <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Index"> <i class="fas fa-arrow-right"></i> 
+                @if (!SignInManager.IsSignedIn(User) || !roles.Contains("Admin"))
+                {
+                    <a id="detalles-footer" asp-area="" asp-controller="NoCliente" asp-action="Catalogo"> <i
+                            class="fas fa-arrow-right"></i>
+                        Catálogo de Productos </a>
+                }
+                <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Index"> <i
+                        class="fas fa-arrow-right"></i>
                     Descripción</a>
                 <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Index"> <i
                         class="fas fa-arrow-right"></i>
                     Misión y Visión </a>
-                <a id="detalles-footer" asp-area="" asp-controller="Contacto" asp-action="Index"> <i class="fas fa-arrow-right"></i>
-                    Contáctanos </a>
+                @if (!SignInManager.IsSignedIn(User) || !roles.Contains("Admin"))
+                {
+                    <a id="detalles-footer" asp-area="" asp-controller="Contacto" asp-action="Index"> <i
+                            class="fas fa-arrow-right"></i>
+                        Contáctanos </a>
+                }
             </div>
 
             <div class="box">
                 <h3>Datos De Contacto</h3>
                 <a id="detalles-footer"> <i class="fas fa-phone"></i> +51 927 572 267 </a>
                 <a id="detalles-footer"> <i class="fas fa-envelope"></i> jesus_soria@usmp.pe </a>
-                <a id="detalles-footer"> <i class="fas fa-map-marker-alt"></i> La Molina, Av. la Fontana 1250, Lima 15024 </a>
+                <a id="detalles-footer"> <i class="fas fa-map-marker-alt"></i> La Molina, Av. la Fontana 1250, Lima
+                    15024 </a>
             </div>
 
             <div class="box">
