@@ -887,6 +887,8 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
             return View();
         }
 
+        /* EN ESTE CONTROLADOR SE MANEJA EL CRUD DE LOS PRODUCTOS USANDO EL SERVICIO DE NUESTRA API */
+
     }
 
 }
