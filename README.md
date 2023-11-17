@@ -67,6 +67,8 @@ Dandole creditos a kristell x2 xd
 
 En el Shared --> _Layout.cshhtml ya esta asignada la logica para delegar que vera un administrador y un cliente de acuerdo a su rol que se le asigno en la base de datos de la tabla de roles y de usuarios en nuestro dbeaver xd
 
+El login para usuarios ya esta terminado, se pueden registrar clientes llenando un formulario o con su cuenta de google si asi lo quiere el cliente xd
+
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
