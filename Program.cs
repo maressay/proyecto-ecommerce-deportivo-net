@@ -74,6 +74,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ProductoService, ProductoService>();
+
+builder.Services.AddScoped<ContactanosService, ContactanosService>();
 builder.Services.AddScoped<CurrencyExchangeApiIntegration, CurrencyExchangeApiIntegration>();
 
 builder.Services.AddScoped<WeatherAPIIntegration, WeatherAPIIntegration>();
