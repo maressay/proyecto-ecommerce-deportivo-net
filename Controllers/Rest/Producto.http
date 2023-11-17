@@ -101,3 +101,41 @@ GET https://currency-exchange.p.rapidapi.com/exchange?from=PEN&to=USD&q=1.0 HTTP
 Accept: application/json
 X-RapidAPI-Key: 0f60cfd355msh859001a93668e79p1ca0e3jsn94c365a6deee
 
+
+
+// API DE CONTACTANOS
+
+
+GET http://localhost:5052/api/contactos
+
+# Obtener un producto por ID (reemplaza {id} con el ID del producto)
+GET http://localhost:5052/api/contactos/15
+
+# Crear un nuevo CONTACTO
+POST http://localhost:5052/api/contactos
+Content-Type: application/json
+
+{
+    "Nombre": "Prueba 17",
+    "Email": "email de la prueba 17",
+    "Phone": "123456789",
+    "Asunto": "PRUEBA",
+    "Mensaje": "PRUEBA"
+}
+
+
+# Actualizar un CONTACTO por ID (reemplaza {id} con el ID del CONTACTO)
+PUT http://localhost:5052/api/contactos/16
+Content-Type: application/json
+
+{
+    "id": 16,
+    "Nombre": "Prueba 16",
+    "Email": "email de la prueba 16",
+    "Phone": "123456789",
+    "Asunto": "PRUEBA",
+    "Mensaje": "PRUEBA"
+}
+
+# Eliminar un CONTACTO por ID (reemplaza {id} con el ID del CONTACTO)
+DELETE http://localhost:5052/api/contactos/18

@@ -4,7 +4,7 @@ using proyecto_ecommerce_deportivo_net.Models;
 using Microsoft.Extensions.Logging;
 using proyecto_ecommerce_deportivo_net.Data;
 using proyecto_ecommerce_deportivo_net.Models.Entity;
-
+using proyecto_ecommerce_deportivo_net.Models.Service;
 namespace proyecto_ecommerce_deportivo_net.Controllers.UI;
 
 public class HomeController : Controller
@@ -12,9 +12,11 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly ApplicationDbContext _context;
 
+    private readonly ContactanosService _contactanosService;
+
     private readonly IMyEmailSender _emailSender;
     public HomeController(ILogger<HomeController> logger,
-        ApplicationDbContext context, IMyEmailSender emailSender)
+        ApplicationDbContext context, IMyEmailSender emailSender, ContactanosService contactanosService)
     {
         _logger = logger;
 
@@ -22,6 +24,9 @@ public class HomeController : Controller
         _context = context;
 
         _emailSender = emailSender;
+
+        //
+        _contactanosService = contactanosService;
     }
 
     public IActionResult Index()

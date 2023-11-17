@@ -52,7 +52,7 @@
             @if (!SignInManager.IsSignedIn(User) || !roles.Contains("Admin"))
             {
                 <a class="nav-link" asp-area="" asp-controller="NoCliente" asp-action="Catalogo">Catálogo de Productos</a>
-                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contacto">Contáctanos</a>
+                <a class="nav-link" asp-area="" asp-controller="Contacto" asp-action="Index">Contáctanos</a>
                 <a class="nav-link" asp-area="" asp-controller="TipoCambio" asp-action="Index">Tipo de cambio</a>
             }
 
@@ -168,7 +168,7 @@
                 <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Index"> <i
                         class="fas fa-arrow-right"></i>
                     Misión y Visión </a>
-                <a id="detalles-footer" asp-area="" asp-controller="Home" asp-action="Contacto"> <i class="fas fa-arrow-right"></i>
+                <a id="detalles-footer" asp-area="" asp-controller="Contacto" asp-action="Index"> <i class="fas fa-arrow-right"></i>
                     Contáctanos </a>
             </div>
 
