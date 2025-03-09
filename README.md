@@ -70,6 +70,16 @@ En el Shared --> _Layout.cshhtml ya esta asignada la logica para delegar que ver
 El login para usuarios ya esta terminado, se pueden registrar clientes llenando un formulario o con su cuenta de google si asi lo quiere el cliente xd
 
 
+### COMANDOS PARA HACER UNA MIGRACION
+
+git checkout -b pruebasoftware
+
+dotnet ef migrations add PruebasSMigration
+
+dotnet ef database update
+
+dotnet watch run
+
 <p align="center">
   <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 </p>
