@@ -80,6 +80,20 @@ dotnet ef database update
 
 dotnet watch run
 
+
+### CREDENCIALES DE LA BASE DE DATOS DE RENDER
+
+Host: dpg-cv6dv1btq21c73di4fd0-a.oregon-postgres.render.com 
+
+Username: db_pruebas_xir8_user 
+
+Database: db_pruebas_xir8
+
+Password: KitIxUlm3A0lLyQZPq2wv4Eg8RhFUSzq
+
+
+ESTA BASE DE DATOS SE CREO EL DIA 8 DE MARZO, ANTES DEL 8 DE ABRIL HACER UN BACKUP Y MIGRAR A OTRA DB GRATUITA
+
 <p align="center">
   <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 </p>
