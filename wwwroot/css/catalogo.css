@@ -21,7 +21,7 @@
 }
 
 body {
-    background: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaCAWKX-4PgJYM6QXtPSx8U-w-ybVtzZ3Rk0pRPjne7s9FL5ZRs9zmwksSeq2IRWK4vK6NcNC1yo5uuFvOEm1P8SRS79qg=w1908-h897");
+    background: url("https://firebasestorage.googleapis.com/v0/b/proyecto20112023-6e784.appspot.com/o/Prueba%2Fcatalogo.png?alt=media&token=6e6b4257-2629-456e-8672-2944f45d7885");
     background-attachment: fixed;
     background-size: cover;
 }
@@ -114,8 +114,8 @@ body {
     height: 50rem;
     padding: 0.2rem 0;
     position: relative;
-    background: linear-gradient(to bottom, transparent, white, transparent); /* Fondo degradado para el difuminado */
-    mask-image: radial-gradient(circle at center, transparent 50%, white 70%); /* Máscara para el efecto de difuminado */
+    /* background: linear-gradient(to bottom, transparent, white, transparent); Fondo degradado para el difuminado */
+    /*mask-image: radial-gradient(circle at center, transparent 50%, white 70%);  Máscara para el efecto de difuminado */
 }
 
 @media (max-width:500px) {
@@ -272,7 +272,7 @@ body {
     }
 
     body {
-        background: url("https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaAtqXSdvwOMygw2ADbHrvAgwxI8dgWUa14NWfDkdgHTFZ5OcVqdX2ntscV1vNvN5n5-Q4Yrc2_IvyMM3WZGx_XZCcr7Lw=w1908-h897");
+        background: url("https://firebasestorage.googleapis.com/v0/b/proyecto20112023-6e784.appspot.com/o/Prueba%2Fcatalogo.png?alt=media&token=6e6b4257-2629-456e-8672-2944f45d7885");
         background-attachment: fixed;
         background-size: cover;
     }

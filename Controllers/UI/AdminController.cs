@@ -136,10 +136,10 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
         {
 
             //INGRESA AQUÍ TUS PROPIAS CREDENCIALES
-            string email = "athletix@gmail.com";
+            string email = "codigo@gmail.com";
             string clave = "codigo123";
-            string ruta = "athletix-app.appspot.com";
-            string api_key = "AIzaSyAg3WiFrCupnLMrv0CHs8XxJIodiX52XqU";
+            string ruta = "proyecto20112023-6e784.appspot.com";
+            string api_key = "AIzaSyCNBDXvNTsCeGYSTJdZi8_OY6CL5g64cGs";
 
             var auth = new FirebaseAuthProvider(new FirebaseConfig(api_key));
             var a = await auth.SignInWithEmailAndPasswordAsync(email, clave);
