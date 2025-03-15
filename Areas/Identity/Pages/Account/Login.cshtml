@@ -22,7 +22,7 @@
         <div class="inputBox">
             <div class="input" id="input-email">
                 <span>Email</span>
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true"
+                <input type="email" asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true"
                     placeholder="name@example.com" />
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
@@ -32,7 +32,7 @@
         <div class="inputBox">
             <div class="input">
                 <span>Contraseña</span>
-                <input asp-for="Input.Password" class="form-control" autocomplete="current-password"
+                <input type="password" asp-for="Input.Password" class="form-control" autocomplete="current-password"
                     aria-required="true" placeholder="password" />
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
