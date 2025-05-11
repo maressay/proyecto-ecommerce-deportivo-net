@@ -83,13 +83,13 @@ dotnet watch run
 
 ### CREDENCIALES DE LA BASE DE DATOS DE RENDER
 
-Host: dpg-cvno5s24d50c73d0u01g-a.oregon-postgres.render.com 
+Host: dpg-d0g12cjuibrs73f5hui0-a.oregon-postgres.render.com 
 
-Username: pruebas_software_user 
+Username: db_pruebas_user 
 
-Database: db_pruebas_software
+Database: db_pruebas_vf19
 
-Password: kiR3UaUOn1U2FBJycgJHXDtd5vKH8y3i
+Password: kHJXuH3aCEWsBSR4Gdbg2bqF2tuQfC44
 
 
 ESTA BASE DE DATOS SE CREO EL DIA 04 DE ABRIL, ANTES DEL 4 DE MAYO HACER UN BACKUP Y MIGRAR A OTRA DB GRATUITA
