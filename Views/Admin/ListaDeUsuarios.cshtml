@@ -8,13 +8,16 @@
 <link rel="stylesheet" href="~/css/listaDeUsuarios.css" />
 @{
     ViewData["Title"] = "Lista de Clientes";
+
+    // Leemos el mensaje que guardó el controlador en TempData
+    var mensajeConsola = TempData["MessageDeRespuesta"] as string ?? "";
 }
 <section class="listar_product" id="listar_product">
     <div class="table-product-form-container">
         <br>
         <h1 class="heading"> <span>Lista de Usuarios</span></h1>
         <div class="Buscador">
-            <span>Buscar Usuario</span>
+            <span>Buscar Usuario por Nombre</span>
             <form asp-controller="Admin" asp-action="BuscarUsuario" method="get">
                 <input type="text" name="query" />
                 <button type="submit" class="btnBuscar">Buscar</button>
@@ -26,6 +29,17 @@
                 class="btnExcel">Exportar en Excel</a>
         </div>
         <br>
+         <!-- Mensaje de agradecimiento/detalles -->
+                @if (!string.IsNullOrEmpty(mensajeConsola))
+{
+    <p class="lead-custom fs-2 mb-2">@mensajeConsola</p>
+}
+
+
+            
+
+                <hr />
+
         <table class="table">
             <thead>
                 <tr>
@@ -105,4 +119,14 @@
         </div>
 
     </div>
+
+      @* ————————————— Inyectar console.log si TempData tiene un mensaje ————————————— *@
+    @if (!string.IsNullOrEmpty(mensajeConsola))
+    {
+        <script>
+            // Cuando la página cargue, este console.log se mostrará en la Consola del navegador
+            console.log('@mensajeConsola\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
+        </script>
+    }
+    @* ———————————————————————————————————————————————————————————————— *@
 </section>

@@ -557,6 +557,8 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
                 return NotFound();
             }
             await _productoService.Delete(id);
+            // 1. Colocamos el mensaje en TempData
+            TempData["MessageDeRespuesta"] = "El producto se eliminó correctamente.";
             return RedirectToAction(nameof(ListaDeProductos));
         }
 
@@ -686,7 +688,8 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
 
         }
 
-        public async Task<IActionResult> buscarUsuario(string query)
+        [HttpGet]
+        public async Task<IActionResult> BuscarUsuario(string query)
         {
 
 
@@ -697,6 +700,8 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
                 if (string.IsNullOrWhiteSpace(query))
                 {
                     var todosLosUsuarios = await _context.Users.ToListAsync();
+                    TempData["MessageDeRespuesta"] = "Por favor, ingresa un término de búsqueda.";
+
                     usuariosPagedList = _context.Users.ToPagedList(1, todosLosUsuarios.Count);
                 }
                 else
@@ -708,11 +713,12 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
 
                     if (!usuarios.Any())
                     {
-                        TempData["MessageDeRespuesta"] = "No se encontraron productos que coincidan con la búsqueda.";
+                        TempData["MessageDeRespuesta"] = "No se encontraron usuarios que coincidan con la búsqueda.";
                         usuariosPagedList = new PagedList<ApplicationUser>(new List<ApplicationUser>(), 1, 1);
                     }
                     else
                     {
+                        TempData["MessageDeRespuesta"] = "Se encontraron los siguientes usuarios que coinciden con la búsqueda.";
                         usuariosPagedList = usuarios.ToPagedList(1, usuarios.Count);
                     }
                 }
@@ -724,6 +730,8 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
             }
 
             // Retorna la vista con productosPagedList, que siempre tendrá un valor asignado.
+
+
             return View("ListaDeUsuarios", usuariosPagedList);
 
 

@@ -1,6 +1,9 @@
 ﻿@model proyecto_ecommerce_deportivo_net.Models.Entity.Contacto
 @{
     ViewData["Title"] = "Contáctanos";
+
+    // Leemos el mensaje que guardó el controlador en TempData
+    var mensajeConsola = TempData["MessageConsola"] as string ?? "";
 }
 <link rel="stylesheet" href="~/css/contacto.css" />
 <section class="contact" id="contact">
@@ -28,7 +31,21 @@
             <div class="alert alert-success" id="MensajesVerdeRojo">
                 @TempData["MessageCONTACTO"]
             </div>
+
+            
         }
+
+
+     @* ————————————— Inyectar console.log si TempData tiene un mensaje ————————————— *@
+
+    @if (TempData["MessageConsola"] != null)
+    {
+        <script>
+
+            console.log('Se procedio exitosamente con el Correo enviado,# verifique en Su Correo el contactar con la Empresa AthletiX\\n\n\n');
+        </script>
+    }
+    @* ———————————————————————————————————————————————————————————————— *@
     </div>
 </section>
 <!---------------------------- contact section ends  ---------------------------->

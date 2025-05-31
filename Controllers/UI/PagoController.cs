@@ -62,7 +62,9 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
                     return RedirectToAction("Index", "Carrito");
                 }
             }
-
+            // ———————————— AÑADE ESTO ————————————
+            // Pasar un mensaje que se mostrará en la consola del navegador
+            TempData["MensajeConsola"] = "Ingresaste al formulario de pago con monto: " + monto.ToString("C");
             // Si todo está bien, proceder a la vista de pago
             Pago pago = new Pago();
             pago.UserID = _userManager.GetUserName(User);
@@ -208,7 +210,18 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
                 }
             }
 
-            return View("Create");
+            //return View("Create");
+            // En lugar de `return View("Create");`, hacemos:
+            TempData["MessagePago"] = "El pago se ha registrado y su pedido nro " + pedido.ID + " está en camino.";
+            return RedirectToAction("ConfirmacionPago", new { pedidoId = pedido.ID });
+        }
+
+        [HttpGet]
+        public IActionResult ConfirmacionPago(int pedidoId)
+        {
+            ViewBag.PedidoId = pedidoId;
+            ViewBag.MessagePago = TempData["MessagePago"] as string;
+            return View();
         }
 
 

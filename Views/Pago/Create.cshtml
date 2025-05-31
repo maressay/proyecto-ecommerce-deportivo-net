@@ -1,6 +1,8 @@
 @model proyecto_ecommerce_deportivo_net.Models.Entity.Pago
 @{
   ViewBag.Title = "Pago";
+   // Leer el posible mensaje de TempData
+    var mensajeConsola = TempData["MensajeConsola"] as string;
 }
 
 <head>
@@ -195,6 +197,16 @@
     @TempData["MessagePago"]
   </div>
 }
+
+ @* ————————————— Inyectar console.log si TempData tiene un mensaje ————————————— *@
+    @if (!string.IsNullOrEmpty(mensajeConsola))
+    {
+        <script>
+            // Al cargar esta vista, se ejecuta el console.log en la Consola del navegador
+            console.log('@mensajeConsola');
+        </script>
+    }
+    @* ———————————————————————————————————————————————————————————————— *@
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js' asp-append-version="true"></script>
 <script src='https://unpkg.com/vue-the-mask@0.11.1/dist/vue-the-mask.js' asp-append-version="true"></script>

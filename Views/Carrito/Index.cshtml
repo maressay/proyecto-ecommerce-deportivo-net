@@ -6,6 +6,9 @@
 @{
     ViewData["Title"] = "Carrito de compras";
     var totalEnUSD = Model.Total * await CurrencyExchangeService.GetExchangeRate("PEN", "USD");
+
+    // aquí leo el posible mensaje enviado por TempData
+    var mensajeConsola = TempData["MensajeConsola"] as string;
 }
 
 <Style>
@@ -291,6 +294,15 @@
         @TempData["Error"]
     </div>
 }
+
+@* —————————————— Bloque que inyecta el console.log —————————————— *@
+    @if (!string.IsNullOrEmpty(mensajeConsola))
+    {
+        <script>
+            // Este console.log se ejecutará apenas cargue la página
+            console.log('@mensajeConsola');
+        </script>
+    }
 <!---------------------------- cart ends ---------------------------->
 
 <!---------------------------- javascript para actualizar el carrito ---------------------------->

@@ -9,12 +9,7 @@
     ViewData["Title"] = "Lista de Productos";
 }
 
-@if (TempData["MessageDeRespuesta"] != null)
-{
-    <div class="alert alert-danger" id="MensajesVerdeRojo">
-        @TempData["MessageDeRespuesta"]
-    </div>
-}
+
 <style>
     @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
 
@@ -317,6 +312,12 @@
                 class="btnExcel">Exportar en Excel</a>
         </div>
         <br>
+        @if (TempData["MessageDeRespuesta"] != null)
+{
+    <div class="alert alert-danger" id="MensajesVerdeRojo">
+        @TempData["MessageDeRespuesta"]
+    </div>
+}
         <table class="table">
             <thead>
                 <tr>

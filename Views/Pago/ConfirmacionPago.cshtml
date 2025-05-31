@@ -1,0 +1,111 @@
+@model dynamic
+
+@{
+    ViewData["Title"] = "Pago Exitoso";
+    var pedidoId = ViewBag.PedidoId as int?;
+    var mensajePago = ViewBag.MessagePago as string ?? "¡Gracias por su compra!";
+    // Usamos el mismo mensaje para consola
+    var mensajeConsola = ViewBag.MessagePago as string ?? "¡Gracias por su compra!";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <!-- --- Asegúrate de tener Bootstrap cargado --- -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        /* Fondo suave para toda la página */
+        body {
+            background-color: #f5f7fa;
+            min-height: 100vh;
+        }
+        /* Centrar vertical y horizontal */
+        .vh-100 {
+            height: 100vh;
+        }
+        /* Ícono grande dentro de círculo */
+        .icon-circle {
+            width: 120px;
+            height: 120px;
+            background-color: #e6f9ed;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem auto;
+        }
+        /* Sombra y bordes redondeados para la tarjeta */
+        .card-confirmation {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+        }
+        /* Título principal */
+        .title-success {
+            color: #28a745;
+            font-weight: 600;
+        }
+        /* Mensaje secundario */
+        .lead-custom {
+            font-size: 1.1rem;
+            color: #555;
+        }
+        /* Botones con algo más de espaciado */
+        .btn-group-confirmation .btn {
+            min-width: 180px;
+            margin: 0 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+        <div class="card card-confirmation w-100" style="max-width: 480px;">
+            <div class="card-body text-center p-4 p-md-5">
+                <!-- Ícono dentro de círculo -->
+                <div class="icon-circle mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="#28a745" class="bi bi-check-lg" viewBox="0 0 16 16">
+                        <path d="M13.854 3.146a.5.5 0 0 1 .058.638l-.058.07L6.707 11l-3.5-3.5a.5.5 0 0 1 .638-.765l.07.058L6.707 9.793l6.647-6.647a.5.5 0 0 1 .707 0z"/>
+                    </svg>
+                </div>
+
+                <!-- Título -->
+                <h2 class="title-success fs-1 mb-3">¡Pago procesado con éxito!</h2>
+
+                <!-- Mensaje de agradecimiento/detalles -->
+                <p class="lead-custom fs-2 mb-2">@mensajePago</p>
+
+                @if (pedidoId.HasValue)
+                {
+                    <p class="fs-3 mb-4">Su número de pedido es: <strong>#@pedidoId.Value</strong></p>
+                }
+
+                <hr />
+
+                <!-- Grupo de botones -->
+                <div class="btn-group-confirmation d-flex justify-content-center mt-4">
+                    <a asp-controller="MisPedidos" asp-action="MisPedidos" class="btn btn-lg fs-4 btn-success">
+                        Ver Mis Pedidos
+                    </a>
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-lg fs-4 btn-outline-secondary">
+                        Volver al Inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* ————————————— Inyectar console.log si TempData tiene un mensaje ————————————— *@
+    @if (!string.IsNullOrEmpty(mensajeConsola))
+    {
+        <script>
+            // Cuando la página cargue, este console.log se mostrará en la Consola del navegador
+            console.log('@mensajeConsola\n\nSu número de pedido es: #@pedidoId.Value\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
+        </script>
+    }
+    @* ———————————————————————————————————————————————————————————————— *@
+
+    <!-- --- Scripts de Bootstrap --- -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

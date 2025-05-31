@@ -7,14 +7,17 @@
 
 @{
     ViewData["Title"] = "Mis Pedidos";
+
+    // Leemos el mensaje que guardó el controlador en TempData
+    var mensajeConsola = TempData["MessageDeRespuesta"] as string ?? "";
 }
 
-@if (TempData["MessageDeRespuesta"] != null)
+@*if (TempData["MessageDeRespuesta"] != null)
 {
     <div class="alert alert-danger" id="MensajesVerdeRojo">
         @TempData["MessageDeRespuesta"]
     </div>
-}
+}*@
 <style>
     @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
     :root {
@@ -264,6 +267,12 @@
                 class="btnExcel">Exportar en Excel</a>
         </div>
         <br>
+
+                 <!-- Mensaje de agradecimiento/detalles -->
+                @if (!string.IsNullOrEmpty(mensajeConsola))
+{
+    <p class="lead-custom fs-2 mb-2">@mensajeConsola</p>
+}<br>
         <table>
             <thead>
                 <tr>
@@ -326,5 +335,31 @@
             </ul>
         </div>
     </div>
+
+     @* ————————————— Inyectar console.log si TempData tiene un mensaje ————————————— *@
+    @if (!string.IsNullOrEmpty(mensajeConsola))
+    {
+        <script>
+            // Cuando la página cargue, este console.log se mostrará en la Consola del navegador
+            console.log('@mensajeConsola\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
+        </script>
+    }
+    @* ———————————————————————————————————————————————————————————————— *@
+
+    <!-- 1) Si hay mensaje de consola, lo inyectamos y luego llamamos a DescargarPDF -->
+@if (!string.IsNullOrEmpty(mensajeConsola))
+{
+    <script>
+        // Mostrar inmediatamente el mensaje en la consola del navegador
+        console.log('@mensajeConsola\n\\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
+
+        // Tras un pequeño delay (0.5s), iniciamos la descarga automática
+        setTimeout(function(){
+            window.location.href = '@Url.Action("MisPedidos", "MisPedidos")';
+           
+        }, 500);
+    </script>
+}
+
 </section>
 <!---------------------------- listar mis pedidos ends  ---------------------------->

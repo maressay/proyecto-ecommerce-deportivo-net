@@ -74,7 +74,9 @@ public class HomeController : Controller
         //await _emailSender.SendEmailAsync(objContacto.Email, "Gracias por contactarnos", message);
         await _emailSender.SendEmailAsync(objContacto.Email, "" + objContacto.Asunto, message1);
 
-        return View("~/Views/Home/Contacto.cshtml");
+        // En lugar de return View(...), rediriges al GET de Contacto
+        TempData["MessageConsola"] = "Gracias por contactarse con nosotros.";
+    return RedirectToAction("Contacto");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

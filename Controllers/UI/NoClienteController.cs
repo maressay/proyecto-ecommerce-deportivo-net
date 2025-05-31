@@ -146,6 +146,8 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
                 }
 
                 await _context.SaveChangesAsync();
+                // ... después de guardar la proforma en BD ...
+                TempData["MensajeConsola"] = "Producto agregado correctamente al carrito.";
                 return RedirectToAction("Index", "Carrito");
             }
         }

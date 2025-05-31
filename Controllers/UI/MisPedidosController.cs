@@ -86,25 +86,29 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
 
         /* metodos para exportar en pdf y excel desde aqui para abajo */
         public IActionResult ExportarPedidosEnPDF()
-        {
-            try
-            {
-                var userId = _userManager.GetUserName(User); //sesion
+{
+    try
+    {
+        var userId = _userManager.GetUserName(User); // sesión
 
-                if (userId == null)
-                {
-                    // no se ha logueado
-                    TempData["MessageLOGUEARSE"] = "Por favor debe loguearse antes de exportar";
-                    return View("~/Views/Home/Index.cshtml");
-                }
-                else
-                {
-                    // Filtrar por el ID del usuario logueado en este caso el id es el email
-                    var pedidos = _context.DataPedido.Where(p => p.UserID == userId).ToList();
-                    var html = @"
+        if (userId == null)
+        {
+            // No se ha logueado
+            TempData["MessageLOGUEARSE"] = "Por favor debe loguearse antes de exportar";
+            return View("~/Views/Home/Index.cshtml");
+        }
+        else
+        {
+            // 1) Filtrar por el ID del usuario logueado
+            var pedidos = _context.DataPedido
+                .Where(p => p.UserID == userId)
+                .ToList();
+
+            // 2) Construir el HTML del PDF
+            var html = @"
             <html>
                 <head>
-                <meta charset='UTF-8'>
+                    <meta charset='UTF-8'>
                     <style>
                         table {
                             width: 100%;
@@ -122,72 +126,81 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
                             position: absolute;
                             top: 0;
                             right: 0;
-                            border-radius:50%;
-                            height:3.3rem;
-                            width:3.3rem;
+                            border-radius: 50%;
+                            height: 3.3rem;
+                            width: 3.3rem;
                         }
-
                         h1 {
                             color: #40E0D0; /* Color celeste */
                         }
                     </style>
                 </head>
                 <body>
-                    <img src='https://firebasestorage.googleapis.com/v0/b/proyectos-cb445.appspot.com/o/img_logo_athletix.png?alt=media&token=a32e429b-4ece-45d2-bf00-85a8f9081a9c&_gl=1*14iryjj*_ga*MTcyOTkyMjIwMS4xNjk2NDU2NzU2*_ga_CW55HF8NVT*MTY5ODAxNDc2Mi4yLjEuMTY5ODAxNDg0Ny40OC4wLjA.' alt='Logo' width='100' class='logo'/>
+                    <img src='https://firebasestorage.googleapis.com/v0/b/proyectos-cb445.appspot.com/o/img_logo_athletix.png?alt=media&token=a32e429b-4ece-45d2-bf00-85a8f9081a9c'
+                         alt='Logo' width='100' class='logo'/>
                     <h1>Reporte de Pedidos</h1>
                     <table>
                         <tr>
                             <th>ID</th>
                             <th>UserID</th>
                             <th>Total (en soles)</th>
-                       
                             <th>Status</th>
                         </tr>";
 
-                    foreach (var pedido in pedidos)
-                    {
+            foreach (var pedido in pedidos)
+            {
+                html += $@"
+                        <tr>
+                            <td>{pedido.ID}</td>
+                            <td>{pedido.UserID}</td>
+                            <td>{pedido.Total}</td>
+                            <td>{pedido.Status}</td>
+                        </tr>";
+            }
 
-                        html += $@"
-                <tr>
-                    <td>{pedido.ID}</td>
-                    <td>{pedido.UserID}</td>
-                    <td>{pedido.Total}</td>
-                 
-                    <td>{pedido.Status}</td>
-   
-                </tr>";
-                    }
-
-                    html += @"
+            html += @"
                     </table>
                 </body>
             </html>";
 
-                    var globalSettings = new GlobalSettings
-                    {
-                        ColorMode = ColorMode.Color,
-                        Orientation = Orientation.Portrait,
-                        PaperSize = PaperKind.A4,
-                    };
-                    var objectSettings = new ObjectSettings { HtmlContent = html };
-                    var pdf = new HtmlToPdfDocument()
-                    {
-                        GlobalSettings = globalSettings,
-                        Objects = { objectSettings }
-                    };
-                    var file = _converter.Convert(pdf);
-
-                    return File(file, "application/pdf", "Pedidos.pdf");
-                }
-            }
-            catch (Exception ex)
+            // 3) Configurar DinkToPdf
+            var globalSettings = new GlobalSettings
             {
-                // Loguear el error para obtener más detalles
-                _logger.LogError(ex, "Error al exportar Pedidos a PDF");
-                // Retornar un mensaje de error al usuario
-                return StatusCode(500, "Ocurrió un error al exportar los Pedidos a PDF. Por favor, inténtelo de nuevo más tarde.");
-            }
+                ColorMode = ColorMode.Color,
+                Orientation = Orientation.Portrait,
+                PaperSize = PaperKind.A4
+            };
+            var objectSettings = new ObjectSettings
+            {
+                HtmlContent = html
+            };
+
+            var pdfDoc = new HtmlToPdfDocument()
+            {
+                GlobalSettings = globalSettings,
+                Objects = { objectSettings }
+            };
+
+            // 4) Convertir a PDF en memoria
+            var file = _converter.Convert(pdfDoc);
+
+            // 5) Asignar mensaje para consola del navegador
+            TempData["MessageDeRespuesta"] = "El PDF de pedidos se generó correctamente. Iniciando descarga...";
+
+            // 6) Devolver el PDF directamente al cliente
+            return File(file, "application/pdf", "MisPedidos.pdf");
         }
+    }
+    catch (Exception ex)
+    {
+        // Loguear el error para obtener más detalles
+        _logger.LogError(ex, "Error al exportar Pedidos a PDF");
+
+        // Retornar un mensaje de error al usuario
+        return StatusCode(500, "Ocurrió un error al exportar los Pedidos a PDF. Por favor, inténtelo de nuevo más tarde.");
+    }
+}
+
 
 
         public IActionResult ExportarPedidosEnExcel()
@@ -253,7 +266,7 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
                     var stream = new MemoryStream();
                     package.SaveAs(stream);
 
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Pedidos.xlsx");
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "MisPedidos.xlsx");
                 }
 
             }
@@ -691,14 +704,17 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
 
                 if (searchPedidoID.HasValue && !String.IsNullOrEmpty(orderStatus))
                 {
+                    TempData["MessageDeRespuesta"] = "No se encontraron pedidos que coincidan con la búsqueda.";
                     pedidos = pedidos.Where(s => s.ID == searchPedidoID.Value && s.Status.Contains(orderStatus));
                 }
                 else if (searchPedidoID.HasValue)
                 {
+                    TempData["MessageDeRespuesta"] = "No se encontraron pedidos que coincidan con la búsqueda.";
                     pedidos = pedidos.Where(s => s.ID == searchPedidoID.Value);
                 }
                 else if (!String.IsNullOrEmpty(orderStatus))
                 {
+                    TempData["MessageDeRespuesta"] = "No se encontraron pedidos con el ESTADO ENTREGADO que coincidan con la búsqueda.";
                     pedidos = pedidos.Where(s => s.Status.Contains(orderStatus));
                 }
 
@@ -711,6 +727,8 @@ namespace proyecto_ecommerce_deportivo_net.Controllers.UI
                 }
                 else
                 {
+                    TempData["MessageDeRespuesta"] = "Si se encontraron pedidos que coincidan \ncon la búsqueda y son los siguientes.";
+
                     pedidosPagedList = pedidosList.ToPagedList(1, pedidosList.Count);
                 }
             }
